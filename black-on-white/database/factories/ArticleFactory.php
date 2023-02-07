@@ -2,22 +2,19 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Factory as Faker;
+use Exception;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Article>
- */
-class ArticleFactory extends Factory
+class ArticleFactory extends \Illuminate\Database\Eloquent\Factories\Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
+     * @throws Exception
      */
     public function definition()
     {
-        $faker = Faker::create('ru_RU');
+        $faker = \Faker\Factory::create('ru_RU');
 
         return [
             'created_at' => $faker->dateTime,
