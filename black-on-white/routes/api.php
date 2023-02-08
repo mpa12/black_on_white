@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResources([
-    'article' => ArticleController::class,
-]);
+Route::get('/article', [ArticleController::class, 'index']);
+Route::get('/article/{article}', [ArticleController::class, 'show']);
+Route::post('/article', [ArticleController::class, 'store'])
+    ->middleware('auth:api')->middleware('admin');
