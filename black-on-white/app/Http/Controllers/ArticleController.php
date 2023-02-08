@@ -2,13 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    public function index(Request $request): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        return Article::with('articleType')->paginate(20);
+        return ArticleResource::collection(Article::paginate(20));
+    }
+
+    public function store(Request $request)
+    {
+        //
+    }
+
+    public function show(Article $article): ArticleResource
+    {
+        return new ArticleResource($article);
+    }
+
+    public function update(Request $request, Article $article)
+    {
+        //
+    }
+
+    public function destroy(Article $article)
+    {
+        //
     }
 }
