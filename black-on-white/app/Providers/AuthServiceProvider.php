@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Auth::viaRequest('jwt', function ($request) {
-            return User::where('api_token', $request->token)->first();
+            return User::where('api_token', $request->bearerToken())->first();
         });
     }
 }

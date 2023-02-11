@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::controller(ArticleController::class)->group(function () {
+    Route::get('/article', 'index');
+    Route::post('/article/{article}', 'show');
+    Route::post('/article', 'store')->middleware('auth:api')->middleware('admin');
 });
 
-Route::get('/article', [ArticleController::class, 'index']);
-Route::get('/article/{article}', [ArticleController::class, 'show']);
-Route::post('/article', [ArticleController::class, 'store'])
-    ->middleware('auth:api')->middleware('admin');
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/auth/login', 'login');
+    Route::post('/auth/register', 'register');
+    Route::post('/auth/refresh', 'refresh');
+});

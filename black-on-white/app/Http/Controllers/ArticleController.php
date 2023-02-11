@@ -15,7 +15,7 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        return 'store';
+        return ['store'];
     }
 
     public function show(Article $article): ArticleResource
@@ -25,7 +25,7 @@ class ArticleController extends Controller
 
     public function update(Request $request, Article $article)
     {
-        return 'update';
+        return ['update'];
     }
 
     public function destroy(Article $article)
