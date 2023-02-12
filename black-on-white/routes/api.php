@@ -19,6 +19,8 @@ Route::controller(ArticleController::class)->group(function () {
     Route::get('/article', 'index');
     Route::post('/article/{article}', 'show');
     Route::post('/article', 'store')->middleware('auth:api')->middleware('admin');
+    Route::put('/article/{article}', 'update')->middleware('auth:api')->middleware('admin');
+    Route::delete('/article/{article}', 'destroy')->middleware('auth:api')->middleware('admin');
 });
 
 Route::controller(AuthController::class)->group(function () {
