@@ -56,4 +56,9 @@ class ArticleController extends Controller
             return response()->json(['error' => $e->errorInfo]);
         }
     }
+
+    public function two_last(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    {
+        return ArticleResource::collection(Article::limit(2)->orderBy('id', 'DESC')->get());
+    }
 }
