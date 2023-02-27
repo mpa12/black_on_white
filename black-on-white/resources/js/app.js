@@ -16,7 +16,10 @@ import { createApp } from 'vue';
 const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
+import ButtonComponent from './components/ButtonComponent.vue';
+
 app.component('example-component', ExampleComponent);
+app.component('button-component', ButtonComponent);
 
 /**
  * The following block of code may be used to automatically register your
