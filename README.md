@@ -19,3 +19,14 @@
 4. Docker
 5. Composer
 
+## Инструкция по развертыванию
+
+1. Перейти через консоль в папку с проектом
+2. Ввести команду docker-compose up -d
+3. Ввести команду docker ps
+4. После запуска педыдущей команды должна появиться таблица из которой надо скопировать CONTAINER_ID нашего приложения
+5. docker exec -it CONTAINER_ID bash
+6. composer install
+7. php artisan migrate
+8. Готово!
+
