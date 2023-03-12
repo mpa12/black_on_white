@@ -15,11 +15,11 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-import ExampleComponent from './components/ExampleComponent.vue';
-import ButtonComponent from './components/ButtonComponent.vue';
+import Button from './components/Button.vue';
+import Header from './components/Header.vue';
 
-app.component('example-component', ExampleComponent);
-app.component('button-component', ButtonComponent);
+app.component('v-button', Button);
+app.component('v-header', Header);
 
 /**
  * The following block of code may be used to automatically register your

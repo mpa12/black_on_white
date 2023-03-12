@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    name: "ButtonComponent",
+    name: "Button",
     props: ['title', 'href']
 }
 </script>
@@ -26,6 +26,7 @@ export default {
         gap: 5px;
         padding: 0 30px;
         width: fit-content;
+        text-transform: uppercase;
     }
 
     .btn:hover {

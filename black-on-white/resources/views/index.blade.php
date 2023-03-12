@@ -10,8 +10,8 @@
 </head>
 <body>
     <div id="app">
-        <example-component></example-component>
-        <button-component title="Смотреть спектакли" href="#21"></button-component>
+        <v-header></v-header>
+        <v-button title="Смотреть спектакли" href="#21"></v-button>
     </div>
 </body>
 </html>
