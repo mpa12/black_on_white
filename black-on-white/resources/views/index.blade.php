@@ -11,7 +11,11 @@
 <body>
     <div id="app">
         <v-header></v-header>
-        <v-button title="Смотреть спектакли" href="#21"></v-button>
+        <main class="container">
+            <router-view></router-view>
+        </main>
+        <v-footer></v-footer>
+        <v-button-up></v-button-up>
     </div>
 </body>
 </html>

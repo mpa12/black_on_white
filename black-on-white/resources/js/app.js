@@ -4,8 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import './bootstrap';
-import { createApp } from 'vue';
+import './bootstrap'
+import { createApp } from 'vue'
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -13,13 +13,19 @@ import { createApp } from 'vue';
  * to use in your application's views. An example is included for you.
  */
 
-const app = createApp({});
+import router from './router'
 
-import Button from './components/Button.vue';
-import Header from './components/Header.vue';
+const app = createApp({ router })
 
-app.component('v-button', Button);
-app.component('v-header', Header);
+import Button from './components/Button.vue'
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+import ButtonUp from './components/ButtonUp.vue'
+
+app.component('v-button', Button)
+app.component('v-header', Header)
+app.component('v-footer', Footer)
+app.component('v-button-up', ButtonUp)
 
 /**
  * The following block of code may be used to automatically register your
@@ -39,4 +45,5 @@ app.component('v-header', Header);
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-app.mount('#app');
+app.use(router)
+app.mount('#app')

@@ -6,7 +6,7 @@
             </div>
             <div class="d-lg-none d-flex">
                 <svg @click=openMenu xmlns="http://www.w3.org/2000/svg" width=20 height=20 fill=currentColor id=menu_icon class="bi bi-list fs-5 text-dark" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                    <path d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                 </svg>
             </div>
             <div class="d-lg-flex d-none flex-lg-row flex-column" id=menu>
@@ -17,9 +17,9 @@
                 </div>
                 <div class="d-flex justify-content-between w-auto me-5 gap-3 flex-lg-row flex-column">
                     <nav><a @click=closeMenu class=fs-6 href="/#about_us">(О НАС)</a></nav>
-                    <nav><a @click=closeMenu class=fs-6 href="participants.html">(УЧАСТНИКИ)</a></nav>
-                    <nav><a @click=closeMenu class=fs-6 href="news.html">(НОВОСТИ)</a></nav>
-                    <nav><a @click=closeMenu class=fs-6 href="photo_gallery.html">(ФОТОГАЛЕРЕЯ)</a></nav>
+                    <nav><a @click=closeMenu class=fs-6 href="/participants">(УЧАСТНИКИ)</a></nav>
+                    <nav><a @click=closeMenu class=fs-6 href="/news">(НОВОСТИ)</a></nav>
+                    <nav><a @click=closeMenu class=fs-6 href="/photo_gallery">(ФОТОГАЛЕРЕЯ)</a></nav>
                     <nav><a @click=closeMenu class=fs-6 href="/#write_to_us">(НАПИСАТЬ НАМ)</a></nav>
                 </div>
                 <div>

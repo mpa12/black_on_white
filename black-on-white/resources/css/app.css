@@ -228,53 +228,6 @@ a:hover {
     align-self: baseline;
 }
 
-.footer__inner {
-    box-sizing: border-box;
-    padding: 40px 20px 80px;
-    border-radius: 20px;
-    background-color: var(--my-white);
-}
-
-.footer__inner h5 {
-    color: var(--my-black);
-}
-
-.footer__inner p,
-.footer__inner a {
-    margin-bottom: 0;
-    color: var(--my-gray);
-}
-
-#button-up {
-    display:none;
-    right: 0;
-    margin: 0;
-    position: fixed;
-    bottom: 50px;
-    outline:none;
-    width: auto;
-    color: var(--my-black);
-    line-height: 30px;
-    text-decoration: none;
-    padding: 5px 20px;
-    background: var(--my-white);
-
-    border-radius: 4px 0 0 4px;
-    -webkit-border-radius: 4px 0 0 4px;
-    -moz-border-radius: 4px 0 0 4px;
-
-    box-shadow: 0 2px 4px #999;
-    -webkit-box-shadow: 0 2px 4px #999;
-    -moz-box-shadow: 0 2px 4px #999;
-    -o-box-shadow: 0 2px 4px #999;
-    cursor:pointer;
-}
-
-#button-up:hover {
-    background-color: var(--my-light-gray);
-    transition: background-color .3s ease-in-out;
-}
-
 .newses__card {
     background-color: var(--my-white);
     border-radius: 20px;
