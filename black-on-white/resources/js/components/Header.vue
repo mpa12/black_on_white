@@ -1,8 +1,8 @@
 <template>
-    <header class="container mb-2">
+    <header class="container mb-3">
         <div class="header d-flex justify-content-between align-items-center">
             <div class="flex-grow-1">
-                <a href="/" class="fw-bold fs-5">Черным по белому</a>
+                <router-link to="/" class="fw-bold fs-5">Черным по белому</router-link>
             </div>
             <div class="d-lg-none d-flex">
                 <svg @click=openMenu xmlns="http://www.w3.org/2000/svg" width=20 height=20 fill=currentColor id=menu_icon class="bi bi-list fs-5 text-dark" viewBox="0 0 16 16">
@@ -16,11 +16,9 @@
                     </svg>
                 </div>
                 <div class="d-flex justify-content-between w-auto me-5 gap-3 flex-lg-row flex-column">
-                    <nav><a @click=closeMenu class=fs-6 href="/#about_us">(О НАС)</a></nav>
-                    <nav><a @click=closeMenu class=fs-6 href="/participants">(УЧАСТНИКИ)</a></nav>
-                    <nav><a @click=closeMenu class=fs-6 href="/news">(НОВОСТИ)</a></nav>
-                    <nav><a @click=closeMenu class=fs-6 href="/photo_gallery">(ФОТОГАЛЕРЕЯ)</a></nav>
-                    <nav><a @click=closeMenu class=fs-6 href="/#write_to_us">(НАПИСАТЬ НАМ)</a></nav>
+                    <nav v-for="link in links">
+                        <router-link @click=closeMenu class=fs-6 :to=link.href>{{ link.title }}</router-link>
+                    </nav>
                 </div>
                 <div>
                     <span class=fs-6>+7 (999) 999 99 99</span>
@@ -44,6 +42,17 @@ export default {
             menu.classList.add('d-none')
             menu.classList.remove('d-flex')
         }
+    },
+    data() {
+        return {
+            links: [
+                { title: '(О НАС)', href: '/#about_us' },
+                { title: '(УЧАСТНИКИ)', href: '/participants' },
+                { title: '(НОВОСТИ)', href: '/news' },
+                { title: '(ФОТОГАЛЕРЕЯ)', href: '/photo_gallery' },
+                { title: '(НАПИСАТЬ НАМ)', href: '/#write_to_us' },
+            ]
+        }
     }
 }
 </script>
@@ -57,6 +66,7 @@ export default {
 }
 
 .header span,
+.header .router-link,
 .header a {
     color: var(--my-black);
     text-decoration: none;
@@ -74,6 +84,7 @@ export default {
     }
 
     .header nav a,
+    .header nav .router-link,
     .header span {
         font-size: 16px!important;
     }
@@ -85,6 +96,7 @@ export default {
 
 @media(max-width: 1200px) {
     .header nav a,
+    .header nav .router-link,
     .header span {
         font-size: 14px!important;
     }

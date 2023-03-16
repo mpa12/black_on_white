@@ -1,5 +1,5 @@
 <template>
-    <footer class="container mt-2">
+    <footer class="container mt-3">
         <div class="d-flex flex-lg-row flex-column justify-content-between gap-4 footer__inner">
             <div class="flex-grow-1">
                 <h5>КОНТАКТЫ</h5>
