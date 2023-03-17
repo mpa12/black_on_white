@@ -25,7 +25,7 @@ export default {
 .benefits {
     padding: 80px 20px;
     margin-top: 40px;
-    margin-bottom: 100px;
+    margin-bottom: 40px;
     border-top: 2px solid var(--my-black);
     border-bottom: 2px solid var(--my-black);
     text-align: center;

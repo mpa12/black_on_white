@@ -1,29 +1,21 @@
 <template>
-    <div class=w-100>
+    <div class=w-100 v-if="articles.length">
         <div class="w-100 marquee">
             <vue-marquee :marquee-props="marqueeProps">
                 Последние новости Последние новости Последние новости&nbsp;
             </vue-marquee>
         </div>
         <div class="d-flex align-items-center gap-3 flex-lg-row flex-column">
-            <div class=news_wrapper style="background-image: url(https://bow4.volkkk.repl.co/static/images/7cjmGiWdqm4.jpg)">
+            <div v-for="article in articles" class=news_wrapper :style="{ backgroundImage: 'url(' + article.photo + ')' }">
                 <div class=news_card>
-                    <h2>Краевая научная студенческая конференция</h2>
-                    <p class=flex-grow-1>
-                        11 ноября, на базе нашего колледжа состоялась Краевая научная студенческая конференция,
-                        посвященная 100-летию окончания Гражданской войны на Дальнем Востоке.
-                    </p>
-                    <v-button title=Смотреть href=# :is-black=false></v-button>
+                    <h2>{{ article.title }}</h2>
+                    <p class=flex-grow-1>{{ article.description }}</p>
+                    <v-button title=Смотреть :href="'/article/' + article.id" :is-black=false></v-button>
                 </div>
-            </div>
-            <div class=news_wrapper style="background-image: url(https://bow4.volkkk.repl.co/static/images/LwhIYwBjnlc.jpg)">
                 <div class=news_card>
-                    <h2>Гастроли в детский центр «Созвездие»</h2>
-                    <p class=flex-grow-1>
-                        Сегодня студенческий театр колледжа «Чёрным по белому» ездил на гастроли. Ребята
-                        участвовали в мастер-классе.
-                    </p>
-                    <v-button title=Смотреть href=# :is-black=false></v-button>
+                    <h2>{{ article.title }}</h2>
+                    <p class=flex-grow-1>{{ article.description }}</p>
+                    <v-button title=Смотреть :href="'/article/' + article.id" :is-black=false></v-button>
                 </div>
             </div>
         </div>
@@ -32,6 +24,8 @@
 
 <script>
 import VueMarquee from 'vue-marquee-text-component';
+import axios from "axios";
+
 export default {
     name: "IndexLastNews",
     components: {
@@ -49,14 +43,26 @@ export default {
                 duration: 1000,
                 gap: 10,
             },
+            articles: []
         };
     },
+    mounted() {
+        this.loadLastNews()
+    },
+    methods: {
+        loadLastNews() {
+            axios.get('/api/article/two-last').then(response => {
+                this.articles = response.data['data']
+            })
+        }
+    }
 }
 </script>
 
 <style scoped>
 .marquee {
     overflow: hidden;
+    margin-top: 80px;
     margin-bottom: 20px;
 }
 
@@ -68,11 +74,6 @@ export default {
 .marquee .marquee-text-text {
     padding-left: 10px!important;
 }
-
-/*.marquee .js-marquee-wrapper {*/
-/*    position: relative;*/
-/*    left: -100%;*/
-/*}*/
 
 .news_wrapper {
     width: 50%;

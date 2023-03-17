@@ -50,7 +50,7 @@ export default {
             links: [
                 { title: '(О НАС)', href: '/', hash: '#about_us' },
                 { title: '(УЧАСТНИКИ)', href: '/participants', hash: '' },
-                { title: '(НОВОСТИ)', href: '/news', hash: '' },
+                { title: '(НОВОСТИ)', href: '/article', hash: '' },
                 { title: '(ФОТОГАЛЕРЕЯ)', href: '/photo_gallery', hash: '' },
                 { title: '(НАПИСАТЬ НАМ)', href: '/', hash: '#write_to_us' },
             ]
