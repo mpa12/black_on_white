@@ -10,7 +10,12 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
+    scrollBehavior(to) {
+        if (!to.hash) return
+        const element = document.querySelector(to.hash)
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 })
 
 export default router

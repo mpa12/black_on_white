@@ -17,7 +17,9 @@
                 </div>
                 <div class="d-flex justify-content-between w-auto me-5 gap-3 flex-lg-row flex-column">
                     <nav v-for="link in links">
-                        <router-link @click=closeMenu class=fs-6 :to=link.href>{{ link.title }}</router-link>
+                        <router-link @click=closeMenu class=fs-6 :to="{ path: link.href, hash: link.hash, exact: true }">
+                            {{ link.title }}
+                        </router-link>
                     </nav>
                 </div>
                 <div>
@@ -46,11 +48,11 @@ export default {
     data() {
         return {
             links: [
-                { title: '(О НАС)', href: '/#about_us' },
-                { title: '(УЧАСТНИКИ)', href: '/participants' },
-                { title: '(НОВОСТИ)', href: '/news' },
-                { title: '(ФОТОГАЛЕРЕЯ)', href: '/photo_gallery' },
-                { title: '(НАПИСАТЬ НАМ)', href: '/#write_to_us' },
+                { title: '(О НАС)', href: '/', hash: '#about_us' },
+                { title: '(УЧАСТНИКИ)', href: '/participants', hash: '' },
+                { title: '(НОВОСТИ)', href: '/news', hash: '' },
+                { title: '(ФОТОГАЛЕРЕЯ)', href: '/photo_gallery', hash: '' },
+                { title: '(НАПИСАТЬ НАМ)', href: '/', hash: '#write_to_us' },
             ]
         }
     }
