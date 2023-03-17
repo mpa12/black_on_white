@@ -15,7 +15,7 @@
             <div class="flex-grow-1">
                 <h5>ДОПОЛНИТЕЛЬНО</h5>
                 <hr>
-                <a href="/privacy_policy">Политикой конфиденциальности</a>
+                <a href="/privacy_policy">Политика конфиденциальности</a>
             </div>
         </div>
     </footer>

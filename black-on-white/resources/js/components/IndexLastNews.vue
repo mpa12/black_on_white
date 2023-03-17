@@ -69,6 +69,7 @@ export default {
 .marquee div {
     color: var(--my-black);
     font-size: 38px;
+    font-weight: 600;
 }
 
 .marquee .marquee-text-text {
