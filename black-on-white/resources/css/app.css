@@ -29,75 +29,6 @@ a:hover {
     color: var(--my-black)!important;
 }
 
-.newses__card {
-    background-color: var(--my-white);
-    border-radius: 20px;
-    padding: 20px;
-}
-
-.newses__card .newses__card-desc {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: flex-start;
-    padding-right: 20px;
-}
-
-.newses__card .newses__card-desc time {
-    font-size: 14px;
-    color: var(--my-gray);
-}
-
-.newses__card .newses__card-desc h1 {
-    font-size: 32px;
-    margin-bottom: 0;
-    color: var(--my-black);
-}
-
-.newses__card .newses__card-desc .newses__card-tag {
-    font-size: 13px;
-    padding: 5px 10px;
-    border: 1px solid var(--my-black);
-    border-radius: 5px;
-    color: var(--my-black);
-    align-self: flex-start;
-    user-select: none;
-}
-
-.newses__card .newses__card-desc img {
-    border-radius: 20px;
-}
-
-.newses__card .newses__card-desc p {
-    color: var(--my-black);
-    margin-bottom: 0;
-}
-
-.newses__card .newses__card-desc a {
-    height: 40px;
-    padding: 10px 20px;
-    border-radius: 20px;
-    background-color: var(--my-black);
-    color: var(--my-white);
-    display: flex;
-    align-items: center;
-}
-
-.newses__card .newses__card-desc a:hover {
-    background-color: var(--my-gray);
-}
-
-.newses__card .newses__card-desc a:hover span.bi-arrow-right-short {
-    position: relative;
-    animation: arrow 0.2s forwards;
-}
-
-.newses__card .newses__card-photo img {
-    width: 100%;
-    height: auto;
-    border-radius: 20px;
-}
-
 .newses__pagination {
     width: 100%;
     padding: 20px;
@@ -239,10 +170,6 @@ a:hover {
 @media(max-width: 992px) {
     .newses__pagination {
         gap: 20px;
-    }
-
-    .newses__card .newses__card-desc {
-        padding-right: 0;
     }
 
     #close_menu_icon {

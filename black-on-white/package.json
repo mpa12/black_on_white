@@ -19,6 +19,7 @@
         "vue": "^3.2.47"
     },
     "dependencies": {
+        "moment": "^2.29.4",
         "vue-marquee-text-component": "^2.0.1",
         "vue-router": "^4.1.6"
     }

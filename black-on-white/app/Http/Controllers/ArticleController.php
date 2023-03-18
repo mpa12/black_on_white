@@ -11,7 +11,7 @@ class ArticleController extends Controller
 {
     public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        return ArticleResource::collection(Article::paginate(20));
+        return ArticleResource::collection(Article::orderBy('created_at', 'desc')->paginate(20, ['*'], 'page'));
     }
 
     public function store(StoreArticleRequest $request)
