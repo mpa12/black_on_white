@@ -5,12 +5,7 @@
             <h1>{{ article.title }}</h1>
             <span class=newses__card-tag>{{ article.article_type.title }}</span>
             <img :src="article.photo" :alt="article.title" class="d-lg-none d-block">
-            <p>
-                11 ноября, на базе нашего колледжа состоялась Краевая научная студенческая конференция,
-                посвященная 100-летию окончания Гражданской войны на Дальнем Востоке. Конференция прошла
-                с возможностью очного и дистанционного участия, что позволило студентам из других городов
-                выступить со своим докладом.
-            </p>
+            <p>{{ article.description }}</p>
             <v-button class="mt-auto" title="Смотреть новость" :href="'/article/' + article.id"></v-button>
         </div>
         <div class="col-lg-6 col-12 newses__card-photo d-none d-lg-block">
@@ -111,11 +106,6 @@ export default {
 
 .newses__card .newses__card-desc a:hover {
     background-color: var(--my-gray);
-}
-
-.newses__card .newses__card-desc a:hover span.bi-arrow-right-short {
-    position: relative;
-    animation: arrow 0.2s forwards;
 }
 
 .newses__card .newses__card-photo img {
