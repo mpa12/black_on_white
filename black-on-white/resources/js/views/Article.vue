@@ -1,0 +1,62 @@
+<template>
+    <div class="article-main">
+        <h2 class=mb-2>{{ article.title }}</h2>
+        <span class=fw-lighter>{{ createdAt }}</span><br>
+        <p class=mt-2>{{ article.description }}</p>
+        <img :src="article.photo" :alt="article.title" class="w-100 my-2 article-main-img">
+        <div class="mt-2" v-html="article.text"></div>
+    </div>
+</template>
+
+<script>
+import axios from "axios";
+import moment from 'moment/min/moment-with-locales'
+
+export default {
+    name: "Article",
+    data() {
+        return {
+            article: [],
+            createdAt: ''
+        }
+    },
+    mounted() {
+        this.loadArticle()
+    },
+    methods: {
+        loadArticle() {
+            axios.get('/api/article/' + this.$route.params.id).then(response => {
+                this.article = response.data['data']
+                this.changeCreatedAt(this.article.created_at)
+            })
+        },
+        changeCreatedAt(createdAt) {
+            console.log(createdAt)
+            const date = new Date(createdAt)
+            const diff = moment.duration(moment().diff(date))
+            if (diff.asMinutes() < 60) {
+                this.createdAt = moment().subtract(diff).format('mm минут назад')
+            } else if (diff.asHours() < 24) {
+                this.createdAt = moment().subtract(diff).format('HH часов назад')
+            } else if (diff.asDays() < 2) {
+                this.createdAt = moment().subtract(diff).format('Вчера в HH:mm')
+            } else {
+                moment.locale('ru')
+                this.createdAt = moment(date).format('D MMMM в HH:mm')
+            }
+        }
+    }
+}
+</script>
+
+<style scoped>
+.article-main {
+    background-color: var(--my-white);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.article-main-img {
+    border-radius: 20px;
+}
+</style>

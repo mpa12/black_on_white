@@ -9,7 +9,7 @@
                 Студенческий театр Хабаровского колледжа отраслевых технологий и&nbsp;сферы обслуживания.<br>
                 Руководитель - Юлия&nbsp;Пирюткина
             </p>
-            <v-button title=Смотреть спектакли href=/news></v-button>
+            <v-button title=Смотреть спектакли href=/article></v-button>
         </div>
     </div>
 </template>
