@@ -14,15 +14,22 @@ class ArticleController extends Controller
 {
     /**
      * Получение списка новостей
+     *
      * @param Request $request
      * @return AnonymousResourceCollection
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        $query = Article::orderBy('created_at', 'desc');
-        if ($article_types = $request->get('article_type')) {
-            $query = $query->whereIn('article_type_id', explode(',', $article_types));
+        $query = Article::orderByDesc('created_at');
+
+        if ($request->has('article_type')) {
+            $query->whereIn('article_type_id', explode(',', $request->input('article_type')));
         }
+
+        if ($request->has('text')) {
+            $query->where('title', 'LIKE', '%' . $request->input('text') . '%');
+        }
+
         return ArticleResource::collection($query->paginate(20, ['*'], 'page'));
     }
 

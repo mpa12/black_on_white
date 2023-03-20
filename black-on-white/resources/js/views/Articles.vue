@@ -21,13 +21,15 @@ export default {
             loading: false,
             totalPages: null,
             selectedFilters: [],
+            text: ''
         }
     },
     mounted() {
         this.loadArticles()
         window.addEventListener('scroll', this.handleScroll)
         window.addEventListener('search', function (event) {
-            this.selectedFilters = [...event.detail] // Массив с id типов статей
+            this.selectedFilters = [...event.detail.selectedFilters] // Массив с id типов статей
+            this.text = event.detail.text
             this.articles = [] // очищаем массив статей
             this.page = 1 // начинаем с первой страницы
             this.loadArticles()
@@ -42,7 +44,8 @@ export default {
             axios.get('/api/article', {
                 params: {
                     page: this.page,
-                    article_type: this.selectedFilters.join(",")
+                    article_type: this.selectedFilters.join(","),
+                    text: this.text,
                 }
             }).then(response => {
                 this.articles = [...this.articles, ...response.data['data']]
