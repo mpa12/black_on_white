@@ -53,6 +53,7 @@ export default {
                 { title: '(НОВОСТИ)', href: '/article', hash: '' },
                 { title: '(ФОТОГАЛЕРЕЯ)', href: '/photo_gallery', hash: '' },
                 { title: '(НАПИСАТЬ НАМ)', href: '/', hash: '#write_to_us' },
+                { title: '(ВОЙТИ)', href: '/login', hash: '' },
             ]
         }
     }
