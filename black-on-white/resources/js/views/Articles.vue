@@ -41,13 +41,10 @@ export default {
     methods: {
         loadArticles() {
             this.loading = true
-            axios.get('/api/article', {
-                params: {
-                    page: this.page,
-                    article_type: this.selectedFilters.join(","),
-                    text: this.text,
-                }
-            }).then(response => {
+            let params = { page: this.page }
+            if (this.text !== '') params['text'] = this.text
+            if (this.selectedFilters.length > 0) params['article_type'] = this.selectedFilters.join(",")
+            axios.get('/api/article', { params }).then(response => {
                 this.articles = [...this.articles, ...response.data['data']]
                 this.totalPages = response.data['meta'].last_page
                 this.loading = false
