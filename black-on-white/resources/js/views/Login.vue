@@ -10,6 +10,7 @@
                 <label for=password class=form-label>Пароль</label>
                 <input v-model=password type=password class=form-control id=password placeholder=Пароль>
             </div>
+            <p class="text-danger" v-if="error">Неверный e-mail или пароль</p>
             <button type=submit class="btn btn-circle mb-4">Войти</button>
             <div class=mb-3>
                 <router-link to="/password-reset">Забыли пароль?</router-link>
@@ -28,6 +29,7 @@ export default {
         return {
             email: '',
             password: '',
+            error: false,
         }
     },
     methods: {
@@ -44,6 +46,7 @@ export default {
                 this.$router.push('/')
             }).catch(error => {
                 console.log(error)
+                this.error = true
             });
         },
     }
