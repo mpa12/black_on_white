@@ -36,12 +36,16 @@ export default {
                 email: this.email,
                 password: this.password
             }).then(response => {
-                localStorage.setItem('token', response.data.user.api_token);
-                this.$router.push('/');
+                localStorage.setItem('token', response.data.user.api_token)
+
+                let evt = new CustomEvent('localStorageUpdated', { detail: null });
+                window.dispatchEvent(evt);
+
+                this.$router.push('/')
             }).catch(error => {
-                console.log(error);
+                console.log(error)
             });
-        }
+        },
     }
 }
 </script>

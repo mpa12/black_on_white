@@ -5,6 +5,7 @@ import Participants from './views/Participants.vue'
 import Articles from './views/Articles.vue'
 import Article from './views/Article.vue'
 import Login from './views/Login.vue'
+import Logout from './views/Logout.vue'
 
 const routes = [
     { path: '/', component: Index },
@@ -12,6 +13,7 @@ const routes = [
     { path: '/article', component: Articles },
     { path: '/article/:id', component: Article },
     { path: '/login', component: Login, meta: { requiresGuest: true } },
+    { path: '/logout', component: Logout, meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({

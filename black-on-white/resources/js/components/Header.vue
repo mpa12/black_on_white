@@ -1,5 +1,5 @@
 <template>
-    <header class="container mb-3">
+    <header class="container mb-3" @localStorageUpdated="handleLocalStorageUpdated">
         <div class="header d-flex justify-content-between align-items-center">
             <div class="flex-grow-1">
                 <router-link to="/" class="fw-bold fs-5">Черным по белому</router-link>
@@ -16,7 +16,7 @@
                     </svg>
                 </div>
                 <div class="d-flex justify-content-between w-auto me-5 gap-3 flex-lg-row flex-column">
-                    <nav v-for="link in links">
+                    <nav v-for="link in visibleLinks" :key="link.href">
                         <router-link @click=closeMenu class=fs-6 :to="{ path: link.href, hash: link.hash, exact: true }">
                             {{ link.title }}
                         </router-link>
@@ -33,7 +33,42 @@
 <script>
 export default {
     name: "Header",
+    computed: {
+        visibleLinks() {
+            const token = localStorage.getItem('token')
+
+            return this.links.filter((link) => {
+                if (link.meta && link.meta.requiresAuth && !token) {
+                    return false;
+                } else if (link.meta && link.meta.requiresGuest && token) {
+                    return false
+                }
+
+                return true
+            })
+        },
+    },
+    created() {
+        window.addEventListener('localStorageUpdated', this.setLinks);
+    },
+    beforeDestroy() {
+        window.removeEventListener('localStorageUpdated', this.setLinks);
+    },
+    mounted() {
+        this.setLinks()
+    },
     methods: {
+        setLinks() {
+            this.links = [
+                { title: '(О НАС)', href: '/', hash: '#about_us' },
+                { title: '(УЧАСТНИКИ)', href: '/participants', hash: '' },
+                { title: '(НОВОСТИ)', href: '/article', hash: '' },
+                { title: '(ФОТОГАЛЕРЕЯ)', href: '/photo_gallery', hash: '' },
+                { title: '(НАПИСАТЬ НАМ)', href: '/', hash: '#write_to_us' },
+                { title: '(ВОЙТИ)', href: '/login', hash: '', meta: { requiresGuest: true } },
+                { title: '(ВЫЙТИ)', href: '/logout', hash: '', meta: { requiresAuth: true } },
+            ]
+        },
         openMenu() {
             let menu = document.querySelector('#menu')
             menu.classList.remove('d-none')
@@ -47,14 +82,7 @@ export default {
     },
     data() {
         return {
-            links: [
-                { title: '(О НАС)', href: '/', hash: '#about_us' },
-                { title: '(УЧАСТНИКИ)', href: '/participants', hash: '' },
-                { title: '(НОВОСТИ)', href: '/article', hash: '' },
-                { title: '(ФОТОГАЛЕРЕЯ)', href: '/photo_gallery', hash: '' },
-                { title: '(НАПИСАТЬ НАМ)', href: '/', hash: '#write_to_us' },
-                { title: '(ВОЙТИ)', href: '/login', hash: '' },
-            ]
+            links: []
         }
     }
 }
