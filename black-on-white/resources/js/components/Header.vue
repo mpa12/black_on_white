@@ -33,6 +33,9 @@
 <script>
 export default {
     name: "Header",
+    mounted() {
+        console.log(this.$root.authenticated)
+    },
     methods: {
         openMenu() {
             let menu = document.querySelector('#menu')

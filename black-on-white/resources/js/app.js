@@ -45,5 +45,9 @@ app.component('v-button-up', ButtonUp)
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
+import checkAuth from "./plugins/auth";
+
+app.config.globalProperties.authenticated = checkAuth()
+
 app.use(router)
 app.mount('#app')

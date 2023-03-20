@@ -1,17 +1,17 @@
 <template>
     <section class=login-section>
-        <form class=login-wrapper method=post>
+        <form class=login-wrapper @submit.prevent=login>
             <h1 class=mb-4>Авторизация</h1>
             <div class=mb-3>
                 <label for=email class=form-label>E-mail</label>
-                <input type=text class=form-control id=email placeholder=E-mail>
+                <input v-model=email type=text class=form-control id=email placeholder=E-mail>
             </div>
             <div class=mb-3>
                 <label for=password class=form-label>Пароль</label>
-                <input type=password class=form-control id=password placeholder=Пароль>
+                <input v-model=password type=password class=form-control id=password placeholder=Пароль>
             </div>
             <div class="form-check mb-3">
-                <input class=form-check-input type=checkbox id=rememberMe>
+                <input v-model=rememberMe class=form-check-input type=checkbox id=rememberMe>
                 <label class=form-check-label for=rememberMe>Запомнить меня</label>
             </div>
             <button type=submit class="btn btn-circle mb-4">Войти</button>
@@ -27,7 +27,27 @@
 
 <script>
 export default {
-    name: "Login"
+    name: "Login",
+    data() {
+        return {
+            email: '',
+            password: '',
+            rememberMe: true,
+        }
+    },
+    methods: {
+        login() {
+            axios.post('/api/auth/login', {
+                email: this.email,
+                password: this.password
+            }).then(response => {
+                localStorage.setItem('token', response.data.user.api_token);
+                this.$router.push('/');
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+    }
 }
 </script>
 
