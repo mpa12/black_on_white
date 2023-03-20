@@ -1,30 +1,28 @@
 <template>
-    <div class="newses__search">
-        <form class="d-flex flex-column">
+    <div class=newses__search>
+        <div class="d-flex flex-column">
             <div class="w-100 d-flex align-items-center gap-2 justify-content-between">
-                <label class="flex-grow-1">
-                    <input type="text" placeholder="Введите название новости..." class="w-100">
+                <label class=flex-grow-1>
+                    <input type=text placeholder="Введите название новости..." class=w-100>
                 </label>
-                <svg @click=filterButton width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
+                <svg @click=filterButton width=16 height=16 fill=currentColor class="bi bi-filter" viewBox="0 0 16 16">
                     <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
                 </svg>
-                <button type="submit">Найти</button>
+                <button type=submit @click=search>Найти</button>
             </div>
             <div class="filters d-none flex-wrap gap-2 mt-2">
-                <input type="checkbox" class="btn-check" id="news" autocomplete="off">
-                <label class="btn btn-outline-dark" for="news">Новости</label>
-
-                <input type="checkbox" class="btn-check" id="scen" autocomplete="off">
-                <label class="btn btn-outline-dark" for="scen">Сценарии</label>
-
-                <input type="checkbox" class="btn-check" id="srec" autocomplete="off">
-                <label class="btn btn-outline-dark" for="srec">Спектакли</label>
+                <span v-for="filter in filters">
+                    <input v-model=selectedFilters type=checkbox class=btn-check :value=filter.id :id=filter.id autocomplete="off" name="selectedFilters">
+                    <label class="btn btn-outline-dark" :for=filter.id>{{ filter.title }}</label>
+                </span>
             </div>
-        </form>
+        </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "ArticleSearch",
     methods: {
@@ -37,7 +35,25 @@ export default {
                 filters.classList.add('d-flex')
                 filters.classList.remove('d-none')
             }
+        },
+        loadFilters() {
+            axios.get('/api/article-type/').then(response => {
+                this.filters = response.data['data']
+            })
+        },
+        search() {
+            let evt = new CustomEvent('search', { detail: this.selectedFilters });
+            window.dispatchEvent(evt);
         }
+    },
+    data() {
+        return {
+            filters: [],
+            selectedFilters: []
+        }
+    },
+    mounted() {
+        this.loadFilters()
     }
 }
 </script>

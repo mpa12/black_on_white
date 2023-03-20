@@ -31,7 +31,6 @@ export default {
             })
         },
         changeCreatedAt(createdAt) {
-            console.log(createdAt)
             const date = new Date(createdAt)
             const diff = moment.duration(moment().diff(date))
             if (diff.asMinutes() < 60) {

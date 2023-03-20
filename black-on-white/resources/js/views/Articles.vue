@@ -19,20 +19,32 @@ export default {
             articles: [],
             page: 1,
             loading: false,
-            totalPages: null
+            totalPages: null,
+            selectedFilters: [],
         }
     },
     mounted() {
-        this.loadLastNews()
+        this.loadArticles()
         window.addEventListener('scroll', this.handleScroll)
+        window.addEventListener('search', function (event) {
+            this.selectedFilters = [...event.detail] // Массив с id типов статей
+            this.articles = [] // очищаем массив статей
+            this.page = 1 // начинаем с первой страницы
+            this.loadArticles()
+        }.bind(this))
     },
     destroyed() {
         window.removeEventListener('scroll', this.handleScroll)
     },
     methods: {
-        loadLastNews() {
+        loadArticles() {
             this.loading = true
-            axios.get('/api/article?page=' + this.page).then(response => {
+            axios.get('/api/article', {
+                params: {
+                    page: this.page,
+                    article_type: this.selectedFilters.join(",")
+                }
+            }).then(response => {
                 this.articles = [...this.articles, ...response.data['data']]
                 this.totalPages = response.data['meta'].last_page
                 this.loading = false
@@ -43,7 +55,7 @@ export default {
             if (window.pageYOffset + window.innerHeight >= document.body.offsetHeight) {
                 if (this.page < this.totalPages) {
                     this.page += 1
-                    this.loadLastNews()
+                    this.loadArticles()
                 }
             }
         }
