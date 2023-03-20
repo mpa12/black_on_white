@@ -33,9 +33,6 @@
 <script>
 export default {
     name: "Header",
-    mounted() {
-        console.log(this.$root.authenticated)
-    },
     methods: {
         openMenu() {
             let menu = document.querySelector('#menu')
@@ -72,7 +69,6 @@ export default {
 }
 
 .header span,
-.header .router-link,
 .header a {
     color: var(--my-black);
     text-decoration: none;
@@ -90,7 +86,6 @@ export default {
     }
 
     .header nav a,
-    .header nav .router-link,
     .header span {
         font-size: 16px!important;
     }
@@ -102,7 +97,6 @@ export default {
 
 @media(max-width: 1200px) {
     .header nav a,
-    .header nav .router-link,
     .header span {
         font-size: 14px!important;
     }

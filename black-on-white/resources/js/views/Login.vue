@@ -10,16 +10,12 @@
                 <label for=password class=form-label>Пароль</label>
                 <input v-model=password type=password class=form-control id=password placeholder=Пароль>
             </div>
-            <div class="form-check mb-3">
-                <input v-model=rememberMe class=form-check-input type=checkbox id=rememberMe>
-                <label class=form-check-label for=rememberMe>Запомнить меня</label>
-            </div>
             <button type=submit class="btn btn-circle mb-4">Войти</button>
             <div class=mb-3>
                 <router-link to="/password-reset">Забыли пароль?</router-link>
             </div>
             <div class=mb-3>
-                <router-link to="/password-reset">Зарегистрироваться</router-link>
+                <router-link to="/register">Зарегистрироваться</router-link>
             </div>
         </form>
     </section>
@@ -32,7 +28,6 @@ export default {
         return {
             email: '',
             password: '',
-            rememberMe: true,
         }
     },
     methods: {
