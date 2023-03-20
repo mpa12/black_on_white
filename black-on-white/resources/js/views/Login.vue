@@ -40,14 +40,14 @@ export default {
             }).then(response => {
                 localStorage.setItem('token', response.data.user.api_token)
 
-                let evt = new CustomEvent('localStorageUpdated', { detail: null });
+                let evt = new CustomEvent('localStorageUpdated', { detail: null })
                 window.dispatchEvent(evt);
 
                 this.$router.push('/')
             }).catch(error => {
                 console.log(error)
                 this.error = true
-            });
+            })
         },
     }
 }

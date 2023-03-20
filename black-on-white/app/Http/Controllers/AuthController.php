@@ -83,4 +83,9 @@ class AuthController extends Controller
             ]
         ]);
     }
+
+    public function isAdmin(): bool
+    {
+        return (bool)Auth::user()['is_admin'];
+    }
 }
