@@ -1,4 +1,22 @@
 <template>
+    <div class="modal fade" id=deleteModal>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class=modal-content>
+                <div class=modal-header>
+                    <h1 class="modal-title fs-5">Удаление новости <span>&laquo;{{ deleteArticleInfo.title }}&raquo;</span></h1>
+                    <button type=button class=btn-close data-bs-dismiss=modal></button>
+                </div>
+                <div class=modal-body>
+                    Вы уверенны, что хотите удалить новость <span>&laquo;{{ deleteArticleInfo.title }}&raquo;</span>?
+                </div>
+                <div class="modal-footer justify-content-start">
+                    <button type=button class="btn btn-secondary" data-bs-dismiss=modal>Отмена</button>
+                    <button type=button class="btn btn-danger" @click=deleteArticle(deleteArticleInfo.id) data-bs-dismiss=modal>Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="title my-3">
         <h1>Управление новостями</h1>
     </div>
@@ -39,7 +57,11 @@
                             </span>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><router-link class=dropdown-item to="/">Редактировать</router-link></li>
-                                <li><router-link class=dropdown-item to="/">Удалить</router-link></li>
+                                <li>
+                                    <span @click=loadDeleteArticle(article.id) class=dropdown-item type=button data-bs-toggle=modal data-bs-target="#deleteModal">
+                                        Удалить
+                                    </span>
+                                </li>
                             </ul>
                         </div>
                     </td>
@@ -83,7 +105,8 @@ export default {
             loading: false,
             totalPages: null,
             selectedFilters: [],
-            text: ''
+            text: '',
+            deleteArticleInfo: [],
         }
     },
     computed: {
@@ -162,6 +185,18 @@ export default {
                 this.loadArticles()
             }
         },
+        loadDeleteArticle(id) {
+            axios.get('/api/article/' + id).then(response => {
+                this.deleteArticleInfo = response.data['data']
+            })
+        },
+        deleteArticle(id) {
+            axios.delete('/api/article/' + id, {
+                headers: { "Authorization" : `Bearer ${localStorage.getItem('token')}` }
+            }).then(() => {
+                this.loadArticles()
+            })
+        }
     }
 }
 </script>
