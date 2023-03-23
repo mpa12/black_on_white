@@ -73,7 +73,7 @@ export default {
                 { title: '(О НАС)', href: '/', hash: '#about_us' },
                 { title: '(УЧАСТНИКИ)', href: '/participants', hash: '' },
                 { title: '(НОВОСТИ)', href: '/article', hash: '' },
-                { title: '(ФОТОГАЛЕРЕЯ)', href: '/photo_gallery', hash: '' },
+                { title: '(ФОТОГАЛЕРЕЯ)', href: '/photo-gallery', hash: '' },
                 { title: '(НАПИСАТЬ НАМ)', href: '/', hash: '#write_to_us' },
                 { title: '(ВОЙТИ)', href: '/login', hash: '', meta: { requiresGuest: true } },
                 { title: '(ВЫЙТИ)', href: '/logout', hash: '', meta: { requiresAuth: true } },

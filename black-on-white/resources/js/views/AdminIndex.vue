@@ -1,10 +1,10 @@
 <template>
     <div class="admin-section-wrapper">
-        <admin-section title=Новости href=# img-src=/images/postcard.svg />
-        <admin-section title=Фотогалерея href=# img-src=/images/card-image.svg />
-        <admin-section title=Участники href=# img-src=/images/people.svg />
-        <admin-section title=Пользователи href=# img-src=/images/people.svg />
-        <admin-section title=Сообщения href=# img-src=/images/envelope.svg />
+        <admin-section title=Новости href=/admin/articles img-src=/images/postcard.svg />
+        <admin-section title=Фотогалерея href=/admin/photo-gallery img-src=/images/card-image.svg />
+        <admin-section title=Участники href=/admin/participants img-src=/images/people.svg />
+        <admin-section title=Пользователи href=/admin/users img-src=/images/people.svg />
+        <admin-section title=Сообщения href=/admin/messages img-src=/images/envelope.svg />
     </div>
 </template>
 

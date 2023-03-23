@@ -7,6 +7,11 @@ import Article from './views/Article.vue'
 import Login from './views/Login.vue'
 import Logout from './views/Logout.vue'
 import AdminIndex from './views/AdminIndex.vue'
+import AdminArticles from './views/AdminArticles.vue'
+import AdminPhotoGallery from './views/AdminPhotoGallery.vue'
+import AdminParticipants from './views/AdminParticipants.vue'
+import AdminUsers from './views/AdminUsers.vue'
+import AdminMessages from './views/AdminMessages.vue'
 
 const routes = [
     { path: '/', component: Index },
@@ -16,6 +21,11 @@ const routes = [
     { path: '/login', component: Login, meta: { requiresGuest: true } },
     { path: '/logout', component: Logout, meta: { requiresAuth: true } },
     { path: '/admin', component: AdminIndex, meta: { requiresAdmin: true } },
+    { path: '/admin/articles', component: AdminArticles, meta: { requiresAdmin: true } },
+    { path: '/admin/photo-gallery', component: AdminPhotoGallery, meta: { requiresAdmin: true } },
+    { path: '/admin/participants', component: AdminParticipants, meta: { requiresAdmin: true } },
+    { path: '/admin/users', component: AdminUsers, meta: { requiresAdmin: true } },
+    { path: '/admin/messages', component: AdminMessages, meta: { requiresAdmin: true } },
 ]
 
 const router = createRouter({
