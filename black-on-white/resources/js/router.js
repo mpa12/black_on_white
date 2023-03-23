@@ -6,6 +6,7 @@ import Articles from './views/Articles.vue'
 import Article from './views/Article.vue'
 import Login from './views/Login.vue'
 import Logout from './views/Logout.vue'
+import AdminIndex from './views/AdminIndex.vue'
 
 const routes = [
     { path: '/', component: Index },
@@ -14,7 +15,7 @@ const routes = [
     { path: '/article/:id', component: Article },
     { path: '/login', component: Login, meta: { requiresGuest: true } },
     { path: '/logout', component: Logout, meta: { requiresAuth: true } },
-    { path: '/admin', component: Articles, meta: { requiresAdmin: true } },
+    { path: '/admin', component: AdminIndex, meta: { requiresAdmin: true } },
 ]
 
 const router = createRouter({
@@ -52,7 +53,7 @@ function checkIsAdmin(token) {
         isAdmin = false
     })
 
-    return isAdmin;
+    return isAdmin
 }
 
 export default router
