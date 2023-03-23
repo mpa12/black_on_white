@@ -39,9 +39,13 @@ export default {
 
             return this.links.filter((link) => {
                 if (link.meta && link.meta.requiresAuth && !token) {
-                    return false;
+                    return false
                 } else if (link.meta && link.meta.requiresGuest && token) {
                     return false
+                } else if (link.meta && link.meta.requiresAdmin) {
+                    if (!token) return false
+                    this.checkIsAdmin(token)
+                    if (!this.isAdmin) return false
                 }
 
                 return true
@@ -49,15 +53,21 @@ export default {
         },
     },
     created() {
-        window.addEventListener('localStorageUpdated', this.setLinks);
+        window.addEventListener('localStorageUpdated', this.localStorageUpdated);
     },
     beforeDestroy() {
-        window.removeEventListener('localStorageUpdated', this.setLinks);
+        window.removeEventListener('localStorageUpdated', this.localStorageUpdated);
     },
     mounted() {
         this.setLinks()
     },
     methods: {
+        localStorageUpdated() {
+            const token = localStorage.getItem('token')
+            if (token) this.checkIsAdmin(token)
+
+            this.setLinks()
+        },
         setLinks() {
             this.links = [
                 { title: '(О НАС)', href: '/', hash: '#about_us' },
@@ -67,6 +77,7 @@ export default {
                 { title: '(НАПИСАТЬ НАМ)', href: '/', hash: '#write_to_us' },
                 { title: '(ВОЙТИ)', href: '/login', hash: '', meta: { requiresGuest: true } },
                 { title: '(ВЫЙТИ)', href: '/logout', hash: '', meta: { requiresAuth: true } },
+                { title: '(АДМИН ПАНЕЛЬ)', href: '/admin', hash: '', meta: { requiresAdmin: true } },
             ]
         },
         openMenu() {
@@ -78,11 +89,22 @@ export default {
             let menu = document.querySelector('#menu')
             menu.classList.add('d-none')
             menu.classList.remove('d-flex')
+        },
+        checkIsAdmin(token) {
+            axios.get('/api/auth/is-admin', {
+                headers: { "Authorization" : `Bearer ${token}` }
+            }).then(response => {
+                this.isAdmin = !!response.data
+            }).catch(error => {
+                console.log(error)
+                this.isAdmin = false
+            })
         }
     },
     data() {
         return {
-            links: []
+            links: [],
+            isAdmin: false,
         }
     }
 }

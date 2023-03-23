@@ -14,6 +14,7 @@ const routes = [
     { path: '/article/:id', component: Article },
     { path: '/login', component: Login, meta: { requiresGuest: true } },
     { path: '/logout', component: Logout, meta: { requiresAuth: true } },
+    { path: '/admin', component: Articles, meta: { requiresAdmin: true } },
 ]
 
 const router = createRouter({
@@ -32,9 +33,26 @@ router.beforeEach((to, from, next) => {
         next('/login')
     } else if (to.matched.some((route) => route.meta.requiresGuest) && token) {
         next('/')
+    } else if (to.matched.some((route) => route.meta.requiresAdmin) && !token) {
+        if (!checkIsAdmin(token)) next('/')
     } else {
         next()
     }
 });
+
+function checkIsAdmin(token) {
+    let isAdmin = false
+
+    axios.get('/api/auth/is-admin', {
+        headers: { "Authorization" : `Bearer ${token}` }
+    }).then(response => {
+        isAdmin = !!response.data
+    }).catch(error => {
+        console.log(error)
+        isAdmin = false
+    })
+
+    return isAdmin;
+}
 
 export default router
