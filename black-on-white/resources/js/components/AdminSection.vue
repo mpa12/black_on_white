@@ -45,7 +45,7 @@ export default {
 
 .admin-section:hover .admin-section-img {
     filter: opacity(.6);
-    left: -10%;
+    left: 20px;
 }
 
 @media(max-width: 992px) {
@@ -61,10 +61,6 @@ export default {
 
     .admin-section .admin-section-img {
         left: -10%;
-    }
-
-    .admin-section:hover .admin-section-img {
-        left: 20px;
     }
 }
 </style>

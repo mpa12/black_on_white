@@ -56,7 +56,7 @@
                                 <img src=/images/three-dots-vertical.svg alt=three-dots-vertical type=button data-toggle=dropdown>
                             </span>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><router-link class=dropdown-item to="/">Редактировать</router-link></li>
+                                <li><router-link class=dropdown-item :to="'/admin/articles/update/' + article.id">Редактировать</router-link></li>
                                 <li>
                                     <span @click=loadDeleteArticle(article.id) class=dropdown-item type=button data-bs-toggle=modal data-bs-target="#deleteModal">
                                         Удалить
