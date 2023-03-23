@@ -103,6 +103,6 @@ class ArticleController extends Controller
      */
     public function two_last(): AnonymousResourceCollection
     {
-        return ArticleResource::collection(Article::limit(2)->orderBy('id', 'DESC')->get());
+        return ArticleResource::collection(Article::limit(2)->orderByDesc('created_at')->get());
     }
 }
