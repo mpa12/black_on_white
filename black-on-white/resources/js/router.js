@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Index from './views/Index.vue'
 import Participants from './views/Participants.vue'
+import PhotoGallery from './views/PhotoGallery.vue'
 import Articles from './views/Articles.vue'
 import Article from './views/Article.vue'
 import Login from './views/Login.vue'
@@ -16,6 +17,7 @@ import AdminMessages from './views/AdminMessages.vue'
 const routes = [
     { path: '/', component: Index },
     { path: '/participants', component: Participants },
+    { path: '/photo-gallery', component: PhotoGallery },
     { path: '/article', component: Articles },
     { path: '/article/:id', component: Article },
     { path: '/login', component: Login, meta: { requiresGuest: true } },

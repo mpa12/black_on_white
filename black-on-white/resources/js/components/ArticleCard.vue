@@ -42,7 +42,7 @@ export default {
                 this.createdAt = moment().subtract(diff).format('Вчера в HH:mm')
             } else {
                 moment.locale('ru')
-                this.createdAt = moment(date).format('D MMMM в HH:mm')
+                this.createdAt = moment(date).format('D MMMM в HH:mm YYYY')
             }
         }
     }
