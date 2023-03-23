@@ -2,6 +2,7 @@
     <div class=newses__search>
         <form class="d-flex flex-column" @submit.prevent=search>
             <div class="w-100 d-flex align-items-center gap-2 justify-content-between">
+                <router-link class="btn btn-primary" to="/" v-if="isAdmin">Добавить</router-link>
                 <label class=flex-grow-1>
                     <input v-model=text type=text placeholder="Введите название новости..." class=w-100>
                 </label>
@@ -49,18 +50,36 @@ export default {
                 }
             });
             window.dispatchEvent(evt);
+        },
+        checkIsAdmin() {
+            const token = localStorage.getItem('token')
+            if (!token) {
+                this.isAdmin = false
+                return
+            }
+
+            axios.get('/api/auth/is-admin', {
+                headers: { "Authorization" : `Bearer ${token}` }
+            }).then(response => {
+                this.isAdmin = !!response.data
+            }).catch(error => {
+                console.log(error)
+                this.isAdmin = false
+            })
         }
     },
     data() {
         return {
             filters: [],
             selectedFilters: [],
-            text: ''
+            text: '',
+            isAdmin: false,
         }
     },
     mounted() {
         this.loadFilters()
-    }
+        this.checkIsAdmin()
+    },
 }
 </script>
 
