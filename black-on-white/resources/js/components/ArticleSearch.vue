@@ -1,6 +1,6 @@
 <template>
     <div class=newses__search>
-        <div class="d-flex flex-column">
+        <form class="d-flex flex-column" @submit.prevent=search>
             <div class="w-100 d-flex align-items-center gap-2 justify-content-between">
                 <label class=flex-grow-1>
                     <input v-model=text type=text placeholder="Введите название новости..." class=w-100>
@@ -16,7 +16,7 @@
                     <label class="btn btn-outline-dark" :for=filter.id>{{ filter.title }}</label>
                 </span>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 

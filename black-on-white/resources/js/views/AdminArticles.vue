@@ -2,6 +2,9 @@
     <div class="title my-3">
         <h1>Управление новостями</h1>
     </div>
+
+    <article-search class=mb-3 />
+
     <div class=table-wrapper>
         <table class=table>
             <thead>
@@ -68,9 +71,11 @@
 <script>
 import axios from "axios";
 import moment from 'moment/min/moment-with-locales'
+import ArticleSearch from "../components/ArticleSearch.vue";
 
 export default {
     name: "AdminArticles",
+    components: { ArticleSearch },
     data() {
         return {
             articles: [],
@@ -103,6 +108,13 @@ export default {
     },
     mounted() {
         this.loadArticles()
+        window.addEventListener('search', function (event) {
+            this.selectedFilters = [...event.detail.selectedFilters] // Массив с id типов статей
+            this.text = event.detail.text
+            this.articles = [] // очищаем массив статей
+            this.page = 1 // начинаем с первой страницы
+            this.loadArticles()
+        }.bind(this))
     },
     methods: {
         loadArticles() {
