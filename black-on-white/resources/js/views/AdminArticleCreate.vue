@@ -1,18 +1,23 @@
 <template>
+    <toast v-if=created title="Новость успешно добавлена" />
     <div class="article-form-title my-3">
         <h1>Добавление новости</h1>
     </div>
-    <admin-article-form />
+    <admin-article-form :key=formKey />
 </template>
 
 <script>
-import AdminArticleForm from "../components/AdminArticleForm.vue";
+import AdminArticleForm from "../components/AdminArticleForm.vue"
+import Toast from "../components/Toast.vue"
+
 export default {
     name: "AdminArticleCreate",
-    components: {AdminArticleForm},
+    components: { AdminArticleForm, Toast },
     data() {
         return {
             formData: null,
+            created: false,
+            formKey: 0
         }
     },
     mounted() {
@@ -28,10 +33,18 @@ export default {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`
                 }
-            }).then(response => {
-                console.log(response)
+            }).then(() => {
+                this.created = true
+                this.formKey++
             }).catch(error => {
-                console.log(error)
+                if (error.response.status === 422) {
+                    let errors = JSON.parse(error.request.responseText).errors
+
+                    for (const key in errors) errors[key] = errors[key][0]
+
+                    let evt = new CustomEvent('setErrors', { detail: { errors: errors } })
+                    window.dispatchEvent(evt)
+                }
             })
         }
     }
