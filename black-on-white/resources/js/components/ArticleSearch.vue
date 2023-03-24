@@ -2,7 +2,7 @@
     <div class=newses__search>
         <form class="d-flex flex-column" @submit.prevent=search>
             <div class="w-100 d-flex align-items-center gap-2 justify-content-between">
-                <router-link class="btn btn-primary" to="/" v-if="isAdmin">Добавить</router-link>
+                <router-link class="btn btn-primary" to="/admin/articles/create" v-if="isAdmin">Добавить</router-link>
                 <label class=flex-grow-1>
                     <input v-model=text type=text placeholder="Введите название новости..." class=w-100>
                 </label>

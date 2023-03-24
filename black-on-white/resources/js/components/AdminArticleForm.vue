@@ -57,9 +57,14 @@ export default {
             let formData = new FormData()
             formData.append('text', this.text)
             formData.append('title', this.title)
-            formData.append('articleType', this.articleType)
+            formData.append('article_type_id', this.articleType)
             formData.append('photo', this.photo)
             formData.append('description', this.description)
+
+            let evt = new CustomEvent('getData', {
+                detail: { formData: formData }
+            })
+            window.dispatchEvent(evt)
         },
         handlePhotoUpload() {
             this.photo = this.$refs.files.files[0]

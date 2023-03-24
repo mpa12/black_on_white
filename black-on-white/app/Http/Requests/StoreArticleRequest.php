@@ -27,7 +27,7 @@ class StoreArticleRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -37,13 +37,13 @@ class StoreArticleRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'text' => 'required|string',
-            'photo' => 'required|string',
+            'photo' => 'required|image',
             'article_type_id' => 'required|exists:article_type,id',
         ];
     }

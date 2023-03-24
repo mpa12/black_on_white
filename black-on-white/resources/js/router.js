@@ -9,6 +9,7 @@ import Login from './views/Login.vue'
 import Logout from './views/Logout.vue'
 import AdminIndex from './views/AdminIndex.vue'
 import AdminArticles from './views/AdminArticles.vue'
+import AdminArticleCreate from './views/AdminArticleCreate.vue'
 import AdminArticleUpdate from './views/AdminArticleUpdate.vue'
 import AdminPhotoGallery from './views/AdminPhotoGallery.vue'
 import AdminParticipants from './views/AdminParticipants.vue'
@@ -28,6 +29,7 @@ const routes = [
 
     { path: '/admin', component: AdminIndex, meta: { requiresAdmin: true } },
     { path: '/admin/articles', component: AdminArticles, meta: { requiresAdmin: true } },
+    { path: '/admin/articles/create', component: AdminArticleCreate, meta: { requiresAdmin: true } },
     { path: '/admin/articles/update/:id', component: AdminArticleUpdate, meta: { requiresAdmin: true } },
 
     { path: '/admin/photo-gallery', component: AdminPhotoGallery, meta: { requiresAdmin: true } },

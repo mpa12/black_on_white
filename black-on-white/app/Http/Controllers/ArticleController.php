@@ -40,11 +40,15 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request): JsonResponse
     {
+        $image = $request->file('photo');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('articles'), $imageName);
+
         $article = Article::create([
             'title' => $request->title,
             'description' => $request->description,
             'text' => $request->text,
-            'photo' => $request->photo,
+            'photo' => '/articles/' . $imageName,
             'article_type_id' => $request->article_type_id,
         ]);
 
