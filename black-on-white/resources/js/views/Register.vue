@@ -51,11 +51,10 @@ export default {
                 this.password = null
                 this.errors = []
             }).catch(error => {
+                console.log(error)
                 if (error.response.status === 422) {
                     let errors = JSON.parse(error.request.responseText).errors
-
                     for (const key in errors) errors[key] = errors[key][0]
-
                     this.errors = errors
                 }
             })

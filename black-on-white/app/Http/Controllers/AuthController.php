@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterAuthRequest;
+use App\Http\Requests\ResetPasswordAuthRequest;
+use App\Mail\ResetPasswordEmail;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'resetPassword']]);
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $request->validate([
             'email' => 'required|string|email',
@@ -43,13 +47,8 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(Request $request){
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
-
+    public function register(RegisterAuthRequest $request): JsonResponse
+    {
         $token = Str::random(80);
 
         $user = User::create([
@@ -70,7 +69,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function refresh()
+    public function refresh(): JsonResponse
     {
         $user = Auth::user();
 
@@ -87,5 +86,17 @@ class AuthController extends Controller
     public function isAdmin(): bool
     {
         return (bool)Auth::user()['is_admin'];
+    }
+
+    public function resetPassword(ResetPasswordAuthRequest $request): JsonResponse
+    {
+        $user = User::where('email', $request->email)->first();
+        $user->generateResetPasswordToken();
+
+        Mail::to($user)->send(new ResetPasswordEmail($user));
+
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 }

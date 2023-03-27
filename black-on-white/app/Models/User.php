@@ -69,4 +69,10 @@ class User extends Authenticatable implements JWTSubject
         $this->save();
         return $this->api_token;
     }
+
+    public function generateResetPasswordToken()
+    {
+        $this->remember_token = Str::random(80);
+        $this->save();
+    }
 }

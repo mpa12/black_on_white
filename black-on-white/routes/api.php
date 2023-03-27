@@ -34,4 +34,5 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/auth/register', 'register');
     Route::post('/auth/refresh', 'refresh');
     Route::get('/auth/is-admin', 'isAdmin');
+    Route::post('/auth/reset-password', 'resetPassword');
 });
