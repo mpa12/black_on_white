@@ -6,6 +6,7 @@ import PhotoGallery from './views/PhotoGallery.vue'
 import Articles from './views/Articles.vue'
 import Article from './views/Article.vue'
 import Login from './views/Login.vue'
+import Register from './views/Register.vue'
 import Logout from './views/Logout.vue'
 import AdminIndex from './views/AdminIndex.vue'
 import AdminArticles from './views/AdminArticles.vue'
@@ -25,6 +26,7 @@ const routes = [
     { path: '/article/:id', component: Article },
 
     { path: '/login', component: Login, meta: { requiresGuest: true } },
+    { path: '/register', component: Register, meta: { requiresGuest: true } },
     { path: '/logout', component: Logout, meta: { requiresAuth: true } },
 
     { path: '/admin', component: AdminIndex, meta: { requiresAdmin: true } },
