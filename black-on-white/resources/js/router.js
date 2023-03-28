@@ -8,6 +8,8 @@ import Article from './views/Article.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Logout from './views/Logout.vue'
+import ResetPassword from './views/ResetPassword.vue'
+import ResetPasswordResponse from './views/ResetPasswordResponse.vue'
 import AdminIndex from './views/AdminIndex.vue'
 import AdminArticles from './views/AdminArticles.vue'
 import AdminArticleCreate from './views/AdminArticleCreate.vue'
@@ -28,6 +30,8 @@ const routes = [
     { path: '/login', component: Login, meta: { requiresGuest: true } },
     { path: '/register', component: Register, meta: { requiresGuest: true } },
     { path: '/logout', component: Logout, meta: { requiresAuth: true } },
+    { path: '/reset-password', component: ResetPassword, meta: { requiresGuest: true } },
+    { path: '/reset-password/:remember_token', component: ResetPasswordResponse, meta: { requiresGuest: true } },
 
     { path: '/admin', component: AdminIndex, meta: { requiresAdmin: true } },
     { path: '/admin/articles', component: AdminArticles, meta: { requiresAdmin: true } },

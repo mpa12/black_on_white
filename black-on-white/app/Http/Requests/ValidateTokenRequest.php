@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
-class ResetPasswordAuthRequest extends FormRequest
+class ValidateTokenRequest extends FormRequest
 {
     protected function failedValidation(Validator $validator)
     {
@@ -40,17 +40,7 @@ class ResetPasswordAuthRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email|max:255|exists:users',
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'email.required' => 'Поле "E-mail" обязательно для заполнения.',
-            'email.max' => 'Максимальная длина e-mail 255 символов.',
-            'email.exists' => 'Пользователь не найден.',
-            'email.email' => 'E-mail не прошел валидацию.',
+            'remember_token' => 'required|string|exists:users',
         ];
     }
 }

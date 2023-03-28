@@ -13,7 +13,7 @@
             <p class="text-danger" v-if="error">Неверный e-mail или пароль</p>
             <button type=submit class="btn btn-circle mb-4">Войти</button>
             <div class=mb-3>
-                <router-link to="/password-reset">Забыли пароль?</router-link>
+                <router-link to="/reset-password">Забыли пароль?</router-link>
             </div>
             <div class=mb-3>
                 <router-link to="/register">Зарегистрироваться</router-link>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterAuthRequest;
 use App\Http\Requests\ResetPasswordAuthRequest;
+use App\Http\Requests\ResetPasswordResponseRequest;
+use App\Http\Requests\ValidateTokenRequest;
 use App\Mail\ResetPasswordEmail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,7 +19,10 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'resetPassword']]);
+        $this->middleware(
+            'auth:api',
+            ['except' => ['login', 'register', 'resetPassword', 'resetPasswordResponse', 'validateToken']]
+        );
     }
 
     public function login(Request $request): JsonResponse
@@ -95,8 +100,21 @@ class AuthController extends Controller
 
         Mail::to($user->email)->queue(new ResetPasswordEmail($user));
 
-        return response()->json([
-            'status' => 'success',
-        ]);
+        return response()->json(['status' => 'success']);
+    }
+
+    public function resetPasswordResponse(ResetPasswordResponseRequest $request): JsonResponse
+    {
+        $user = User::where('remember_token', $request->remember_token)->first();
+        $user->password = Hash::make($request->new_password);
+        $user->remember_token = null;
+        $user->save();
+
+        return response()->json(['status' => 'success']);
+    }
+
+    public function validateToken(ValidateTokenRequest $request): JsonResponse
+    {
+        return response()->json(['status' => 'success']);
     }
 }

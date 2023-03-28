@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
-class ResetPasswordAuthRequest extends FormRequest
+class ResetPasswordResponseRequest extends FormRequest
 {
     protected function failedValidation(Validator $validator)
     {
@@ -40,17 +40,18 @@ class ResetPasswordAuthRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email|max:255|exists:users',
+            'remember_token' => 'required|string|exists:users',
+            'new_password' => 'required|string|min:6',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'email.required' => 'Поле "E-mail" обязательно для заполнения.',
-            'email.max' => 'Максимальная длина e-mail 255 символов.',
-            'email.exists' => 'Пользователь не найден.',
-            'email.email' => 'E-mail не прошел валидацию.',
+            'remember_token.required' => 'Поле "remember_token" обязательно для заполнения.',
+            'remember_token.exists' => 'Пользователь не найден.',
+            'new_password.required' => 'Поле "new_password" обязательно для заполнения.',
+            'new_password.min' => 'Минимальная длина пароля должна быть 6 символов.',
         ];
     }
 }
