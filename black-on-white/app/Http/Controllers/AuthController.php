@@ -93,7 +93,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         $user->generateResetPasswordToken();
 
-        Mail::to($user)->send(new ResetPasswordEmail($user));
+        Mail::to($user->email)->queue(new ResetPasswordEmail($user));
 
         return response()->json([
             'status' => 'success',
