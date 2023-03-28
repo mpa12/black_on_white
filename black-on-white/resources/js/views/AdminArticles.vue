@@ -157,7 +157,9 @@ export default {
             date = new Date(date)
             const diff = moment.duration(moment().diff(date))
             if (diff.asMinutes() < 60) {
-                return moment().subtract(diff).format('mm минут назад')
+                let test = (new Date()).getTime() - date.getTime()
+                test = (new Date(test)).getMinutes()
+                return test + ' минут назад'
             } else if (diff.asHours() < 24) {
                 return moment().subtract(diff).format('HH часов назад')
             } else if (diff.asDays() < 2) {

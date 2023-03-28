@@ -33,9 +33,11 @@ export default {
     methods: {
         changeCreatedAt(createdAt) {
             const date = new Date(createdAt)
-            const diff = moment.duration(moment().diff(date))
+            let diff = moment.duration(moment().diff(date))
             if (diff.asMinutes() < 60) {
-                this.createdAt = moment().subtract(diff).format('mm минут назад')
+                let test = (new Date()).getTime() - date.getTime()
+                test = (new Date(test)).getMinutes()
+                this.createdAt = test + ' минут назад'
             } else if (diff.asHours() < 24) {
                 this.createdAt = moment().subtract(diff).format('HH часов назад')
             } else if (diff.asDays() < 2) {

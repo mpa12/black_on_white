@@ -74,7 +74,15 @@ class ArticleController extends Controller
     public function update(UpdateArticleRequest $request, Article $article): JsonResponse
     {
         foreach ($article->fillable as $item) {
+            if ($item === 'photo') continue;
             $article->$item = $request->$item ?? $article->$item;
+        }
+
+        $image = $request->file('photo');
+        if ($image) {
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('articles'), $imageName);
+            $article->photo = '/articles/' . $imageName;
         }
 
         try {

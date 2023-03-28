@@ -16,6 +16,9 @@
                 </div>
             </div>
             <div class=mb-3>
+                <div v-if=installedPhoto class="w-100 d-flex align-items-center justify-content-center">
+                    <img :src=installedPhoto class=w-50 alt="Главное изображение новости">
+                </div>
                 <label for=photo class=form-label>Главное изображение новости</label>
                 <input v-on:change=handlePhotoUpload ref=files class=form-control type=file id=photo>
                 <small v-if="errors.hasOwnProperty('photo')" class=text-danger>{{ errors.photo }}</small>
@@ -52,6 +55,7 @@ export default {
             title: null,
             article_type_id: null,
             photo: null,
+            installedPhoto: null,
             description: null,
             articleTypes: [],
             errors: [],
@@ -78,6 +82,19 @@ export default {
             axios.get('/api/article-type/').then(response => {
                 this.articleTypes = response.data['data']
             })
+        },
+        loadArticle() {
+            let article_id = this.$route.params.id
+
+            if (article_id) {
+                axios.get('/api/article/' + article_id).then(response => {
+                    this.title = response.data['data'].title
+                    this.text = response.data['data'].text
+                    this.article_type_id = response.data['data'].article_type.id
+                    this.description = response.data['data'].description
+                    this.installedPhoto = response.data['data'].photo
+                })
+            }
         }
     },
     mounted() {
@@ -85,6 +102,7 @@ export default {
         window.addEventListener('setErrors', function (event) {
             this.errors = event.detail.errors
         }.bind(this))
+        this.loadArticle()
     }
 }
 </script>

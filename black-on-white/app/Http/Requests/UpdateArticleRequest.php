@@ -27,7 +27,7 @@ class UpdateArticleRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -37,14 +37,17 @@ class UpdateArticleRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
-        return [
+        $rules = [
             'title' => 'string|max:255',
             'description' => 'string|max:255',
             'text' => 'string',
-            'photo' => 'string',
             'article_type_id' => 'exists:article_type,id',
         ];
+
+        if ($this->hasFile('photo')) $rules['photo'] = 'image|mimes:jpeg,png,jpg,gif|max:2048';
+
+        return $rules;
     }
 }
