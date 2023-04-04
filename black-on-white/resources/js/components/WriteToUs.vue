@@ -1,35 +1,43 @@
 <template>
-    <div class="write_to_us gap-3 mt-3 flex-column flex-lg-row" id="write_to_us">
-        <div class="write_to_us__left">
-            <h1 class="fs-2">Хотите что-нибудь узнать или предложить? Напишите&nbsp;нам!</h1>
+    <div class="write_to_us gap-3 mt-3 flex-column flex-lg-row" id=write_to_us>
+        <div class=write_to_us__left>
+            <h1 class=fs-2>Хотите что-нибудь узнать или предложить? Напишите&nbsp;нам!</h1>
         </div>
-        <div class="write_to_us__right">
-            <form method="post" class="d-flex justify-content-between flex-column">
+        <div class=write_to_us__right>
+            <form method=post class="d-flex justify-content-between flex-column" @submit.prevent=createMessage>
+                <div v-if=created class="alert alert-light">Сообщение успешно отправлено</div>
                 <div class="form-floating mb-3">
-                    <input type="text" name="name" id="name" placeholder="ИМЯ" class="form-control">
-                    <label for="name">ИМЯ</label>
+                    <input v-model=name type=text name=name id=name placeholder=ИМЯ class=form-control>
+                    <label for=name>ИМЯ</label>
+                    <small v-if="errors.hasOwnProperty('name')" class=text-danger>{{ errors.name }}</small>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" name="telephone" id="telephone" placeholder="ТЕЛЕФОН" class="form-control">
-                    <label for="telephone">ТЕЛЕФОН</label>
+                    <input v-model=phone type=text name=phone id=phone placeholder=ТЕЛЕФОН class=form-control>
+                    <label for=phone>ТЕЛЕФОН</label>
+                    <small v-if="errors.hasOwnProperty('phone')" class=text-danger>{{ errors.phone }}</small>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="email" name="email" id="email" placeholder="E-MAIL" class="form-control">
-                    <label for="email">E-MAIL</label>
+                    <input v-model=email type=email name=email id=email placeholder=E-MAIL class=form-control>
+                    <label for=email>E-MAIL</label>
+                    <small v-if="errors.hasOwnProperty('email')" class=text-danger>{{ errors.email }}</small>
                 </div>
                 <div class="form-floating">
-                    <textarea type="text" name="message" id="message" placeholder="СООБЩЕНИЕ" class="form-control"></textarea>
-                    <label for="message">СООБЩЕНИЕ</label>
+                    <textarea v-model=message type=text name=message id=message placeholder=СООБЩЕНИЕ class=form-control></textarea>
+                    <label for=message>СООБЩЕНИЕ</label>
+                    <small v-if="errors.hasOwnProperty('message')" class=text-danger>{{ errors.message }}</small>
                 </div>
-                <div class="d-flex gap-2 my-3 privacy_policy">
-                    <input type="checkbox" id="privacy_policy" name="privacy_policy">
-                    <label class="black_label" for="privacy_policy">
-                        Нажав кнопку, Вы соглашаетесь с <router-link to="/privacy_policy">Политикой конфиденциальности</router-link>
-                    </label>
+                <div class=my-3>
+                    <div class="d-flex gap-2 privacy_policy">
+                        <input v-model=privacy_policy type=checkbox id=privacy_policy name=privacy_policy>
+                        <label class=black_label for=privacy_policy>
+                            Нажав кнопку, Вы соглашаетесь с <router-link to=/privacy_policy>Политикой конфиденциальности</router-link>
+                        </label>
+                    </div>
+                    <small v-if="errors.hasOwnProperty('privacy_policy')" class=text-danger>{{ errors.privacy_policy }}</small>
                 </div>
-                <button type="submit" class="btn">
+                <button type=submit class=btn>
                     ЗАКАЗАТЬ ОБРАТНЫЙ ЗВОНОК
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-right-short fs-5" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width=25 height=25 fill=currentColor class="bi bi-arrow-right-short fs-5" viewBox="0 0 16 16">
                         <path d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
                     </svg>
                 </button>
@@ -41,6 +49,53 @@
 <script>
 export default {
     name: "WriteToUs",
+    data() {
+        return {
+            'name': null,
+            'phone': null,
+            'email': null,
+            'message': null,
+            'privacy_policy': false,
+            'created': false,
+            'errors': [],
+        }
+    },
+    methods: {
+        createMessage() {
+            if (!this.privacy_policy) {
+                this.errors = {'privacy_policy': 'Необходимо принять политику конфиденциальности'}
+                return
+            } else {
+                this.errors = {}
+            }
+            this.created = false
+
+            let formData = new FormData()
+            formData.append('name', this.name)
+            formData.append('phone', this.phone)
+            formData.append('email', this.email)
+            formData.append('message', this.message)
+
+            this.create(formData)
+        },
+        create(formData) {
+            axios.post( '/api/message', formData, {
+                headers: {'Content-Type': 'multipart/form-data'}
+            }).then(() => {
+                this.created = true
+                this.name = null
+                this.phone = null
+                this.email = null
+                this.message = null
+                this.privacy_policy = false
+            }).catch(error => {
+                if (error.response.status === 422) {
+                    let errors_list = JSON.parse(error.request.responseText).errors
+                    for (const key in errors_list) this.errors[key] = errors_list[key][0]
+                }
+            })
+        }
+    }
 }
 </script>
 
