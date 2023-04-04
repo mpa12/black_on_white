@@ -20,17 +20,15 @@ class ArticleController extends Controller
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        $query = Article::orderByDesc('created_at');
+        $articlesQuery = Article::orderByDesc('created_at');
 
-        if ($request->has('article_type')) {
-            $query->whereIn('article_type_id', explode(',', $request->input('article_type')));
-        }
+        if ($request->has('article_type'))
+            $articlesQuery->whereIn('article_type_id', explode(',', $request->input('article_type')));
 
-        if ($request->has('text')) {
-            $query->where('title', 'LIKE', '%' . $request->input('text') . '%');
-        }
+        if ($request->has('text'))
+            $articlesQuery->where('title', 'LIKE', '%' . $request->input('text') . '%');
 
-        return ArticleResource::collection($query->paginate(20, ['*'], 'page'));
+        return ArticleResource::collection($articlesQuery->paginate(20, ['*'], 'page'));
     }
 
     /**
