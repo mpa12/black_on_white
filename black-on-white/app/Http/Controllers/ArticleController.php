@@ -36,7 +36,7 @@ class ArticleController extends Controller
      * @param StoreArticleRequest $request
      * @return JsonResponse
      */
-    public function store(StoreArticleRequest $request): JsonResponse
+    public function create(StoreArticleRequest $request): JsonResponse
     {
         $image = $request->file('photo');
         $imageName = time() . '.' . $image->getClientOriginalExtension();

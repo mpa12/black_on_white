@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ArticleTypeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,13 +21,19 @@ Route::controller(ArticleController::class)->group(function () {
     Route::get('/article', 'index');
     Route::get('/article/two-last', 'two_last');
     Route::get('/article/{article}', 'show');
-    Route::post('/article', 'store')->middleware('auth:api')->middleware('admin');
+    Route::post('/article', 'create')->middleware('auth:api')->middleware('admin');
     Route::post('/article/{article}', 'update')->middleware('auth:api')->middleware('admin');
     Route::delete('/article/{article}', 'destroy')->middleware('auth:api')->middleware('admin');
 });
 
 Route::controller(ArticleTypeController::class)->group(function () {
     Route::get('/article-type', 'index');
+});
+
+Route::controller(MessageController::class)->group(function () {
+    Route::get('/message', 'index');
+    Route::get('/message/{message}', 'show');
+    Route::delete('/message/{message}', 'destroy')->middleware('auth:api')->middleware('admin');
 });
 
 Route::controller(AuthController::class)->group(function () {
