@@ -6,6 +6,7 @@ use App\Http\Requests\CreateMessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MessageController extends Controller
@@ -22,7 +23,7 @@ class MessageController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $messagesQuery = Message::orderByDesc('id')->paginate(20, ['*'], 'page');
+        $messagesQuery = Message::orderByDesc('id')->paginate(20);
         return MessageResource::collection($messagesQuery);
     }
 
