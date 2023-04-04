@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-content-around benefits flex-wrap gap-2">
         <div class="d-flex flex-column align-items-center justify-content-start">
-            <h1>3</h1>
+            <h1>{{ year }}</h1>
             <p>ГОДА ПРОВОДИМ<br>СПЕКТАКЛИ</p>
         </div>
         <div class="d-flex flex-column align-items-center justify-content-start">
@@ -17,7 +17,20 @@
 
 <script>
 export default {
-    name: "IndexInfo"
+    name: "IndexInfo",
+    data() {
+        return {
+            'year': null
+        }
+    },
+    mounted() {
+        this.getYear()
+    },
+    methods: {
+        getYear() {
+            this.year = new Date().getFullYear() - 2019
+        }
+    }
 }
 </script>
 
