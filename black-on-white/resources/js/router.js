@@ -18,11 +18,13 @@ import AdminPhotoGallery from './views/AdminPhotoGallery.vue'
 import AdminParticipants from './views/AdminParticipants.vue'
 import AdminUsers from './views/AdminUsers.vue'
 import AdminMessages from './views/AdminMessages.vue'
+import PrivacyPolicy from './views/PrivacyPolicy.vue'
 
 const routes = [
     { path: '/', component: Index },
     { path: '/participants', component: Participants },
     { path: '/photo-gallery', component: PhotoGallery },
+    { path: '/privacy_policy', component: PrivacyPolicy },
 
     { path: '/article', component: Articles },
     { path: '/article/:id', component: Article },
