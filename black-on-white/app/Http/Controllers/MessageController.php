@@ -58,6 +58,19 @@ class MessageController extends Controller
     }
 
     /**
+     * Чтение сообщения
+     *
+     * @param Message $message
+     * @return MessageResource
+     */
+    public function read(Message $message): MessageResource
+    {
+        $message->is_read = true;
+        $message->save();
+        return new MessageResource($message);
+    }
+
+    /**
      * Удаление сообщения
      *
      * @param Message $message

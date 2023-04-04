@@ -18,6 +18,7 @@ import AdminPhotoGallery from './views/AdminPhotoGallery.vue'
 import AdminParticipants from './views/AdminParticipants.vue'
 import AdminUsers from './views/AdminUsers.vue'
 import AdminMessages from './views/AdminMessages.vue'
+import AdminMessagesView from './views/AdminMessagesView.vue'
 import PrivacyPolicy from './views/PrivacyPolicy.vue'
 
 const routes = [
@@ -43,7 +44,9 @@ const routes = [
     { path: '/admin/photo-gallery', component: AdminPhotoGallery, meta: { requiresAdmin: true } },
     { path: '/admin/participants', component: AdminParticipants, meta: { requiresAdmin: true } },
     { path: '/admin/users', component: AdminUsers, meta: { requiresAdmin: true } },
+
     { path: '/admin/messages', component: AdminMessages, meta: { requiresAdmin: true } },
+    { path: '/admin/messages/:id', component: AdminMessagesView, meta: { requiresAdmin: true } },
 ]
 
 const router = createRouter({

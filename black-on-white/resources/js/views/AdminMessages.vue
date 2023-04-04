@@ -40,7 +40,7 @@
                 <th>{{ index + 1 }}</th>
                 <td>{{ message.id }}</td>
                 <td class="text-truncate user-select-none" :title="message.name">
-                    <router-link :to="'/message/' + message.id" class=text-decoration-none>
+                    <router-link :to="'/admin/messages/' + message.id" class=text-decoration-none>
                         {{ message.name }}
                     </router-link>
                 </td>
