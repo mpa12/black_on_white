@@ -33,6 +33,7 @@ Route::controller(ArticleTypeController::class)->group(function () {
 Route::controller(MessageController::class)->group(function () {
     Route::get('/message', 'index');
     Route::get('/message/{message}', 'show');
+    Route::post('/message', 'create');
     Route::delete('/message/{message}', 'destroy')->middleware('auth:api')->middleware('admin');
 });
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateMessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use Illuminate\Http\JsonResponse;
@@ -9,6 +10,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MessageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['create']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,13 +27,22 @@ class MessageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Создание сообщения
      *
-     * @return \Illuminate\Http\Response
+     * @param CreateMessageRequest $request
+     * @return JsonResponse
      */
-    public function create()
+    public function create(CreateMessageRequest $request): JsonResponse
     {
-        //
+        $message = Message::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'message' => $request->message,
+            'is_read' => false
+        ]);
+
+        return response()->json(['success' => new MessageResource($message)]);
     }
 
     /**
