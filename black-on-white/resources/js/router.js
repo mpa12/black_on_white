@@ -54,32 +54,39 @@ const router = createRouter({
     }
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     const token = localStorage.getItem('token')
     if (to.matched.some((route) => route.meta.requiresAuth) && !token) {
         next('/login')
     } else if (to.matched.some((route) => route.meta.requiresGuest) && token) {
         next('/')
-    } else if (to.matched.some((route) => route.meta.requiresAdmin) && !token) {
-        if (!checkIsAdmin(token)) next('/')
+    } else if (to.matched.some((route) => route.meta.requiresAdmin)) {
+        if (!token) next('/')
+        else {
+            try {
+                const isAdmin = await checkIsAdmin(token)
+                if (!isAdmin) next('/')
+                else next()
+            } catch (error) {
+                console.log(error)
+                next('/')
+            }
+        }
     } else {
         next()
     }
-});
+})
 
-function checkIsAdmin(token) {
-    let isAdmin = false
-
-    axios.get('/api/auth/is-admin', {
-        headers: { "Authorization" : `Bearer ${token}` }
-    }).then(response => {
-        isAdmin = !!response.data
-    }).catch(error => {
+async function checkIsAdmin(token) {
+    try {
+        const response = await axios.get('/api/auth/is-admin', {
+            headers: { "Authorization" : `Bearer ${token}` }
+        })
+        return !!response.data
+    } catch (error) {
         console.log(error)
-        isAdmin = false
-    })
-
-    return isAdmin
+        return false
+    }
 }
 
 export default router
