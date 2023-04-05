@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ArticleTypeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ParticipantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,12 @@ Route::controller(MessageController::class)->group(function () {
     Route::get('/message/read/{message}', 'read');
     Route::post('/message', 'create');
     Route::delete('/message/{message}', 'destroy')->middleware('auth:api')->middleware('admin');
+});
+
+Route::controller(ParticipantController::class)->group(function () {
+    Route::get('/participant', 'index');
+    Route::get('/participant/{participant}', 'show');
+    Route::post('/participant', 'create')->middleware('auth:api')->middleware('admin');
 });
 
 Route::controller(AuthController::class)->group(function () {
