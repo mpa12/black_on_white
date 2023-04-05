@@ -41,6 +41,8 @@ export default {
     width: 200px;
     height: 200px;
     border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
 }
 
 @media (max-width: 992px) {

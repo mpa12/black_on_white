@@ -46,7 +46,7 @@ class ParticipantController extends Controller
         $participant = Participant::create([
             'name' => $request->name,
             'role' => $request->role,
-            'photo' => '/articles/' . $imageName,
+            'photo' => '/participant/' . $imageName,
         ]);
 
         return response()->json(['success' => new ParticipantResource($participant)]);

@@ -52,16 +52,10 @@
                 <td>{{ convertDate(participant.updated_at) }}</td>
                 <td>
                     <div class=dropdown>
-                        <span type=button data-bs-toggle=dropdown>
-                            <img src=/images/three-dots-vertical.svg alt=three-dots-vertical type=button data-toggle=dropdown>
-                        </span>
+                        <span type=button data-bs-toggle=dropdown><img src=/images/three-dots-vertical.svg alt=three-dots-vertical type=button data-toggle=dropdown></span>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><router-link class=dropdown-item :to="'/admin/participants/update/' + participant.id">Редактировать</router-link></li>
-                            <li>
-                                <span @click=loadDeleteParticipant(participant.id) class=dropdown-item type=button data-bs-toggle=modal data-bs-target="#deleteModal">
-                                    Удалить
-                                </span>
-                            </li>
+                            <li><span @click=loadDeleteParticipant(participant.id) class=dropdown-item type=button data-bs-toggle=modal data-bs-target="#deleteModal">Удалить</span></li>
                         </ul>
                     </div>
                 </td>
