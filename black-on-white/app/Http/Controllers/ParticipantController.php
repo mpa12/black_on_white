@@ -22,6 +22,16 @@ class ParticipantController extends Controller
     }
 
     /**
+     * Количество участников
+     *
+     * @return int
+     */
+    public function participants_count(): int
+    {
+        return Participant::all()->count();
+    }
+
+    /**
      * Создание участника
      *
      * @param CreateParticipantRequest $request

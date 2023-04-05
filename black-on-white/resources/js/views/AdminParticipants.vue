@@ -1,10 +1,11 @@
 <template>
-    <div class="title my-3">
+    <div class="title my-3 d-flex align-items-center gap-3">
         <h1>Управление участниками театра</h1>
+        <router-link to="/admin/participants/create" class="btn btn-primary">Создать</router-link>
     </div>
 
     <div class=table-wrapper>
-        <table class=table>
+        <table class="table table-hover">
             <thead>
             <tr>
                 <th>№</th>

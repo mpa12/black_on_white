@@ -41,6 +41,7 @@ Route::controller(MessageController::class)->group(function () {
 
 Route::controller(ParticipantController::class)->group(function () {
     Route::get('/participant', 'index');
+    Route::get('/participant/count', 'participants_count');
     Route::get('/participant/{participant}', 'show');
     Route::post('/participant', 'create')->middleware('auth:api')->middleware('admin');
     Route::delete('/participant/{participant}', 'destroy')->middleware('auth:api')

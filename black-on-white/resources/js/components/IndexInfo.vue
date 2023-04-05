@@ -5,7 +5,7 @@
             <p>ГОДА ПРОВОДИМ<br>СПЕКТАКЛИ</p>
         </div>
         <div class="d-flex flex-column align-items-center justify-content-start">
-            <h1>10</h1>
+            <h1>{{ participants }}</h1>
             <p>ТАЛАНТЛИВЫХ<br>УЧАСТНИКОВ</p>
         </div>
         <div class="d-flex flex-column align-items-center justify-content-start">
@@ -16,19 +16,28 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "IndexInfo",
     data() {
         return {
-            'year': null
+            'year': null,
+            'participants': null,
         }
     },
     mounted() {
         this.getYear()
+        this.getParticipants()
     },
     methods: {
         getYear() {
             this.year = new Date().getFullYear() - 2019
+        },
+        getParticipants() {
+            axios.get('/api/participant/count').then(response => {
+                this.participants = response.data
+            })
         }
     }
 }
