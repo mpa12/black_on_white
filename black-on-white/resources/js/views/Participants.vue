@@ -3,19 +3,31 @@
         <h1>Участники театра</h1>
     </div>
     <section class="participants-section my-3">
-        <participant-card name="Андрей Андреевич" role="Актер" src="https://i.etsystatic.com/23559605/r/il/e4cc77/2435317011/il_794xN.2435317011_jgsj.jpg"/>
-        <participant-card name="Андрей Андреевич" role="Актер" src="https://i.etsystatic.com/23559605/r/il/e4cc77/2435317011/il_794xN.2435317011_jgsj.jpg"/>
-        <participant-card name="Андрей Андреевич" role="Актер" src="https://i.etsystatic.com/23559605/r/il/e4cc77/2435317011/il_794xN.2435317011_jgsj.jpg"/>
-        <participant-card name="Андрей Андреевич" role="Актер" src="https://i.etsystatic.com/23559605/r/il/e4cc77/2435317011/il_794xN.2435317011_jgsj.jpg"/>
-        <participant-card name="Андрей Андреевич" role="Актер" src="https://i.etsystatic.com/23559605/r/il/e4cc77/2435317011/il_794xN.2435317011_jgsj.jpg"/>
+        <participant-card v-for="participant in participants" :name="participant.name" :role="participant.role" :src="participant.photo"/>
     </section>
 </template>
 
 <script>
 import ParticipantCard from "../components/ParticipantCard.vue";
+import axios from "axios";
 export default {
     name: "Participants",
-    components: {ParticipantCard}
+    components: {ParticipantCard},
+    data() {
+        return {
+            'participants': [],
+        }
+    },
+    mounted() {
+        this.loadParticipants()
+    },
+    methods: {
+        loadParticipants() {
+            axios.get('/api/participant').then(response => {
+                this.participants = response.data['data']
+            })
+        }
+    }
 }
 </script>
 

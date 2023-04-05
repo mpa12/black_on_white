@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateParticipantRequest;
 use App\Http\Resources\ParticipantResource;
 use App\Models\Participant;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -24,7 +25,7 @@ class ParticipantController extends Controller
      * Создание участника
      *
      * @param CreateParticipantRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function create(CreateParticipantRequest $request)
     {
@@ -65,13 +66,18 @@ class ParticipantController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Удаление участника
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Participant $participant
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Participant $participant): JsonResponse
     {
-        //
+        try {
+            $participant->delete();
+            return response()->json(['success' => 'Участник успешно удален']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->errorInfo]);
+        }
     }
 }

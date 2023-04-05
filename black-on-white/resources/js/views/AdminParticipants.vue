@@ -1,5 +1,7 @@
 <template>
-    <h1>Управление участниками</h1>
+    <div class="title my-3">
+        <h1>Управление участниками театра</h1>
+    </div>
 </template>
 
 <script>
@@ -9,5 +11,10 @@ export default {
 </script>
 
 <style scoped>
-
+.title {
+    border-radius: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    background: var(--my-white);
+}
 </style>
