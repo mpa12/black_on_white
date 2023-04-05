@@ -1,4 +1,22 @@
 <template>
+    <div class="modal fade" id=deleteModal>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class=modal-content>
+                <div class=modal-header>
+                    <h1 class="modal-title fs-5">Удаление участника <span>&laquo;{{ deleteParticipantInfo.name }}&raquo;</span></h1>
+                    <button type=button class=btn-close data-bs-dismiss=modal></button>
+                </div>
+                <div class=modal-body>
+                    Вы уверенны, что хотите удалить участника <span>&laquo;{{ deleteParticipantInfo.name }}&raquo;</span>?
+                </div>
+                <div class="modal-footer justify-content-start">
+                    <button type=button class="btn btn-secondary" data-bs-dismiss=modal>Отмена</button>
+                    <button type=button class="btn btn-danger" @click=deleteParticipant(deleteParticipantInfo.id) data-bs-dismiss=modal>Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="title my-3 d-flex align-items-center gap-3">
         <h1>Управление участниками театра</h1>
         <router-link to="/admin/participants/create" class="btn btn-primary">Создать</router-link>
@@ -65,7 +83,8 @@ export default {
     },
     data() {
         return {
-            'participants': [],
+            participants: [],
+            deleteParticipantInfo: [],
         }
     },
     mounted() {
@@ -95,6 +114,18 @@ export default {
         },
         getImgTag(src, alt) {
             return `<img width=150 style="border-radius: 10px" src="${src}" alt="${alt}">`
+        },
+        loadDeleteParticipant(id) {
+            axios.get('/api/participant/' + id).then(response => {
+                this.deleteParticipantInfo = response.data['data']
+            })
+        },
+        deleteParticipant(id) {
+            axios.delete('/api/participant/' + id, {
+                headers: { "Authorization" : `Bearer ${localStorage.getItem('token')}` }
+            }).then(() => {
+                this.loadParticipants()
+            })
         }
     }
 }
