@@ -30,7 +30,7 @@
             </div>
             <div class=mb-3>
                 <label for=text class=form-label>Текст новости</label>
-                <quill-editor v-model:content=text contentType=html theme=snow></quill-editor>
+                <quill-editor toolbar=full v-model:content=text contentType=html theme=snow></quill-editor>
                 <small v-if="errors.hasOwnProperty('text')" class=text-danger>{{ errors.text }}</small>
             </div>
             <div class="d-flex gap-2">
