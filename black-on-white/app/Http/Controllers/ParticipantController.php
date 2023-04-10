@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateParticipantRequest;
+use App\Http\Requests\UpdateParticipantRequest;
 use App\Http\Resources\ParticipantResource;
 use App\Models\Participant;
 use Illuminate\Http\JsonResponse;
@@ -64,15 +65,33 @@ class ParticipantController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Редактирование участника
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateParticipantRequest $request
+     * @param Participant $participant
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateParticipantRequest $request, Participant $participant): JsonResponse
     {
-        //
+        foreach ($participant->fillable as $item) {
+            if ($item === 'photo') continue;
+            $participant->$item = $request->$item ?? $participant->$item;
+        }
+
+        $image = $request->file('photo');
+        if ($image) {
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('articles'), $imageName);
+            $participant->photo = '/articles/' . $imageName;
+        }
+
+        try {
+            $participant->save();
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->errorInfo]);
+        }
+
+        return response()->json(['success' => new ParticipantResource($participant)]);
     }
 
     /**

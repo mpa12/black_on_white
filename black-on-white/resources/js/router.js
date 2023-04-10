@@ -17,6 +17,7 @@ import AdminArticleUpdate from './views/AdminArticleUpdate.vue'
 import AdminPhotoGallery from './views/AdminPhotoGallery.vue'
 import AdminParticipants from './views/AdminParticipants.vue'
 import AdminParticipantsCreate from './views/AdminParticipantsCreate.vue'
+import AdminParticipantsUpdate from './views/AdminParticipantsUpdate.vue'
 import AdminUsers from './views/AdminUsers.vue'
 import AdminMessages from './views/AdminMessages.vue'
 import AdminMessagesView from './views/AdminMessagesView.vue'
@@ -46,6 +47,7 @@ const routes = [
 
     { path: '/admin/participants', component: AdminParticipants, meta: { requiresAdmin: true } },
     { path: '/admin/participants/create', component: AdminParticipantsCreate, meta: { requiresAdmin: true } },
+    { path: '/admin/participants/update/:id', component: AdminParticipantsUpdate, meta: { requiresAdmin: true } },
 
     { path: '/admin/users', component: AdminUsers, meta: { requiresAdmin: true } },
 
