@@ -1,11 +1,11 @@
 <template>
-    <div class="article-main">
-        <h2 class=mb-2>{{ article.title }}</h2>
+    <section class="article-main">
+        <h3 class=mb-2>{{ article.title }}</h3>
         <span class=fw-lighter>{{ createdAt }}</span><br>
         <p class=mt-2>{{ article.description }}</p>
         <img :src="article.photo" :alt="article.title" class="w-100 my-2 article-main-img">
-        <div class="mt-2 content" v-html="article.text"></div>
-    </div>
+        <section class="mt-2 content" v-html="article.text"></section>
+    </section>
 </template>
 
 <script>
