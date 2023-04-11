@@ -21,6 +21,7 @@
     "dependencies": {
         "@vueup/vue-quill": "^1.1.1",
         "moment": "^2.29.4",
+        "quill-image-uploader": "^1.2.4",
         "vue-marquee-text-component": "^2.0.1",
         "vue-router": "^4.1.6",
         "vue-tippy": "^6.0.0"

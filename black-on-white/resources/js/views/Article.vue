@@ -4,7 +4,7 @@
         <span class=fw-lighter>{{ createdAt }}</span><br>
         <p class=mt-2>{{ article.description }}</p>
         <img :src="article.photo" :alt="article.title" class="w-100 my-2 article-main-img">
-        <div class="mt-2" v-html="article.text"></div>
+        <div class="mt-2 content" v-html="article.text"></div>
     </div>
 </template>
 
@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .article-main {
     background-color: var(--my-white);
     border-radius: 20px;
@@ -59,5 +59,16 @@ export default {
 
 .article-main-img {
     border-radius: 20px;
+}
+
+.content img {
+    width: 100% !important;
+    height: auto;
+    border-radius: 20px;
+}
+
+.content iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
 }
 </style>

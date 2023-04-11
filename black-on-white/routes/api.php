@@ -25,6 +25,8 @@ Route::controller(ArticleController::class)->group(function () {
     Route::post('/article', 'create')->middleware('auth:api')->middleware('admin');
     Route::post('/article/{article}', 'update')->middleware('auth:api')->middleware('admin');
     Route::delete('/article/{article}', 'destroy')->middleware('auth:api')->middleware('admin');
+    Route::post('/article/upload/image', 'uploadImage')->middleware('auth:api')
+        ->middleware('admin');
 });
 
 Route::controller(ArticleTypeController::class)->group(function () {

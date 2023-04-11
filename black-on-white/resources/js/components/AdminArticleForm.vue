@@ -30,7 +30,7 @@
             </div>
             <div class=mb-3>
                 <label for=text class=form-label>Текст новости</label>
-                <quill-editor toolbar=full v-model:content=text contentType=html theme=snow></quill-editor>
+                <quill-editor :modules="modules" toolbar=full contentType=html theme=snow v-model:content=text></quill-editor >
                 <small v-if="errors.hasOwnProperty('text')" class=text-danger>{{ errors.text }}</small>
             </div>
             <div class="d-flex gap-2">
@@ -44,6 +44,7 @@
 <script>
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import ImageUploader from 'quill-image-uploader';
 import axios from "axios";
 
 export default {
@@ -103,6 +104,36 @@ export default {
             this.errors = event.detail.errors
         }.bind(this))
         this.loadArticle()
+    },
+    setup: () => {
+        const modules = {
+            name: 'imageUploader',
+            module: ImageUploader,
+            options: {
+                upload: file => {
+                    return new Promise((resolve, reject) => {
+                        const formData = new FormData();
+                        formData.append("image", file);
+
+                        axios.post('/api/article/upload/image', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                                "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                            }
+                        })
+                            .then(res => {
+                                console.log(res)
+                                resolve(res.data.url)
+                            })
+                            .catch(err => {
+                                reject("Upload failed")
+                                console.error("Error:", err)
+                            })
+                    })
+                }
+            }
+        }
+        return { modules }
     }
 }
 </script>

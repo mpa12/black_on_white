@@ -115,4 +115,17 @@ class ArticleController extends Controller
     {
         return ArticleResource::collection(Article::limit(2)->orderByDesc('created_at')->get());
     }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('article-images'), $filename);
+            $url = asset('article-images/' . $filename);
+            return response()->json(['url' => $url]);
+        } else {
+            return response()->json(['error' => 'Image not found'], 400);
+        }
+    }
 }
