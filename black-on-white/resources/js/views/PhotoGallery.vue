@@ -53,7 +53,7 @@ export default {
         },
         handleScroll() {
             if (this.loading) return
-            if (window.pageYOffset + window.innerHeight >= document.body.offsetHeight) {
+            if (window.pageYOffset + window.innerHeight + 200 >= document.body.offsetHeight) {
                 if (this.page < this.totalPages) {
                     this.page += 1
                     this.loadImages()

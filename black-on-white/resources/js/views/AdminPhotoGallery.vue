@@ -1,25 +1,43 @@
 <template>
     <div class="modal fade" id=deleteModal>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Вы действительно хотите удалить изображение?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class=modal-content>
+                <div class=modal-header>
+                    <h5 class=modal-title>Вы действительно хотите удалить изображение?</h5>
+                    <button type=button class=btn-close data-bs-dismiss=modal aria-label=Закрыть></button>
                 </div>
-                <div class="modal-body">
-                    <img :src="deleteSrc" class="w-100 rounded-2" alt="Фото" />
+                <div class=modal-body>
+                    <img :src="deleteSrc" class="w-100 rounded-2" alt=Фото />
                 </div>
                 <div class="modal-footer justify-content-start">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss=modal>Закрыть</button>
-                    <button type="button" class="btn btn-danger" @click="deleteImage(deleteId, deleteIndex)" data-bs-dismiss=modal>Удалить</button>
+                    <button type=button class="btn btn-secondary" data-bs-dismiss=modal>Закрыть</button>
+                    <button type=button class="btn btn-danger" data-bs-dismiss=modal>Удалить</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="modal fade" id=createModal>
+        <div class="modal-dialog modal-dialog-centered">
+            <form class=modal-content>
+                <div class=modal-header>
+                    <h5 class=modal-title>Добавление изображения</h5>
+                    <button type=button class=btn-close data-bs-dismiss=modal aria-label=Закрыть></button>
+                </div>
+                <div class=modal-body>
+                    <input type=file class=form-control name=photo id=photo>
+                </div>
+                <div class="modal-footer justify-content-start">
+                    <button type=button class="btn btn-secondary" data-bs-dismiss=modal>Закрыть</button>
+                    <button class="btn btn-success" data-bs-dismiss=modal>Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="title my-3 d-flex align-items-center gap-3">
         <h1>Управление фотогалереей</h1>
-        <span class="btn btn-primary">Добавить фотографию</span>
+        <span class="btn btn-primary" data-bs-toggle=modal data-bs-target=#createModal>Добавить фотографию</span>
     </div>
 
     <div class="gallery">
@@ -27,7 +45,7 @@
             <img class="gallery-image" :src="image.src" alt="Фото" />
             <div class="gallery-buttons d-flex gap-2">
                 <span class="badge bg-primary" @click=openImage(index)>Смотреть</span>
-                <span class="badge bg-danger" @click=openDeleteImage(index) data-bs-toggle=modal data-bs-target="#deleteModal">Удалить</span>
+                <span class="badge bg-danger" @click=openDeleteImage(index) data-bs-toggle=modal data-bs-target=#deleteModal>Удалить</span>
             </div>
             <div @click="closeImage(index)" class="overlay" v-if="image.show">
                 <img @click="closeImage(index)" :src="image.src" alt="Фото" />
@@ -83,7 +101,7 @@ export default {
         },
         handleScroll() {
             if (this.loading) return
-            if (window.pageYOffset + window.innerHeight >= document.body.offsetHeight) {
+            if (window.pageYOffset + window.innerHeight + 200 >= document.body.offsetHeight) {
                 if (this.page < this.totalPages) {
                     this.page += 1
                     this.loadImages()
