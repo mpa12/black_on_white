@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PhotoGalleryResource;
 use App\Models\PhotoGallery;
-use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PhotoGalleryController extends Controller
 {
     /**
+     * Получение списка изображений
+     *
      * @return AnonymousResourceCollection
      */
     public function index(): AnonymousResourceCollection
     {
-        return PhotoGalleryResource::collection(PhotoGallery::paginate(50, ['*'], 'page'));
+        return PhotoGalleryResource::collection(PhotoGallery::orderByDesc('id')->paginate(50, ['*'], 'page'));
     }
 
     /**
@@ -28,58 +31,18 @@ class PhotoGalleryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Удаление изображения
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PhotoGallery $photo
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function destroy(PhotoGallery $photo): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        try {
+            $photo->delete();
+            return response()->json(['success' => 'Изображение успешно удалено']);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->errorInfo]);
+        }
     }
 }

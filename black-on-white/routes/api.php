@@ -64,4 +64,6 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(PhotoGalleryController::class)->group(function () {
     Route::get('/photo-gallery', 'index');
+    Route::delete('/photo-gallery/{photo}', 'destroy')->middleware('auth:api')
+        ->middleware('admin');
 });
