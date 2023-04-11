@@ -5,6 +5,7 @@ use App\Http\Controllers\ArticleTypeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\PhotoGalleryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,4 +60,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/auth/reset-password', 'resetPassword');
     Route::post('/auth/reset-password-response', 'resetPasswordResponse');
     Route::post('/auth/validate-token', 'validateToken');
+});
+
+Route::controller(PhotoGalleryController::class)->group(function () {
+    Route::get('/photo-gallery', 'index');
 });

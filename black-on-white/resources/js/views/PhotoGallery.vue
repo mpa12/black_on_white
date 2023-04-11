@@ -7,26 +7,28 @@
             </div>
         </div>
     </div>
+    <div v-if="loading" class="text-center">Loading...</div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "PhotoGallery",
     data() {
         return {
-            images: [
-                { src: 'https://avatars.mds.yandex.net/i?id=f7f7f05383c16827da3b369ba44114f6b1af936d-3823851-images-thumbs&n=13', show: false },
-                { src: 'https://avatars.mds.yandex.net/i?id=c5c177e2c8b89b7f9f4de961c690e47790602e3b-8240946-images-thumbs&n=13', show: false },
-                { src: 'https://avatars.mds.yandex.net/i?id=2825d42d36bcdeebe57c1e57ca4a3c8f8030a060-8564995-images-thumbs&n=13', show: false },
-                { src: 'https://avatars.mds.yandex.net/i?id=f7a347c2a572387aa2ae96cf7288d0dcfa753eeb-9291460-images-thumbs&n=13', show: false },
-                { src: 'https://avatars.mds.yandex.net/i?id=f7f7f05383c16827da3b369ba44114f6b1af936d-3823851-images-thumbs&n=13', show: false },
-                { src: 'https://avatars.mds.yandex.net/i?id=c5c177e2c8b89b7f9f4de961c690e47790602e3b-8240946-images-thumbs&n=13', show: false },
-                { src: 'https://avatars.mds.yandex.net/i?id=2825d42d36bcdeebe57c1e57ca4a3c8f8030a060-8564995-images-thumbs&n=13', show: false },
-                { src: 'https://avatars.mds.yandex.net/i?id=f7a347c2a572387aa2ae96cf7288d0dcfa753eeb-9291460-images-thumbs&n=13', show: false },
-                { src: 'https://avatars.mds.yandex.net/i?id=2825d42d36bcdeebe57c1e57ca4a3c8f8030a060-8564995-images-thumbs&n=13', show: false },
-                { src: 'https://avatars.mds.yandex.net/i?id=f7a347c2a572387aa2ae96cf7288d0dcfa753eeb-9291460-images-thumbs&n=13', show: false },
-            ],
+            images: [],
+            page: 1,
+            totalPages: null,
+            loading: false,
         };
+    },
+    mounted() {
+        this.loadImages()
+        window.addEventListener('scroll', this.handleScroll)
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll)
     },
     methods: {
         openImage(index) {
@@ -37,6 +39,27 @@ export default {
             this.images[index].show = false;
             document.body.style.overflow = 'auto';
         },
+        loadImages() {
+            this.loading = true
+            let params = { page: this.page }
+            axios.get('/api/photo-gallery', {params}).then(response => {
+                let newData = response.data['data'].map(x => {
+                    return {src: x.photo, show: false}
+                })
+                this.images = [...this.images, ...newData]
+                this.totalPages = response.data['meta'].last_page
+                this.loading = false
+            })
+        },
+        handleScroll() {
+            if (this.loading) return
+            if (window.pageYOffset + window.innerHeight >= document.body.offsetHeight) {
+                if (this.page < this.totalPages) {
+                    this.page += 1
+                    this.loadImages()
+                }
+            }
+        }
     },
 }
 </script>
