@@ -15,15 +15,12 @@
                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                     </svg>
                 </div>
-                <div class="d-flex justify-content-between w-auto me-5 gap-3 flex-lg-row flex-column">
+                <div class="d-flex justify-content-between w-auto gap-3 flex-lg-row flex-column">
                     <nav v-for="link in visibleLinks" :key="link.href">
                         <router-link @click=closeMenu class=fs-6 :to="{ path: link.href, hash: link.hash, exact: true }">
                             {{ link.title }}
                         </router-link>
                     </nav>
-                </div>
-                <div>
-                    <span class=fs-6>+7 (999) 999 99 99</span>
                 </div>
             </div>
         </div>
