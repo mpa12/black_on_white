@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-footer justify-content-start">
                     <button type=button class="btn btn-secondary" data-bs-dismiss=modal>Закрыть</button>
-                    <button type=button class="btn btn-danger" data-bs-dismiss=modal>Удалить</button>
+                    <button @click="deleteImage(deleteId, deleteIndex)" type=button class="btn btn-danger" data-bs-dismiss=modal>Удалить</button>
                 </div>
             </div>
         </div>
@@ -19,13 +19,13 @@
 
     <div class="modal fade" id=createModal>
         <div class="modal-dialog modal-dialog-centered">
-            <form class=modal-content>
+            <form class=modal-content @submit.prevent=create>
                 <div class=modal-header>
                     <h5 class=modal-title>Добавление изображения</h5>
                     <button type=button class=btn-close data-bs-dismiss=modal aria-label=Закрыть></button>
                 </div>
                 <div class=modal-body>
-                    <input type=file class=form-control name=photo id=photo>
+                    <input v-on:change=handlePhotoUpload ref=files class=form-control type=file id=photo>
                 </div>
                 <div class="modal-footer justify-content-start">
                     <button type=button class="btn btn-secondary" data-bs-dismiss=modal>Закрыть</button>
@@ -65,10 +65,11 @@ export default {
             images: [],
             page: 1,
             totalPages: null,
-            loading: false,
+            loading: true,
             deleteSrc: null,
             deleteId: null,
             deleteIndex: null,
+            photo: null,
         };
     },
     mounted() {
@@ -122,7 +123,31 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
-        }
+        },
+        create() {
+            let formData = new FormData()
+            formData.append('photo', this.photo)
+
+            axios.post('/api/photo-gallery', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(() => {
+                this.photo = null
+
+                this.images = []
+                this.page = 1
+                this.totalPages = null
+                this.loading = true
+                this.loadImages()
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+        handlePhotoUpload() {
+            this.photo = this.$refs.files.files[0]
+        },
     }
 }
 </script>

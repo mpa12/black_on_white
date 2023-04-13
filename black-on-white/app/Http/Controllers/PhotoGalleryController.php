@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePhotoGalleryRequest;
 use App\Http\Resources\PhotoGalleryResource;
 use App\Models\PhotoGallery;
 use Exception;
@@ -21,13 +22,18 @@ class PhotoGalleryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param CreatePhotoGalleryRequest $request
+     * @return JsonResponse
      */
-    public function create()
+    public function create(CreatePhotoGalleryRequest $request)
     {
-        //
+        $image = $request->file('photo');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('photo-gallery'), $imageName);
+
+        $photo = PhotoGallery::create(['photo' => '/photo-gallery/' . $imageName]);
+
+        return response()->json(['success' => new PhotoGalleryResource($photo)]);
     }
 
     /**

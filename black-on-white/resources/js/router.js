@@ -26,7 +26,7 @@ import PrivacyPolicy from './views/PrivacyPolicy.vue'
 const routes = [
     { path: '/', component: Index },
     { path: '/participants', component: Participants },
-    { path: '/photo-gallery', component: PhotoGallery },
+    { path: '/photo_gallery', component: PhotoGallery },
     { path: '/privacy_policy', component: PrivacyPolicy },
 
     { path: '/article', component: Articles },
