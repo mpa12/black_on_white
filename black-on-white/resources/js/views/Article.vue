@@ -6,14 +6,17 @@
         <img :src="article.photo" :alt="article.title" class="w-100 my-2 article-main-img">
         <section class="mt-2 content" v-html="article.text"></section>
     </section>
+    <comments :article_id=$route.params.id />
 </template>
 
 <script>
 import axios from "axios";
 import moment from 'moment/min/moment-with-locales'
+import Comments from "../components/Comments.vue";
 
 export default {
     name: "Article",
+    components: {Comments},
     data() {
         return {
             article: [],
