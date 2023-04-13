@@ -100,6 +100,10 @@ export default {
 </script>
 
 <style scoped>
+.black_label {
+    color: var(--my-black)!important;
+}
+
 .write_to_us {
     box-sizing: border-box;
     align-items: stretch;
