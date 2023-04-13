@@ -1,17 +1,17 @@
 <template>
-    <div class="d-flex gap-3 flex-lg-row flex-column">
-        <div class=index-image-wrapper>
+    <section class="d-flex gap-3 flex-lg-row flex-column">
+        <section class=index-image-wrapper>
             <img src=/images/index-banner.avif alt=Маска class=index-image>
-        </div>
-        <div class="index-text">
+        </section>
+        <section class="index-text">
             <h1 class="fw-bold">СТУДЕНЧЕСКИЙ ТЕАТР «ЧЕРНЫМ&nbsp;ПО&nbsp;БЕЛОМУ»</h1>
             <p class="mt-3 flex-grow-1 w-50">
                 Студенческий театр Хабаровского колледжа отраслевых технологий и&nbsp;сферы обслуживания.<br>
                 Руководитель - Юлия&nbsp;Пирюткина
             </p>
             <v-button title=Смотреть спектакли href=/article></v-button>
-        </div>
-    </div>
+        </section>
+    </section>
 </template>
 
 <script>

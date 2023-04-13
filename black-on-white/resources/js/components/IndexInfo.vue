@@ -8,10 +8,6 @@
             <h1>{{ participants }}</h1>
             <p>ТАЛАНТЛИВЫХ<br>УЧАСТНИКОВ</p>
         </div>
-        <div class="d-flex flex-column align-items-center justify-content-start">
-            <h1>38</h1>
-            <p>ВЫСТУПЛЕНИЙ</p>
-        </div>
     </div>
 </template>
 
