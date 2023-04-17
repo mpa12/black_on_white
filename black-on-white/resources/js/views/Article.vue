@@ -3,7 +3,7 @@
         <h3 class=mb-2>{{ article.title }}</h3>
         <span class=fw-lighter>{{ createdAt }}</span><br>
         <p class=mt-2>{{ article.description }}</p>
-        <img :src="article.photo" :alt="article.title" class="w-100 my-2 article-main-img">
+        <img :src="article.photo" :alt="article.title" class="my-2 mx-auto d-block article-main-img">
         <section class="mt-2 content" v-html="article.text"></section>
     </section>
     <comments :article_id=$route.params.id />
@@ -62,12 +62,16 @@ export default {
 
 .article-main-img {
     border-radius: 20px;
+    max-height: 400px;
+    max-width: 100%;
+    width: auto;
 }
 
 .content img {
-    width: 100% !important;
-    height: auto;
     border-radius: 20px;
+    height: 400px;
+    max-width: 100%;
+    width: auto;
 }
 
 .content iframe {

@@ -24,24 +24,12 @@ export default {
         return {
             canComment: false,
             hasComments: false,
-            comments: [
-                {id: 1, user: {name: 'Admin'}, body: 'Комментарий 1', created_at: '28 мая 2023', parent_id: null},
-                {id: 2, user: {name: 'Admin'}, body: 'Комментарий 2, ответ на 1', created_at: '28 мая 2023', parent_id: 1},
-                {id: 3, user: {name: 'Admin'}, body: 'Комментарий 3, ответ на 2', created_at: '28 мая 2023', parent_id: 2},
-                {id: 4, user: {name: 'Admin'}, body: 'Комментарий 4, ответ на 2', created_at: '28 мая 2023', parent_id: 2},
-                {id: 5, user: {name: 'Admin'}, body: 'Комментарий 5, ответ на 2', created_at: '28 мая 2023', parent_id: 2},
-                {id: 6, user: {name: 'Admin'}, body: 'Комментарий 6, ответ на 2', created_at: '28 мая 2023', parent_id: 1},
-                {id: 7, user: {name: 'Admin'}, body: 'Комментарий 7, ответ на 2', created_at: '28 мая 2023', parent_id: 2},
-                {id: 8, user: {name: 'Admin'}, body: 'Комментарий 8', created_at: '28 мая 2023', parent_id: null},
-                {id: 9, user: {name: 'Admin'}, body: 'Комментарий 9', created_at: '28 мая 2023', parent_id: null},
-                {id: 10, user: {name: 'Admin'}, body: 'Комментарий 10', created_at: '28 мая 2023', parent_id: null},
-                {id: 11, user: {name: 'Admin'}, body: 'Комментарий 11, ответ на 1', created_at: '28 мая 2023', parent_id: 1},
-                {id: 12, user: {name: 'Admin'}, body: 'Комментарий 12, ответ на 3', created_at: '28 мая 2023', parent_id: 3},
-            ],
+            comments: [],
             parentComments: [],
         }
     },
     mounted() {
+        this.loadComments()
         this.checkCanComment()
         this.checkHasComments()
         this.getParentComments()
@@ -55,6 +43,22 @@ export default {
         },
         getParentComments() {
             this.parentComments = this.comments.filter(item => item.parent_id === null)
+        },
+        loadComments() {
+            this.comments = [
+                {id: 1, user: {name: 'Admin'}, body: 'Комментарий 1', created_at: '28 мая 2023', parent_id: null},
+                {id: 2, user: {name: 'Admin'}, body: 'Комментарий 2, ответ на 1', created_at: '28 мая 2023', parent_id: 1},
+                {id: 3, user: {name: 'Admin'}, body: 'Комментарий 3, ответ на 2', created_at: '28 мая 2023', parent_id: 2},
+                {id: 4, user: {name: 'Admin'}, body: 'Комментарий 4, ответ на 2', created_at: '28 мая 2023', parent_id: 2},
+                {id: 5, user: {name: 'Admin'}, body: 'Комментарий 5, ответ на 2', created_at: '28 мая 2023', parent_id: 2},
+                {id: 6, user: {name: 'Admin'}, body: 'Комментарий 6, ответ на 2', created_at: '28 мая 2023', parent_id: 1},
+                {id: 7, user: {name: 'Admin'}, body: 'Комментарий 7, ответ на 2', created_at: '28 мая 2023', parent_id: 2},
+                {id: 8, user: {name: 'Admin'}, body: 'Комментарий 8', created_at: '28 мая 2023', parent_id: null},
+                {id: 9, user: {name: 'Admin'}, body: 'Комментарий 9', created_at: '28 мая 2023', parent_id: null},
+                {id: 10, user: {name: 'Admin'}, body: 'Комментарий 10', created_at: '28 мая 2023', parent_id: null},
+                {id: 11, user: {name: 'Admin'}, body: 'Комментарий 11, ответ на 1', created_at: '28 мая 2023', parent_id: 1},
+                {id: 12, user: {name: 'Admin'}, body: 'Комментарий 12, ответ на 3', created_at: '28 мая 2023', parent_id: 3},
+            ]
         }
     }
 }
