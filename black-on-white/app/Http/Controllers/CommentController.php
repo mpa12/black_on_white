@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
     /**
-     * @param int $article_id
+     * Просмотр комментареив
+     *
+     * @param int $article_id ID новости
      * @return AnonymousResourceCollection
      */
     public function index(int $article_id): AnonymousResourceCollection
@@ -20,13 +25,21 @@ class CommentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Создание комментария
      *
-     * @return \Illuminate\Http\Response
+     * @param CreateCommentRequest $request
+     * @return JsonResponse
      */
-    public function create()
+    public function create(CreateCommentRequest $request): JsonResponse
     {
-        //
+        $comment = Comment::create([
+            'body' => $request->body,
+            'user_id' => Auth::user()['id'],
+            'article_id' => $request->article_id,
+            'parent_id' => $request->parent_id,
+        ]);
+
+        return response()->json(['success' => new CommentResource($comment)]);
     }
 
     /**

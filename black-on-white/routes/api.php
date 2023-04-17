@@ -72,4 +72,5 @@ Route::controller(PhotoGalleryController::class)->group(function () {
 
 Route::controller(CommentController::class)->group(function () {
     Route::get('/comment/{article_id}', 'index');
+    Route::post('/comment', 'create')->middleware('auth:api');
 });

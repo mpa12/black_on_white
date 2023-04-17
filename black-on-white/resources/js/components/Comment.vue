@@ -5,10 +5,21 @@
             <time>{{ changeCreatedAt(comment.created_at) }}</time>
         </div>
         <p class=m-0>{{ comment.body }}</p>
-        <button type=button class=comment-button />
+        <button type=button class=comment-button @click=showReplyForm />
+
+        <form class="d-flex gap-2" v-if=replying @submit.prevent=reply>
+            <div class=flex-grow-1>
+                <label class=form-label>Ответ</label>
+                <input v-model=body type=text class=form-control>
+            </div>
+            <div class="d-flex flex-column justify-content-between align-items-end">
+                <button class=reply-cancel type=button @click=hideReplyForm>отмена</button>
+                <button class="btn btn-dark">Отправить</button>
+            </div>
+        </form>
     </section>
     <div>
-        <comment v-if="childComments" v-for="childComment in childComments" :comment="childComment" :comments="comments" />
+        <comment v-if=childComments v-for="childComment in childComments" :comment=childComment :comments=comments />
     </div>
 </template>
 
@@ -22,6 +33,8 @@ export default {
         return {
             childComments: null,
             parentComments: [],
+            replying: false,
+            body: null,
         }
     },
     mounted() {
@@ -46,6 +59,22 @@ export default {
                 moment.locale('ru')
                 return moment(date).format('D MMMM в HH:mm YYYY')
             }
+        },
+        showReplyForm() {
+            this.replying = true
+        },
+        hideReplyForm() {
+            this.replying = false
+        },
+        reply() {
+            let comment = {
+                'body': this.body,
+                'article_id': this.$route.params.id,
+                'paren_id': this.comment.id,
+                'user': {'name': 'admin'},
+            }
+
+            this.childComments.push(comment)
         }
     }
 }
@@ -73,5 +102,15 @@ export default {
 
 .comment-button:hover {
     background:url(/images/reply-fill.svg) no-repeat;
+}
+
+.reply-cancel {
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+.reply-cancel:hover {
+    text-decoration: underline;
 }
 </style>
