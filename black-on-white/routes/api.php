@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ArticleTypeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\PhotoGalleryController;
@@ -67,4 +68,8 @@ Route::controller(PhotoGalleryController::class)->group(function () {
     Route::delete('/photo-gallery/{photo}', 'destroy')->middleware('auth:api')
         ->middleware('admin');
     Route::post('/photo-gallery', 'create')->middleware('auth:api')->middleware('admin');
+});
+
+Route::controller(CommentController::class)->group(function () {
+    Route::get('/comment/{article_id}', 'index');
 });

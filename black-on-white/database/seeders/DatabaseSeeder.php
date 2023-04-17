@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Article;
+use App\Models\Comment;
 use App\Models\Message;
 use App\Models\Participant;
 use App\Models\PhotoGallery;
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
         Article::factory(50)->create();
         Message::factory(50)->create();
         Participant::factory(50)->create();
-        PhotoGallery::factory(500)->create();
+        PhotoGallery::factory(50)->create();
+        Comment::factory(100)->create();
     }
 }
