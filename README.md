@@ -30,5 +30,5 @@
 7. php artisan migrate (Если нужны тестовые данные, то надо добавить ключ --seed)
 8. Выйти из контейнера используя команду exit
 9. Ввести команду ./vendor/bin/sail npm install
-10. Ввести команду ./vendor/bin/sail npm run dev
+10. Ввести команду ./vendor/bin/sail npm run build
 11. Готово!
