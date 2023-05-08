@@ -12,7 +12,7 @@
 <script>
 import axios from "axios";
 import moment from 'moment/min/moment-with-locales'
-import Comments from "../components/Comments.vue";
+import Comments from "../../components/Comments/Comments.vue";
 
 export default {
     name: "Article",

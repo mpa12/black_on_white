@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import ArticleSearch from "../components/ArticleSearch.vue";
-import ArticleCard from "../components/ArticleCard.vue";
+import ArticleSearch from "../../components/ArticleSearch.vue";
+import ArticleCard from "../../components/ArticleCard.vue";
 import axios from "axios";
 
 export default {

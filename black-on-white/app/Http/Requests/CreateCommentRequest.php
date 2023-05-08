@@ -37,7 +37,7 @@ class CreateCommentRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'article_id' => 'required|int',

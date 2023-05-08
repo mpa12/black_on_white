@@ -1,16 +1,16 @@
 <template>
     <section v-if="canComment || hasComments" class="comments-section mt-3">
-        <form v-if=canComment class="d-flex align-items-end gap-2">
+        <form v-if=canComment class="d-flex align-items-end gap-2"  @submit.prevent=createComment>
             <div class=flex-grow-1>
                 <label class=form-label>Комментарий</label>
-                <input type=text class=form-control>
+                <input type=text class=form-control v-model=body>
             </div>
             <button class="btn btn-dark">Отправить</button>
         </form>
 
         <p v-if="!hasComments" class="alert alert-light text-center">Нет комментариев</p>
 
-        <comment v-for="parentComment in parentComments" :comment="parentComment" :comments="comments" />
+        <comment v-for="parentComment in parentComments" :comment="parentComment" :comments="comments"/>
     </section>
 </template>
 
@@ -28,6 +28,8 @@ export default {
             hasComments: false,
             comments: [],
             parentComments: [],
+            body: null,
+            errors: [],
         }
     },
     mounted() {
@@ -49,6 +51,29 @@ export default {
                 this.checkCanComment()
                 this.checkHasComments()
                 this.getParentComments()
+            })
+        },
+        createComment() {
+            let formData = new FormData()
+            formData.append('body', this.body)
+            formData.append('article_id', this.article_id)
+
+            axios.post('/api/comment', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then((response) => {
+                this.errors = []
+                this.body = null
+                this.comments.push(response.data.success)
+                this.getParentComments()
+            }).catch(error => {
+                if (error.response.status === 422) {
+                    this.errors = []
+                    let errors = JSON.parse(error.request.responseText).errors
+                    for (const key in errors) this.errors[key] = errors[key][0]
+                }
             })
         }
     }

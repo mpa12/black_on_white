@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import AdminSection from '../components/AdminSection.vue'
+import AdminSection from '../../components/AdminSection.vue'
 
 export default {
     name: "AdminIndex",

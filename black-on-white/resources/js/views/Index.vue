@@ -7,11 +7,11 @@
 </template>
 
 <script>
-import IndexBanner from "../components/IndexBanner.vue";
-import IndexInfo from "../components/IndexInfo.vue";
-import IndexLastNews from "../components/IndexLastNews.vue";
-import AboutUs from "../components/AboutUs.vue";
-import WriteToUs from "../components/WriteToUs.vue";
+import IndexBanner from "../components/IndexPage/IndexBanner.vue";
+import IndexInfo from "../components/IndexPage/IndexInfo.vue";
+import IndexLastNews from "../components/IndexPage/IndexLastNews.vue";
+import AboutUs from "../components/IndexPage/AboutUs.vue";
+import WriteToUs from "../components/IndexPage/WriteToUs.vue";
 
 export default {
     name: "Index",

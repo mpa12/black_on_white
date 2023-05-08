@@ -1,8 +1,8 @@
 <template>
-    <toast v-if=updated title="Участник успешно изменен" />
+    <toast v-if=created title="Участник успешно добавлен" />
 
     <div class="title my-3">
-        <h1>Редактирование участника</h1>
+        <h1>Создание участника</h1>
     </div>
 
     <div class=form-wrapper>
@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import Toast from "../components/Toast.vue";
+import Toast from "../../components/Toast.vue";
 
 export default {
-    name: "AdminParticipantsUpdate",
+    name: "AdminParticipantsCreate",
     components: { Toast },
     data() {
         return {
@@ -47,27 +47,10 @@ export default {
             role: null,
             photo: null,
             data: null,
-            updated: false,
+            created: false,
         }
     },
-    mounted() {
-        this.loadParticipant()
-    },
     methods: {
-        loadParticipant() {
-            axios.get(`/api/participant/${this.$route.params.id}`, null, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
-                }
-            }).then((response) => {
-                this.name = response.data['data']['name']
-                this.role = response.data['data']['role']
-                this.installedPhoto = response.data['data']['photo']
-            }).catch(error => {
-                console.log(error)
-            })
-        },
         handlePhotoUpload() {
             this.photo = this.$refs.files.files[0]
         },
@@ -82,18 +65,17 @@ export default {
         create() {
             this.getData()
 
-            axios.post(`/api/participant/${this.$route.params.id}`, this.data, {
+            axios.post('/api/participant', this.data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`
                 }
-            }).then((response) => {
+            }).then(() => {
                 this.errors = []
-                this.name = response.data['success']['name']
-                this.role = response.data['success']['role']
+                this.name = null
+                this.role = null
                 this.photo = null
-                this.installedPhoto = response.data['success']['photo']
-                this.updated = true
+                this.created = true
             }).catch(error => {
                 if (error.response.status === 422) {
                     this.errors = []

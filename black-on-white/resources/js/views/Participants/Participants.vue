@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ParticipantCard from "../components/ParticipantCard.vue";
+import ParticipantCard from "../../components/ParticipantCard.vue";
 import axios from "axios";
 export default {
     name: "Participants",

@@ -93,7 +93,7 @@
 <script>
 import axios from "axios";
 import moment from 'moment/min/moment-with-locales'
-import ArticleSearch from "../components/ArticleSearch.vue";
+import ArticleSearch from "../../components/ArticleSearch.vue";
 
 export default {
     name: "AdminArticles",

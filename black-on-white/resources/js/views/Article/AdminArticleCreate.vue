@@ -1,41 +1,40 @@
 <template>
-    <toast v-if=updated title="Новость успешно изменена" />
+    <toast v-if=created title="Новость успешно добавлена" />
     <div class="article-form-title my-3">
-        <h1>Редактирование новости</h1>
+        <h1>Добавление новости</h1>
     </div>
     <admin-article-form :key=formKey />
 </template>
 
 <script>
-import AdminArticleForm from "../components/AdminArticleForm.vue";
-import Toast from "../components/Toast.vue";
+import AdminArticleForm from "../../components/AdminArticleForm.vue"
+import Toast from "../../components/Toast.vue"
 
 export default {
-    name: "AdminArticleUpdate",
+    name: "AdminArticleCreate",
     components: { AdminArticleForm, Toast },
     data() {
         return {
-            article_id: null,
-            updated: false,
-            formKey: 0,
+            formData: null,
+            created: false,
+            formKey: 0
         }
     },
     mounted() {
-        this.article_id = this.$route.params.id
         window.addEventListener('getData', function (event) {
             this.formData = event.detail.formData
-            this.update(this.formData)
+            this.create(this.formData)
         }.bind(this))
     },
     methods: {
-        update(formData) {
-            axios.post( '/api/article/' + this.article_id, formData, {
+        create(formData) {
+            axios.post( '/api/article', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`
                 }
             }).then(() => {
-                this.updated = true
+                this.created = true
                 this.formKey++
             }).catch(error => {
                 if (error.response.status === 422) {
@@ -45,7 +44,6 @@ export default {
 
                     let evt = new CustomEvent('setErrors', { detail: { errors: errors } })
                     window.dispatchEvent(evt)
-                    console.log(errors)
                 }
             })
         }
