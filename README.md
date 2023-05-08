@@ -21,14 +21,33 @@
 
 ## Инструкция по развертыванию
 
-1. Перейти через консоль в папку с проектом
-2. Ввести команду docker-compose up -d
-3. Ввести команду docker ps
-4. После запуска педыдущей команды должна появиться таблица из которой надо скопировать CONTAINER_ID нашего приложения
-5. docker exec -it CONTAINER_ID bash
-6. composer install
-7. php artisan migrate (Если нужны тестовые данные, то надо добавить ключ --seed)
-8. Выйти из контейнера используя команду exit
-9. Ввести команду ./vendor/bin/sail npm install
-10. Ввести команду ./vendor/bin/sail npm run build
-11. Готово!
+1. Устаноливаем зависимости указанные в файле composer.json
+```
+composer install
+```
+
+2. Создаем файл .env по примеру из .env.example
+
+3. Запускаем контейнеры
+
+```
+./vendor/bin/sail up -d
+```
+
+4. Запускаем миграции
+
+```
+./vendor/bin/sail php artisan migrate
+```
+
+5. Устаноливаем зависимости указанные в файле package.json
+
+```
+./vendor/bin/sail npm install
+```
+
+6. Выполняем сборку на основе настроек, указанных в файле package.json
+
+```
+./vendor/bin/sail npm run build
+```
