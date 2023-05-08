@@ -25,29 +25,20 @@
 ```
 composer install
 ```
-
 2. Создаем файл .env по примеру из .env.example
-
 3. Запускаем контейнеры
-
 ```
 ./vendor/bin/sail up -d
 ```
-
 4. Запускаем миграции
-
 ```
 ./vendor/bin/sail php artisan migrate
 ```
-
 5. Устаноливаем зависимости указанные в файле package.json
-
 ```
 ./vendor/bin/sail npm install
 ```
-
 6. Выполняем сборку на основе настроек, указанных в файле package.json
-
 ```
 ./vendor/bin/sail npm run build
 ```
