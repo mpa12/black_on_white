@@ -1,11 +1,12 @@
 <template>
-    <section class="comment mt-2">
+    <section class="comment mt-2" v-if=!isDeleted>
         <div class="d-flex gap-2 align-items-baseline">
             <h6 class=m-0>{{ comment.user.name }}</h6>
             <time>{{ changeCreatedAt(comment.created_at) }}</time>
         </div>
         <p class=m-0>{{ comment.body }}</p>
-        <button type=button class=comment-button @click=showReplyForm v-if=canComment />
+        <button type=button class=reply-button @click=showReplyForm v-if=canComment />
+        <button type=button class=delete-button @click=deleteComment(comment.id) v-if=canDeleteComment />
 
         <form class="d-flex gap-2" v-if=replying @submit.prevent=reply>
             <div class=flex-grow-1>
@@ -33,27 +34,33 @@ export default {
     data() {
         return {
             canComment: false,
+            canDeleteComment: false,
             childComments: null,
             parentComments: [],
             errors: [],
             replying: false,
+            isDeleted: false,
             body: null,
         }
     },
     mounted() {
         this.getChildComment()
         this.checkCanComment()
+        this.checkCanDeleteComment()
     },
     methods: {
         checkCanComment() {
             this.canComment = !!localStorage.getItem('token')
         },
+        checkCanDeleteComment() {
+            this.canDeleteComment = this.comment.can_delete
+        },
         getChildComment() {
             this.childComments = this.comments.filter(item => item.parent_id === this.comment.id);
         },
-        changeCreatedAt(createdAt) {
-            const date = new Date(createdAt)
-            let diff = moment.duration(moment().diff(date))
+        changeCreatedAt(date) {
+            date = new Date(date)
+            const diff = moment.duration(moment().diff(date))
             if (diff.asMinutes() < 60) {
                 let test = (new Date()).getTime() - date.getTime()
                 test = (new Date(test)).getMinutes()
@@ -95,6 +102,18 @@ export default {
                     for (const key in errors) this.errors[key] = errors[key][0]
                 }
             })
+        },
+        deleteComment(commentId) {
+            axios.delete('/api/comment/' + commentId, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                }
+            }).then(() => {
+                this.isDeleted = true
+            }).catch(error => {
+                console.log(error)
+            })
         }
     }
 }
@@ -112,7 +131,7 @@ export default {
     margin-left: 20px;
 }
 
-.comment-button {
+.reply-button {
     background:url(/images/reply.svg) no-repeat;
     border: none;
     padding: 0;
@@ -120,8 +139,20 @@ export default {
     width: 20px;
 }
 
-.comment-button:hover {
+.reply-button:hover {
     background:url(/images/reply-fill.svg) no-repeat;
+}
+
+.delete-button {
+    background:url(/images/trash3.svg) no-repeat;
+    border: none;
+    padding: 0;
+    height: 20px;
+    width: 20px;
+}
+
+.delete-button:hover {
+    background:url(/images/trash3-fill.svg) no-repeat;
 }
 
 .reply-cancel {

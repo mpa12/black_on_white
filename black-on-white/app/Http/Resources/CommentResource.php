@@ -22,6 +22,7 @@ class CommentResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'parent_id' => $this->parent_id,
+            'can_delete' => $this->canDelete(),
         ];
     }
 }

@@ -46,7 +46,9 @@ export default {
             this.parentComments = this.comments.filter(item => item.parent_id === null)
         },
         loadComments() {
-            axios.get(`/api/comment/${this.article_id}`).then(response => {
+            axios.get(`/api/comment/${this.article_id}`, {
+                headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
+            }).then(response => {
                 this.comments = response.data['data']
                 this.checkCanComment()
                 this.checkHasComments()

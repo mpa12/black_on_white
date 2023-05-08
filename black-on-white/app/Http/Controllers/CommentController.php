@@ -57,11 +57,20 @@ class CommentController extends Controller
     /**
      * Удаление комментария
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Comment $comment
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        //
+        try {
+            if (Auth::user()['id'] === $comment->user_id || Auth::user()['is_admin']) {
+                $comment->delete();
+                return response()->json(['success' => 'Комментарий успешно удален']);
+            } else {
+                return response()->json(['error' => 'Недостаточно прав для удаления комментария']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->errorInfo]);
+        }
     }
 }
