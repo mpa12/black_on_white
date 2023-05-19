@@ -6,6 +6,7 @@
         <img :src="article.photo" :alt="article.title" class="my-2 mx-auto d-block article-main-img">
         <section class="mt-2 content" v-html="article.text"></section>
     </section>
+    <article-rating :article-id=$route.params.id />
     <comments :article_id=$route.params.id />
 </template>
 
@@ -13,10 +14,11 @@
 import axios from "axios";
 import moment from 'moment/min/moment-with-locales'
 import Comments from "../../components/Comments/Comments.vue";
+import ArticleRating from "../../components/ArticleRating.vue";
 
 export default {
     name: "Article",
-    components: {Comments},
+    components: {ArticleRating, Comments},
     data() {
         return {
             article: [],

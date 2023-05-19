@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
-class CreateCommentRequest extends FormRequest
+class SetRatingRequest extends FormRequest
 {
     protected function failedValidation(Validator $validator)
     {
@@ -41,8 +41,7 @@ class CreateCommentRequest extends FormRequest
     {
         return [
             'article_id' => 'required|int',
-            'parent_id' => 'int',
-            'body' => 'required|string|max:255',
+            'create_rating' => 'required|boolean',
         ];
     }
 }
