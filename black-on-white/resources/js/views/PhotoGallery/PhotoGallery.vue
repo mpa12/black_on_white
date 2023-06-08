@@ -7,14 +7,16 @@
             </div>
         </div>
     </div>
-    <div v-if="loading" class="text-center">Loading...</div>
+    <loader v-if="loading"></loader>
 </template>
 
 <script>
 import axios from "axios";
+import Loader from "../../components/Loader.vue";
 
 export default {
     name: "PhotoGallery",
+    components: {Loader},
     data() {
         return {
             images: [],

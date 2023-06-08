@@ -30,11 +30,14 @@ import Button from './components/Button.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import ButtonUp from './components/ButtonUp.vue'
+import Loader from './components/Loader.vue'
+import store from "./store";
 
 app.component('v-button', Button)
 app.component('v-header', Header)
 app.component('v-footer', Footer)
 app.component('v-button-up', ButtonUp)
+app.component('loader', Loader)
 
 /**
  * Finally, we will attach the application instance to a HTML element with
@@ -54,5 +57,6 @@ app.use(
     }
 )
 
+app.use(store);
 app.use(router)
 app.mount('#app')

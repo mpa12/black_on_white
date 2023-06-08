@@ -2,7 +2,7 @@
     <div class="w-100 gap-3 d-flex flex-column">
         <article-search />
         <article-card v-for="article in articles" :article="article" :key="article.id"></article-card>
-        <div v-if="loading" class="text-center">Loading...</div>
+        <loader v-if="loading"></loader>
     </div>
 </template>
 
@@ -10,10 +10,11 @@
 import ArticleSearch from "../../components/ArticleSearch.vue";
 import ArticleCard from "../../components/ArticleCard.vue";
 import axios from "axios";
+import Loader from "../../components/Loader.vue";
 
 export default {
     name: "Articles",
-    components: { ArticleCard, ArticleSearch },
+    components: {Loader, ArticleCard, ArticleSearch },
     data() {
         return {
             articles: [],

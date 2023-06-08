@@ -16,6 +16,7 @@
     <div id="app">
         <v-header></v-header>
         <main class="container">
+            <loader v-if="$store.state.isLoading"></loader>
             <router-view></router-view>
         </main>
         <v-footer></v-footer>
