@@ -224,7 +224,7 @@ router.beforeEach((to, from, next) => {
     } else if (to.matched.some((route) => route.meta.requiresAdmin)) {
         if (!token) next('/');
         else {
-            store.commit('setLoading', true); // Устанавливаем состояние загрузки в true
+            store.commit('setLoading', true);
             checkIsAdmin(token)
                 .then((isAdmin) => {
                     if (!isAdmin) next('/');
@@ -235,7 +235,7 @@ router.beforeEach((to, from, next) => {
                     next('/');
                 })
                 .finally(() => {
-                    store.commit('setLoading', false); // После завершения проверки устанавливаем состояние загрузки в false
+                    store.commit('setLoading', false);
                 });
         }
     } else {
