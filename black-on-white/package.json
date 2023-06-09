@@ -19,6 +19,7 @@
         "vue": "^3.2.47"
     },
     "dependencies": {
+        "@rollup/plugin-alias": "^5.0.0",
         "@vueup/vue-quill": "^1.1.1",
         "moment": "^2.29.4",
         "quill-image-uploader": "^1.2.4",
