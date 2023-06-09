@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         update(formData) {
-            axios.post( '/api/article/' + this.article_id, formData, {
+            axios.post( process.env.VUE_APP_URL + '/api/article/' + this.article_id, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`

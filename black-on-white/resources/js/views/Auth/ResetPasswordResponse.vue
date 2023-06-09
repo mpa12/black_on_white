@@ -39,7 +39,7 @@ export default {
     },
     methods: {
         tokenIsValid() {
-            axios.post('/api/auth/validate-token', {
+            axios.post(process.env.VUE_APP_URL + '/api/auth/validate-token', {
                 remember_token: this.remember_token
             }).then(() => {
                 this.token_valid = true
@@ -49,7 +49,7 @@ export default {
             })
         },
         resetPassword() {
-            axios.post('/api/auth/reset-password-response', {
+            axios.post(process.env.VUE_APP_URL + '/api/auth/reset-password-response', {
                 remember_token: this.remember_token,
                 new_password: this.new_password
             }).then(() => {

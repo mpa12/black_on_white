@@ -55,7 +55,7 @@ export default {
     },
     methods: {
         loadParticipant() {
-            axios.get(`/api/participant/${this.$route.params.id}`, null, {
+            axios.get(process.env.VUE_APP_URL + `/api/participant/${this.$route.params.id}`, null, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`
@@ -82,7 +82,7 @@ export default {
         create() {
             this.getData()
 
-            axios.post(`/api/participant/${this.$route.params.id}`, this.data, {
+            axios.post(process.env.VUE_APP_URL + `/api/participant/${this.$route.params.id}`, this.data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`

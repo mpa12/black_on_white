@@ -44,7 +44,7 @@ export default {
         loadImages() {
             this.loading = true
             let params = { page: this.page }
-            axios.get('/api/photo-gallery', {params}).then(response => {
+            axios.get(process.env.VUE_APP_URL + '/api/photo-gallery', {params}).then(response => {
                 let newData = response.data['data'].map(x => {
                     return {src: x.photo, show: false}
                 })

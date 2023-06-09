@@ -30,7 +30,7 @@ export default {
     },
     methods: {
         loadArticle() {
-            axios.get('/api/article/' + this.$route.params.id).then(response => {
+            axios.get(process.env.VUE_APP_URL + '/api/article/' + this.$route.params.id).then(response => {
                 this.article = response.data['data']
                 this.changeCreatedAt(this.article.created_at)
             })

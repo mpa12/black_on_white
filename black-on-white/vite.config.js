@@ -28,4 +28,9 @@ export default defineConfig({
             vue: 'vue/dist/vue.esm-bundler.js',
         },
     },
+    define: {
+        'process.env': {
+            VUE_APP_URL: 'http://localhost:8080',
+        },
+    },
 });

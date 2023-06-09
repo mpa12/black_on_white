@@ -24,7 +24,7 @@ export default {
     },
     methods: {
         getRating(articleId) {
-            axios.get(`/api/rating/${articleId}`, {
+            axios.get(process.env.VUE_APP_URL + `/api/rating/${articleId}`, {
                 headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
             }).then(response => {
                 this.rating = response.data.rating;
@@ -47,7 +47,7 @@ export default {
             formData.append('create_rating', this.isRated ? 1 : 0)
             formData.append('article_id', articleId)
 
-            axios.post('/api/rating', formData, {
+            axios.post(process.env.VUE_APP_URL + '/api/rating', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`

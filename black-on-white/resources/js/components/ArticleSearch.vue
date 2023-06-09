@@ -38,7 +38,7 @@ export default {
             }
         },
         loadFilters() {
-            axios.get('/api/article-type/').then(response => {
+            axios.get(process.env.VUE_APP_URL + '/api/article-type/').then(response => {
                 this.filters = response.data['data']
             })
         },
@@ -58,7 +58,7 @@ export default {
                 return
             }
 
-            axios.get('/api/auth/is-admin', {
+            axios.get(process.env.VUE_APP_URL + '/api/auth/is-admin', {
                 headers: { "Authorization" : `Bearer ${token}` }
             }).then(response => {
                 this.isAdmin = !!response.data

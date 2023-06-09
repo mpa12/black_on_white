@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         register() {
-            axios.post('/api/auth/register', {
+            axios.post(process.env.VUE_APP_URL + '/api/auth/register', {
                 name: this.name,
                 email: this.email,
                 password: this.password

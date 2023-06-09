@@ -86,7 +86,7 @@ export default {
             formData.append('article_id', this.$route.params.id)
             formData.append('parent_id', this.comment.id)
 
-            axios.post('/api/comment', formData, {
+            axios.post(process.env.VUE_APP_URL + '/api/comment', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`
@@ -104,7 +104,7 @@ export default {
             })
         },
         deleteComment(commentId) {
-            axios.delete('/api/comment/' + commentId, {
+            axios.delete(process.env.VUE_APP_URL + '/api/comment/' + commentId, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`

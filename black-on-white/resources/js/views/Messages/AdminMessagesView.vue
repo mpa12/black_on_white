@@ -37,7 +37,7 @@ export default {
     methods: {
         loadMessage() {
             axios.get(
-                '/api/message/read/' + this.$route.params.id,
+                process.env.VUE_APP_URL + '/api/message/read/' + this.$route.params.id,
                 {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
             ).then(response => {
                 this.message = response.data['data']

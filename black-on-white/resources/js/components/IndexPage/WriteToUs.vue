@@ -79,7 +79,7 @@ export default {
             this.create(formData)
         },
         create(formData) {
-            axios.post( '/api/message', formData, {
+            axios.post( process.env.VUE_APP_URL + '/api/message', formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             }).then(() => {
                 this.created = true

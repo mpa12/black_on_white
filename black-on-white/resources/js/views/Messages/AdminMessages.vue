@@ -133,7 +133,7 @@ export default {
         loadMessages() {
             this.loading = true
 
-            axios.get('/api/message?page=' + this.currentPage, {
+            axios.get(process.env.VUE_APP_URL + '/api/message?page=' + this.currentPage, {
                 headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}
             }).then(response => {
                 this.messages = response.data['data']
@@ -177,14 +177,14 @@ export default {
         },
         loadDeleteMessage(id) {
             axios.get(
-                '/api/message/' + id,
+                process.env.VUE_APP_URL + '/api/message/' + id,
                 {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
             ).then(response => {
                 this.deleteMessageInfo = response.data['data']
             })
         },
         deleteMessage(id) {
-            axios.delete('/api/message/' + id, {
+            axios.delete(process.env.VUE_APP_URL + '/api/message/' + id, {
                 headers: { "Authorization" : `Bearer ${localStorage.getItem('token')}` }
             }).then(() => {
                 this.loadMessages()

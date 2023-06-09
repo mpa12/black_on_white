@@ -147,7 +147,7 @@ export default {
             if (this.text !== '') params['text'] = this.text
             if (this.selectedFilters.length > 0) params['article_type'] = this.selectedFilters.join(",")
 
-            axios.get('/api/article', { params }).then(response => {
+            axios.get(process.env.VUE_APP_URL + '/api/article', { params }).then(response => {
                 this.articles = response.data['data']
                 this.totalPages = response.data['meta'].last_page
                 this.loading = false
@@ -188,12 +188,12 @@ export default {
             }
         },
         loadDeleteArticle(id) {
-            axios.get('/api/article/' + id).then(response => {
+            axios.get(process.env.VUE_APP_URL + '/api/article/' + id).then(response => {
                 this.deleteArticleInfo = response.data['data']
             })
         },
         deleteArticle(id) {
-            axios.delete('/api/article/' + id, {
+            axios.delete(process.env.VUE_APP_URL + '/api/article/' + id, {
                 headers: { "Authorization" : `Bearer ${localStorage.getItem('token')}` }
             }).then(() => {
                 this.loadArticles()

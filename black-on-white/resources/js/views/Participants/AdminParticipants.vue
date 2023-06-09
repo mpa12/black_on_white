@@ -86,7 +86,7 @@ export default {
     },
     methods: {
         loadParticipants() {
-            axios.get('/api/participant').then(response => {
+            axios.get(process.env.VUE_APP_URL + '/api/participant').then(response => {
                 this.participants = response.data['data']
             })
         },
@@ -110,12 +110,12 @@ export default {
             return `<img width=150 style="border-radius: 10px" src="${src}" alt="${alt}">`
         },
         loadDeleteParticipant(id) {
-            axios.get('/api/participant/' + id).then(response => {
+            axios.get(process.env.VUE_APP_URL + '/api/participant/' + id).then(response => {
                 this.deleteParticipantInfo = response.data['data']
             })
         },
         deleteParticipant(id) {
-            axios.delete('/api/participant/' + id, {
+            axios.delete(process.env.VUE_APP_URL + '/api/participant/' + id, {
                 headers: { "Authorization" : `Bearer ${localStorage.getItem('token')}` }
             }).then(() => {
                 this.loadParticipants()

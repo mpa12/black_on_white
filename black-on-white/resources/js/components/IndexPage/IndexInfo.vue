@@ -31,7 +31,7 @@ export default {
             this.year = new Date().getFullYear() - 2019
         },
         getParticipants() {
-            axios.get('/api/participant/count').then(response => {
+            axios.get(process.env.VUE_APP_URL + '/api/participant/count').then(response => {
                 this.participants = response.data
             })
         }

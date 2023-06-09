@@ -46,7 +46,7 @@ export default {
             this.parentComments = this.comments.filter(item => item.parent_id === null)
         },
         loadComments() {
-            axios.get(`/api/comment/${this.article_id}`, {
+            axios.get(process.env.VUE_APP_URL + `/api/comment/${this.article_id}`, {
                 headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
             }).then(response => {
                 this.comments = response.data['data']
@@ -60,7 +60,7 @@ export default {
             formData.append('body', this.body)
             formData.append('article_id', this.article_id)
 
-            axios.post('/api/comment', formData, {
+            axios.post(process.env.VUE_APP_URL + '/api/comment', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`

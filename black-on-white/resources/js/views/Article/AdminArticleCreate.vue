@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         create(formData) {
-            axios.post( '/api/article', formData, {
+            axios.post( process.env.VUE_APP_URL + '/api/article', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`

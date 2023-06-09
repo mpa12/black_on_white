@@ -39,7 +39,7 @@ export default {
     },
     methods: {
         loadLastNews() {
-            axios.get('/api/article/two-last').then(response => {
+            axios.get(process.env.VUE_APP_URL + '/api/article/two-last').then(response => {
                 this.articles = response.data['data']
             })
         }

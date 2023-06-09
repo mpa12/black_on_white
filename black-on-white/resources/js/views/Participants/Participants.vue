@@ -23,7 +23,7 @@ export default {
     },
     methods: {
         loadParticipants() {
-            axios.get('/api/participant').then(response => {
+            axios.get(process.env.VUE_APP_URL + '/api/participant').then(response => {
                 this.participants = response.data['data']
             })
         }

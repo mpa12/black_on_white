@@ -91,7 +91,7 @@ export default {
         loadImages() {
             this.loading = true
             let params = { page: this.page }
-            axios.get('/api/photo-gallery', {params}).then(response => {
+            axios.get(process.env.VUE_APP_URL + '/api/photo-gallery', {params}).then(response => {
                 let newData = response.data['data'].map(x => {
                     return {src: x.photo, show: false, id: x.id}
                 })
@@ -115,7 +115,7 @@ export default {
             this.deleteIndex = index
         },
         deleteImage(id, index) {
-            axios.delete(`/api/photo-gallery/${id}`, {
+            axios.delete(process.env.VUE_APP_URL + `/api/photo-gallery/${id}`, {
                 headers: { "Authorization" : `Bearer ${localStorage.getItem('token')}` }
             }).then(response => {
                 this.images.splice(index,1);
@@ -128,7 +128,7 @@ export default {
             let formData = new FormData()
             formData.append('photo', this.photo)
 
-            axios.post('/api/photo-gallery', formData, {
+            axios.post(process.env.VUE_APP_URL + '/api/photo-gallery', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`
