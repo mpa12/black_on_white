@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import alias from '@rollup/plugin-alias';
 
 export default defineConfig({
     plugins: [
@@ -22,7 +21,6 @@ export default defineConfig({
                 },
             },
         }),
-        alias({ entries: [{ find: /^http(s)?:\/\//, replacement: '' }] }),
     ],
     resolve: {
         alias: {

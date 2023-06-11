@@ -1,0 +1,1 @@
+:root{--my-light: #f4f4f4;--my-gray: #474a51;--my-black: #000000;--my-white: #ffffff;--my-light-gray: #e8e8e8}body{background:var(--my-light)!important}a{color:var(--my-black);text-decoration:none}a:hover{color:var(--my-gray);transition:color .3s ease-in-out}
