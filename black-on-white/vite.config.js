@@ -29,7 +29,7 @@ export default defineConfig({
     },
     define: {
         'process.env': {
-            VUE_APP_URL: 'http://localhost:8080',
+            VUE_APP_URL: '',
         },
     },
 });
