@@ -3,7 +3,7 @@
         <h3 class=mb-2>{{ article.title }}</h3>
         <span class=fw-lighter>{{ createdAt }}</span><br>
         <p class=mt-2>{{ article.description }}</p>
-        <img :src="article.photo" :alt="article.title" class="my-2 mx-auto d-block article-main-img">
+        <img :src="'/storage/' + article.photo" :alt="article.title" class="my-2 mx-auto d-block article-main-img">
         <section class="mt-2 content" v-html="article.text"></section>
     </section>
     <article-rating :article-id=$route.params.id />

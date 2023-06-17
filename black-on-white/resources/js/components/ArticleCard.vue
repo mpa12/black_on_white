@@ -4,12 +4,12 @@
             <time>{{ this.createdAt }}</time>
             <h1>{{ article.title }}</h1>
             <span class=newses__card-tag>{{ article.article_type.title }}</span>
-            <img :src="article.photo" :alt="article.title" class="d-lg-none d-block">
+            <img :src="'/storage/' + article.photo" :alt="article.title" class="d-lg-none d-block">
             <p>{{ article.description }}</p>
             <v-button class="mt-auto" title="Смотреть новость" :href="'/article/' + article.id"></v-button>
         </div>
         <div class="col-lg-6 col-12 newses__card-photo d-none d-lg-block">
-            <img :src="article.photo" :alt="article.title">
+            <img :src="'/storage/' + article.photo" :alt="article.title">
         </div>
     </div>
 </template>

@@ -8,6 +8,7 @@ use App\Models\PhotoGallery;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Storage;
 
 class PhotoGalleryController extends Controller
 {
@@ -27,11 +28,9 @@ class PhotoGalleryController extends Controller
      */
     public function create(CreatePhotoGalleryRequest $request)
     {
-        $image = $request->file('photo');
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('photo-gallery'), $imageName);
+        $path = $request->file('photo')->store('photo-gallery', 'public');
 
-        $photo = PhotoGallery::create(['photo' => '/photo-gallery/' . $imageName]);
+        $photo = PhotoGallery::create(['photo' => $path]);
 
         return response()->json(['success' => new PhotoGalleryResource($photo)]);
     }
@@ -45,6 +44,7 @@ class PhotoGalleryController extends Controller
     public function destroy(PhotoGallery $photo): JsonResponse
     {
         try {
+            Storage::disk('public')->delete($photo->photo);
             $photo->delete();
             return response()->json(['success' => 'Изображение успешно удалено']);
         } catch (Exception $e) {

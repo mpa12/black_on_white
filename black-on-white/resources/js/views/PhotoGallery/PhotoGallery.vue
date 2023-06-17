@@ -1,9 +1,9 @@
 <template>
     <div class="gallery">
         <div class="gallery-item" v-for="(image, index) in images" :key="index">
-            <img class="gallery-image" :src="image.src" @click="openImage(index)" alt="Фото" />
+            <img class="gallery-image" :src="'/storage/' + image.src" @click="openImage(index)" alt="Фото" />
             <div @click="closeImage(index)" class="overlay" v-if="image.show">
-                <img :src="image.src" @click="closeImage(index)" alt="Фото" />
+                <img :src="'/storage/' + image.src" @click="closeImage(index)" alt="Фото" />
             </div>
         </div>
     </div>

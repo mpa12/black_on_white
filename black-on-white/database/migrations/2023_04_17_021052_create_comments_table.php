@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('body')->nullable(false);
-            $table->foreignId('article_id')->constrained('articles');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('article_id')->constrained('articles')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->integer('parent_id')->nullable()->default(null);
         });
     }

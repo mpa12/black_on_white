@@ -17,7 +17,7 @@
             </div>
             <div class=mb-3>
                 <div v-if=installedPhoto class="w-100 d-flex align-items-center justify-content-center">
-                    <img :src=installedPhoto class=w-50 alt="Главное изображение новости">
+                    <img :src="'/storage/' + installedPhoto" class=w-50 alt="Главное изображение новости">
                 </div>
                 <label for=photo class=form-label>Главное изображение новости</label>
                 <input v-on:change=handlePhotoUpload ref=files class=form-control type=file id=photo>

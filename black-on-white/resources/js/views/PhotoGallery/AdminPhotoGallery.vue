@@ -42,13 +42,13 @@
 
     <div class="gallery">
         <div class="gallery-item" v-for="(image, index) in images" :key="index">
-            <img class="gallery-image" :src="image.src" alt="Фото" />
+            <img class="gallery-image" :src="'/storage/' + image.src" alt="Фото" />
             <div class="gallery-buttons d-flex gap-2">
                 <span class="badge bg-primary" @click=openImage(index)>Смотреть</span>
                 <span class="badge bg-danger" @click=openDeleteImage(index) data-bs-toggle=modal data-bs-target=#deleteModal>Удалить</span>
             </div>
             <div @click="closeImage(index)" class="overlay" v-if="image.show">
-                <img @click="closeImage(index)" :src="image.src" alt="Фото" />
+                <img @click="closeImage(index)" :src="'/storage/' + image.src" alt="Фото" />
             </div>
         </div>
     </div>

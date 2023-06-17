@@ -195,7 +195,7 @@ export default {
         deleteArticle(id) {
             axios.delete(process.env.VUE_APP_URL + '/api/article/' + id, {
                 headers: { "Authorization" : `Bearer ${localStorage.getItem('token')}` }
-            }).then(() => {
+            }).then((resp) => {
                 this.loadArticles()
             })
         }

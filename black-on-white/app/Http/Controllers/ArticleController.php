@@ -9,6 +9,7 @@ use App\Models\Article;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -38,15 +39,13 @@ class ArticleController extends Controller
      */
     public function create(StoreArticleRequest $request): JsonResponse
     {
-        $image = $request->file('photo');
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('articles'), $imageName);
+        $path = $request->file('photo')->store('articles', 'public');
 
         $article = Article::create([
             'title' => $request->title,
             'description' => $request->description,
             'text' => $request->text,
-            'photo' => '/articles/' . $imageName,
+            'photo' => $path,
             'article_type_id' => $request->article_type_id,
         ]);
 
@@ -78,9 +77,9 @@ class ArticleController extends Controller
 
         $image = $request->file('photo');
         if ($image) {
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('articles'), $imageName);
-            $article->photo = '/articles/' . $imageName;
+            $storage = Storage::disk('public');
+            if ($storage->exists($article->photo)) $storage->delete($article->photo);
+            $article->photo = $image->store('articles', 'public');
         }
 
         try {
@@ -100,6 +99,7 @@ class ArticleController extends Controller
     public function destroy(Article $article): JsonResponse
     {
         try {
+            Storage::disk('public')->delete($article->photo);
             $article->delete();
             return response()->json(['success' => 'Новость успешно удалена']);
         } catch (\Exception $e) {
