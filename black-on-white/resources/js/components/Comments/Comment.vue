@@ -89,7 +89,7 @@ export default {
             axios.post(process.env.VUE_APP_URL + '/api/comment', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                    Authorization : `Bearer ${localStorage.getItem('token')}`
                 }
             }).then((response) => {
                 this.errors = []
@@ -104,16 +104,20 @@ export default {
             })
         },
         deleteComment(commentId) {
-            axios.delete(process.env.VUE_APP_URL + '/api/comment/' + commentId, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+            axios.post(
+                process.env.VUE_APP_URL + '/api/comment/' + commentId,
+                {
+                    _method: 'delete',
+                },
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
                 }
-            }).then(() => {
+            ).then(() => {
                 this.isDeleted = true
-            }).catch(error => {
-                console.log(error)
-            })
+            }).catch(console.error)
         }
     }
 }

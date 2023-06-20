@@ -115,11 +115,17 @@ export default {
             })
         },
         deleteParticipant(id) {
-            axios.delete(process.env.VUE_APP_URL + '/api/participant/' + id, {
-                headers: { "Authorization" : `Bearer ${localStorage.getItem('token')}` }
-            }).then(() => {
-                this.loadParticipants()
-            })
+            axios.post(
+                process.env.VUE_APP_URL + '/api/participant/' + id,
+                {
+                    _method: 'delete',
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            ).then(this.loadParticipants).catch(console.error)
         }
     }
 }

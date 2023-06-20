@@ -122,9 +122,7 @@ export default {
                 start = Math.max(end - maxVisiblePages + 1, 1);
             }
 
-            for (let i = start; i <= end; i++) {
-                pages.push(i);
-            }
+            for (let i = start; i <= end; i++) pages.push(i);
 
             return pages;
         },
@@ -193,11 +191,17 @@ export default {
             })
         },
         deleteArticle(id) {
-            axios.delete(process.env.VUE_APP_URL + '/api/article/' + id, {
-                headers: { "Authorization" : `Bearer ${localStorage.getItem('token')}` }
-            }).then((resp) => {
-                this.loadArticles()
-            })
+            axios.post(
+                process.env.VUE_APP_URL + '/api/article/' + id,
+                {
+                    _method: 'delete',
+                },
+            {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            ).then(this.loadArticles).catch(console.error)
         }
     }
 }

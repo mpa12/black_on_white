@@ -92,9 +92,7 @@ export default {
             this.loading = true
             let params = { page: this.page }
             axios.get(process.env.VUE_APP_URL + '/api/photo-gallery', {params}).then(response => {
-                let newData = response.data['data'].map(x => {
-                    return {src: x.photo, show: false, id: x.id}
-                })
+                let newData = response.data['data'].map(x => ({src: x.photo, show: false, id: x.id}))
                 this.images = [...this.images, ...newData]
                 this.totalPages = response.data['meta'].last_page
                 this.loading = false
@@ -103,10 +101,9 @@ export default {
         handleScroll() {
             if (this.loading) return
             if (window.pageYOffset + window.innerHeight + 200 >= document.body.offsetHeight) {
-                if (this.page < this.totalPages) {
-                    this.page += 1
-                    this.loadImages()
-                }
+                if (!(this.page < this.totalPages)) return;
+                this.page++;
+                this.loadImages();
             }
         },
         openDeleteImage(index) {
@@ -115,14 +112,19 @@ export default {
             this.deleteIndex = index
         },
         deleteImage(id, index) {
-            axios.delete(process.env.VUE_APP_URL + `/api/photo-gallery/${id}`, {
-                headers: { "Authorization" : `Bearer ${localStorage.getItem('token')}` }
-            }).then(response => {
+            axios.post(
+                process.env.VUE_APP_URL + `/api/photo-gallery/${id}`,
+                {
+                    _method: 'delete',
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            ).then(() => {
                 this.images.splice(index,1);
-                console.log(response)
-            }).catch(err => {
-                console.log(err)
-            })
+            }).catch(console.error)
         },
         create() {
             let formData = new FormData()
@@ -131,19 +133,16 @@ export default {
             axios.post(process.env.VUE_APP_URL + '/api/photo-gallery', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                    Authorization : `Bearer ${localStorage.getItem('token')}`
                 }
             }).then(() => {
                 this.photo = null
-
                 this.images = []
                 this.page = 1
                 this.totalPages = null
                 this.loading = true
                 this.loadImages()
-            }).catch(error => {
-                console.log(error)
-            })
+            }).catch(console.error)
         },
         handlePhotoUpload() {
             this.photo = this.$refs.files.files[0]

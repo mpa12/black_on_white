@@ -119,9 +119,7 @@ export default {
                 start = Math.max(end - maxVisiblePages + 1, 1);
             }
 
-            for (let i = start; i <= end; i++) {
-                pages.push(i);
-            }
+            for (let i = start; i <= end; i++) pages.push(i);
 
             return pages;
         },
@@ -134,7 +132,7 @@ export default {
             this.loading = true
 
             axios.get(process.env.VUE_APP_URL + '/api/message?page=' + this.currentPage, {
-                headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
             }).then(response => {
                 this.messages = response.data['data']
                 this.totalPages = response.data['meta'].last_page
@@ -178,17 +176,23 @@ export default {
         loadDeleteMessage(id) {
             axios.get(
                 process.env.VUE_APP_URL + '/api/message/' + id,
-                {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+                {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}}
             ).then(response => {
                 this.deleteMessageInfo = response.data['data']
             })
         },
         deleteMessage(id) {
-            axios.delete(process.env.VUE_APP_URL + '/api/message/' + id, {
-                headers: { "Authorization" : `Bearer ${localStorage.getItem('token')}` }
-            }).then(() => {
-                this.loadMessages()
-            })
+            axios.post(
+                process.env.VUE_APP_URL + '/api/message/' + id,
+                {
+                    _method: 'delete',
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            ).then(this.loadMessages).catch(console.error)
         }
     }
 }

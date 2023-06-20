@@ -1,5 +1,5 @@
 <template>
-    <div class=news_wrapper :style="{ backgroundImage: 'url(' + article.photo + ')' }">
+    <div class=news_wrapper :style="{ backgroundImage: 'url(/storage/' +  article.photo + ')' }">
         <div class=news_card>
             <h2>{{ article.title }}</h2>
             <p class=flex-grow-1>{{ article.description }}</p>
