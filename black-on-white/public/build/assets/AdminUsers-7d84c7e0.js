@@ -1,1 +1,0 @@
-import{_ as e,o as s,c as n}from"./app-38c7d57f.js";const o={name:"AdminUsers"};function r(t,c,a,_,p,m){return s(),n("h1",null,"Управление пользователями")}const f=e(o,[["render",r]]);export{f as default};

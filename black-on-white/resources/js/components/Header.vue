@@ -1,5 +1,5 @@
 <template>
-    <header class="container mb-3" @localStorageUpdated="handleLocalStorageUpdated">
+    <header class="container my-3" @localStorageUpdated="handleLocalStorageUpdated">
         <div class="header d-flex justify-content-between align-items-center">
             <div class="flex-grow-1">
                 <router-link to="/" class="fw-bold fs-5">Черным по белому</router-link>

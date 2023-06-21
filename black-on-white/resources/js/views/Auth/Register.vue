@@ -4,8 +4,8 @@
         <form class=register-wrapper @submit.prevent=register>
             <h1 class=mb-4>Регистрация</h1>
             <div class=mb-3>
-                <label for=name class=form-label>Имя пользоватлея</label>
-                <input v-model=name type=text class=form-control id=name placeholder="Имя пользоватлея">
+                <label for=name class=form-label>Имя пользователя</label>
+                <input v-model=name type=text class=form-control id=name placeholder="Имя пользователя">
                 <small v-if="errors.hasOwnProperty('name')" class=text-danger>{{ errors.name }}</small>
             </div>
             <div class=mb-3>
