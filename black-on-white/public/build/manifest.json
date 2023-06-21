@@ -7,41 +7,11 @@
     "file": "assets/ArticleSearch-a26d2a0a.css",
     "src": "ArticleSearch.css"
   },
-  "_AdminArticleForm-45138994.js": {
-    "css": [
-      "assets/AdminArticleForm-5f84d7fc.css"
-    ],
-    "file": "assets/AdminArticleForm-45138994.js",
-    "imports": [
-      "__commonjsHelpers-87174ba5.js",
-      "resources/js/app.js"
-    ]
-  },
   "_AdminArticleForm-5d840da1.js": {
     "css": [
       "assets/AdminArticleForm-5f84d7fc.css"
     ],
     "file": "assets/AdminArticleForm-5d840da1.js",
-    "imports": [
-      "__commonjsHelpers-87174ba5.js",
-      "resources/js/app.js"
-    ]
-  },
-  "_AdminArticleForm-b4e66aab.js": {
-    "css": [
-      "assets/AdminArticleForm-5f84d7fc.css"
-    ],
-    "file": "assets/AdminArticleForm-b4e66aab.js",
-    "imports": [
-      "__commonjsHelpers-87174ba5.js",
-      "resources/js/app.js"
-    ]
-  },
-  "_AdminArticleForm-ca160fef.js": {
-    "css": [
-      "assets/AdminArticleForm-5f84d7fc.css"
-    ],
-    "file": "assets/AdminArticleForm-ca160fef.js",
     "imports": [
       "__commonjsHelpers-87174ba5.js",
       "resources/js/app.js"
@@ -56,53 +26,8 @@
       "resources/js/app.js"
     ]
   },
-  "_ArticleSearch-4c9d2150.js": {
-    "css": [
-      "assets/ArticleSearch-a26d2a0a.css"
-    ],
-    "file": "assets/ArticleSearch-4c9d2150.js",
-    "imports": [
-      "resources/js/app.js"
-    ]
-  },
-  "_ArticleSearch-9417a2c0.js": {
-    "css": [
-      "assets/ArticleSearch-a26d2a0a.css"
-    ],
-    "file": "assets/ArticleSearch-9417a2c0.js",
-    "imports": [
-      "resources/js/app.js"
-    ]
-  },
-  "_ArticleSearch-bfa75cf8.js": {
-    "css": [
-      "assets/ArticleSearch-a26d2a0a.css"
-    ],
-    "file": "assets/ArticleSearch-bfa75cf8.js",
-    "imports": [
-      "resources/js/app.js"
-    ]
-  },
   "_Toast-42f21987.js": {
     "file": "assets/Toast-42f21987.js",
-    "imports": [
-      "resources/js/app.js"
-    ]
-  },
-  "_Toast-49fbe0ca.js": {
-    "file": "assets/Toast-49fbe0ca.js",
-    "imports": [
-      "resources/js/app.js"
-    ]
-  },
-  "_Toast-7793702c.js": {
-    "file": "assets/Toast-7793702c.js",
-    "imports": [
-      "resources/js/app.js"
-    ]
-  },
-  "_Toast-eb488580.js": {
-    "file": "assets/Toast-eb488580.js",
     "imports": [
       "resources/js/app.js"
     ]
