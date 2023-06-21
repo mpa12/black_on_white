@@ -7,7 +7,7 @@
                     <button type=button class=btn-close data-bs-dismiss=modal aria-label=Закрыть></button>
                 </div>
                 <div class=modal-body>
-                    <img :src="deleteSrc" class="w-100 rounded-2" alt=Фото />
+                    <img :src="'/storage/' + deleteSrc" class="w-100 rounded-2" alt=Фото />
                 </div>
                 <div class="modal-footer justify-content-start">
                     <button type=button class="btn btn-secondary" data-bs-dismiss=modal>Закрыть</button>
