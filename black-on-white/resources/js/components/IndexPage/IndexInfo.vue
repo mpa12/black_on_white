@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-around benefits flex-wrap gap-2">
         <div class="d-flex flex-column align-items-center justify-content-start">
             <h1>{{ year }}</h1>
-            <p>ГОДА ПРОВОДИМ<br>СПЕКТАКЛИ</p>
+            <p>ГОДА СОЗДАЕМ<br>ТВОРЧЕСКИЕ ПРОЕКТЫ</p>
         </div>
         <div class="d-flex flex-column align-items-center justify-content-start">
             <h1>{{ participants }}</h1>
