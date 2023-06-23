@@ -9,9 +9,9 @@
                 <svg @click=filterButton width=16 height=16 fill=currentColor class="bi bi-filter" viewBox="0 0 16 16">
                     <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
                 </svg>
-                <button type=submit @click=search>Найти</button>
+                <button type=submit>Найти</button>
             </div>
-            <div class="filters d-none flex-wrap gap-2 mt-2">
+            <div class="d-flex flex-wrap gap-2 mt-2" v-if="showFilters">
                 <span v-for="filter in filters">
                     <input v-model=selectedFilters type=checkbox class=btn-check :value=filter.id :id=filter.id autocomplete="off" name="selectedFilters">
                     <label class="btn btn-outline-dark" :for=filter.id>{{ filter.title }}</label>
@@ -26,16 +26,18 @@ import axios from "axios";
 
 export default {
     name: "ArticleSearch",
+    data() {
+        return {
+            filters: [],
+            selectedFilters: [],
+            text: '',
+            isAdmin: false,
+            showFilters: false,
+        }
+    },
     methods: {
         filterButton() {
-            let filters = document.querySelector('.filters')
-            if (filters.classList.contains('d-flex')) {
-                filters.classList.remove('d-flex')
-                filters.classList.add('d-none')
-            } else {
-                filters.classList.add('d-flex')
-                filters.classList.remove('d-none')
-            }
+            this.showFilters = !this.showFilters;
         },
         loadFilters() {
             axios.get(process.env.VUE_APP_URL + '/api/article-type/').then(response => {
@@ -66,14 +68,6 @@ export default {
                 console.log(error)
                 this.isAdmin = false
             })
-        }
-    },
-    data() {
-        return {
-            filters: [],
-            selectedFilters: [],
-            text: '',
-            isAdmin: false,
         }
     },
     mounted() {

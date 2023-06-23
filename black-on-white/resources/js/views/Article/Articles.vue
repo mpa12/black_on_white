@@ -14,7 +14,7 @@ import Loader from "../../components/Loader.vue";
 
 export default {
     name: "Articles",
-    components: {Loader, ArticleCard, ArticleSearch },
+    components: { Loader, ArticleCard, ArticleSearch },
     data() {
         return {
             articles: [],
@@ -29,10 +29,10 @@ export default {
         this.loadArticles()
         window.addEventListener('scroll', this.handleScroll)
         window.addEventListener('search', function (event) {
-            this.selectedFilters = [...event.detail.selectedFilters] // Массив с id типов статей
+            this.selectedFilters = [...event.detail.selectedFilters]
             this.text = event.detail.text
-            this.articles = [] // очищаем массив статей
-            this.page = 1 // начинаем с первой страницы
+            this.articles = []
+            this.page = 1
             this.loadArticles()
         }.bind(this))
     },
