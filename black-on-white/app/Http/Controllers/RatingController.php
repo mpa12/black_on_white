@@ -58,6 +58,10 @@ class RatingController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Rating created successfully',
+            'rating' => Rating::where('article_id', $request->article_id)->count(),
+            'isRated' => Rating::where('article_id', $request->article_id)
+                ->where('user_id', Auth::guard('api')->id())
+                ->exists()
         ]);
     }
 
@@ -74,6 +78,10 @@ class RatingController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Rating deleted successfully',
+            'rating' => Rating::where('article_id', $request->article_id)->count(),
+            'isRated' => Rating::where('article_id', $request->article_id)
+                ->where('user_id', Auth::guard('api')->id())
+                ->exists()
         ]);
     }
 }

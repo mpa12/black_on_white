@@ -26,10 +26,7 @@ export default {
         getRating(articleId) {
             axios.get(process.env.VUE_APP_URL + `/api/rating/${articleId}`, {
                 headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
-            }).then(response => {
-                this.rating = response.data.rating;
-                this.isRated = response.data.isRated;
-            })
+            }).then(this.setRating).catch(console.error)
         },
         getImageSrc(isRated) {
             return isRated ? '/images/heart-fill.svg' : '/images/heart.svg';
@@ -52,14 +49,12 @@ export default {
                     'Content-Type': 'multipart/form-data',
                     "Authorization" : `Bearer ${localStorage.getItem('token')}`
                 }
-            }).then((response) => {
-                console.log(response)
-            }).catch(error => {
-                console.error(error)
-            })
-
-            this.getRating(articleId)
+            }).then(this.setRating).catch(console.error)
         },
+        setRating(response) {
+            this.rating = response.data.rating;
+            this.isRated = response.data.isRated;
+        }
     }
 }
 </script>
