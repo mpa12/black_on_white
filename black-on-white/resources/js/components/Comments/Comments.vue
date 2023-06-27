@@ -17,6 +17,7 @@
 <script>
 import Comment from "./Comment.vue";
 import axios from "axios";
+import User from "../../models/User";
 
 export default {
     name: "Comments",
@@ -48,7 +49,7 @@ export default {
         loadComments() {
             const url = `/api/comment/${this.article_id}`;
             const config = {
-                headers: { Authorization : `Bearer ${localStorage.getItem('token')}` }
+                headers: { Authorization : User.getAuthorizationString() }
             };
 
             axios.get(url, config).then(response => {
@@ -67,7 +68,7 @@ export default {
             const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization : `Bearer ${localStorage.getItem('token')}`
+                    Authorization : User.getAuthorizationString()
                 }
             };
 

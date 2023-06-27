@@ -27,6 +27,7 @@
 <script>
 import axios from "axios";
 import {changeDate} from "../../utils/ChangeDate";
+import User from "../../models/User";
 
 export default {
     name: "Comment",
@@ -76,7 +77,7 @@ export default {
             const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization : `Bearer ${localStorage.getItem('token')}`
+                    Authorization : User.getAuthorizationString()
                 }
             };
 
@@ -98,7 +99,7 @@ export default {
             const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                    Authorization: User.getAuthorizationString()
                 }
             };
 

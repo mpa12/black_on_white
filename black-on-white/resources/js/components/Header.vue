@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import User from "../models/User";
+
 export default {
     name: "Header",
     computed: {
@@ -60,10 +62,9 @@ export default {
     },
     methods: {
         localStorageUpdated() {
-            const token = localStorage.getItem('token')
-            if (token) this.checkIsAdmin(token)
+            if (User.isAuth()) this.checkIsAdmin();
 
-            this.setLinks()
+            this.setLinks();
         },
         setLinks() {
             this.links = [
@@ -87,15 +88,8 @@ export default {
             menu.classList.add('d-none')
             menu.classList.remove('d-flex')
         },
-        checkIsAdmin(token) {
-            axios.get('/api/auth/is-admin', {
-                headers: { "Authorization" : `Bearer ${token}` }
-            }).then(response => {
-                this.isAdmin = !!response.data
-            }).catch(error => {
-                console.log(error)
-                this.isAdmin = false
-            })
+        async checkIsAdmin() {
+            this.isAdmin = await User.isAdmin();
         }
     },
     data() {

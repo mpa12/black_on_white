@@ -9,6 +9,7 @@
 
 <script>
 import axios from "axios";
+import User from "../models/User";
 
 export default {
     name: "ArticleRating",
@@ -25,7 +26,7 @@ export default {
     methods: {
         getRating(articleId) {
             axios.get(process.env.VUE_APP_URL + `/api/rating/${articleId}`, {
-                headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
+                headers: { Authorization: User.getAuthorizationString() }
             }).then(this.setRating).catch(console.error)
         },
         getImageSrc(isRated) {
@@ -35,7 +36,7 @@ export default {
             return isRated ? 'Понравилось' : 'Лайкнуть';
         },
         updateRating(articleId) {
-            if (!localStorage.getItem('token')) return;
+            if (User.isGuest()) return;
 
             this.rating += this.isRated ? -1 : 1;
             this.isRated = !this.isRated;
@@ -47,7 +48,7 @@ export default {
             axios.post(process.env.VUE_APP_URL + '/api/rating', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                    Authorization: User.getAuthorizationString()
                 }
             }).then(this.setRating).catch(console.error)
         },

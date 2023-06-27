@@ -46,6 +46,7 @@ import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import ImageUploader from 'quill-image-uploader';
 import axios from "axios";
+import User from "../models/User";
 
 export default {
     name: "AdminArticleForm",
@@ -118,7 +119,7 @@ export default {
                         axios.post(process.env.VUE_APP_URL + '/api/article/upload/image', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data',
-                                "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                                "Authorization" : User.getAuthorizationString()
                             }
                         })
                             .then(res => {

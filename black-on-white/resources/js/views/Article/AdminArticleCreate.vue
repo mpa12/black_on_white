@@ -9,6 +9,7 @@
 <script>
 import AdminArticleForm from "../../components/AdminArticleForm.vue"
 import Toast from "../../components/Toast.vue"
+import User from "../../models/User";
 
 export default {
     name: "AdminArticleCreate",
@@ -28,12 +29,14 @@ export default {
     },
     methods: {
         create(formData) {
-            axios.post( process.env.VUE_APP_URL + '/api/article', formData, {
+            const url = '/api/article';
+            const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                    Authorization: User.getAuthorizationString()
                 }
-            }).then(() => {
+            };
+            axios.post(url, formData, config).then(() => {
                 this.created = true
                 this.formKey++
             }).catch(error => {

@@ -23,6 +23,7 @@
 
 <script>
 import axios from "axios";
+import User from "../models/User";
 
 export default {
     name: "ArticleSearch",
@@ -53,21 +54,8 @@ export default {
             });
             window.dispatchEvent(evt);
         },
-        checkIsAdmin() {
-            const token = localStorage.getItem('token')
-            if (!token) {
-                this.isAdmin = false
-                return
-            }
-
-            axios.get(process.env.VUE_APP_URL + '/api/auth/is-admin', {
-                headers: { "Authorization" : `Bearer ${token}` }
-            }).then(response => {
-                this.isAdmin = !!response.data
-            }).catch(error => {
-                console.log(error)
-                this.isAdmin = false
-            })
+        async checkIsAdmin() {
+            this.isAdmin = await User.isAdmin();
         }
     },
     mounted() {
@@ -134,11 +122,6 @@ export default {
 .newses__search button:hover {
     cursor: pointer;
     background-color: var(--my-light-gray);
-}
-
-.newses__search .filters {
-    width: 100%;
-    margin-top: 5px;
 }
 
 .newses__search .btn-outline-dark {

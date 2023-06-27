@@ -1,1 +1,0 @@
-import{_ as e}from"./app-77659426.js";const o={name:"Logout",created(){localStorage.removeItem("token");let t=new CustomEvent("localStorageUpdated",{detail:null});window.dispatchEvent(t),this.$router.push("/")}};function n(t,r,a,s,c,l){return null}const d=e(o,[["render",n]]);export{d as default};
