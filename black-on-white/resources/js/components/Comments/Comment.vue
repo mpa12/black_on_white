@@ -2,7 +2,7 @@
     <section class="comment mt-2" v-if=!isDeleted>
         <div class="d-flex gap-2 align-items-baseline">
             <h6 class=m-0>{{ comment.user.name }}</h6>
-            <time>{{ changeCreatedAt(comment.created_at) }}</time>
+            <time>{{ changeDate(comment.created_at) }}</time>
         </div>
         <p class=m-0>{{ comment.body }}</p>
         <button type=button class=reply-button @click=showReplyForm v-if=canComment />
@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import moment from 'moment/min/moment-with-locales'
 import axios from "axios";
+import {changeDate} from "../../utils/ChangeDate";
 
 export default {
     name: "Comment",
@@ -49,30 +49,16 @@ export default {
         this.checkCanDeleteComment()
     },
     methods: {
+        changeDate,
         checkCanComment() {
             this.canComment = !!localStorage.getItem('token')
         },
         checkCanDeleteComment() {
-            this.canDeleteComment = this.comment.can_delete
+            this.canDeleteComment = this.comment.can_delete;
         },
         getChildComment() {
-            this.childComments = this.comments.filter(item => item.parent_id === this.comment.id);
-        },
-        changeCreatedAt(date) {
-            date = new Date(date)
-            const diff = moment.duration(moment().diff(date))
-            if (diff.asMinutes() < 60) {
-                let test = (new Date()).getTime() - date.getTime()
-                test = (new Date(test)).getMinutes()
-                return test + ' минут назад'
-            } else if (diff.asHours() < 24) {
-                return moment().subtract(diff).format('HH часов назад')
-            } else if (diff.asDays() < 2) {
-                return moment().subtract(diff).format('Вчера в HH:mm')
-            } else {
-                moment.locale('ru')
-                return moment(date).format('D MMMM в HH:mm YYYY')
-            }
+            const predicate = item => item.parent_id === this.comment.id;
+            this.childComments = this.comments.filter(predicate);
         },
         showReplyForm() {
             this.replying = true
@@ -81,43 +67,44 @@ export default {
             this.replying = false
         },
         reply() {
-            let formData = new FormData()
-            formData.append('body', this.body)
-            formData.append('article_id', this.$route.params.id)
-            formData.append('parent_id', this.comment.id)
+            let formData = new FormData();
+            formData.append('body', this.body);
+            formData.append('article_id', this.$route.params.id);
+            formData.append('parent_id', this.comment.id);
 
-            axios.post(process.env.VUE_APP_URL + '/api/comment', formData, {
+            const url = '/api/comment';
+            const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization : `Bearer ${localStorage.getItem('token')}`
                 }
-            }).then((response) => {
-                this.errors = []
-                this.body = null
-                this.childComments.push(response.data.success)
+            };
+
+            axios.post(url, formData, config).then((response) => {
+                this.errors = [];
+                this.body = null;
+                this.childComments.push(response.data.success);
             }).catch(error => {
-                if (error.response.status === 422) {
-                    this.errors = []
-                    let errors = JSON.parse(error.request.responseText).errors
-                    for (const key in errors) this.errors[key] = errors[key][0]
-                }
+                if (error.response.status !== 422) return;
+
+                this.errors = [];
+                let errors = JSON.parse(error.request.responseText).errors;
+                for (const key in errors) this.errors[key] = errors[key][0];
             })
         },
         deleteComment(commentId) {
-            axios.post(
-                process.env.VUE_APP_URL + '/api/comment/' + commentId,
-                {
-                    _method: 'delete',
-                },
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
-                    }
+            const url = '/api/comment/' + commentId;
+            const data = { _method: 'delete' };
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
-            ).then(() => {
+            };
+
+            axios.post(url, data, config).then(() => {
                 this.isDeleted = true
-            }).catch(console.error)
+            }).catch(console.error);
         }
     }
 }

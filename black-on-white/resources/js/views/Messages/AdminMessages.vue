@@ -46,7 +46,7 @@
                 </td>
                 <td class=text-truncate :title=message.phone>{{ message.phone }}</td>
                 <td class=text-truncate :title=message.email>{{ message.email }}</td>
-                <td>{{ convertDate(message.created_at) }}</td>
+                <td>{{ changeDate(message.created_at) }}</td>
                 <td>
                     <span :class="(message.is_read ? 'badge bg-light text-dark' : 'badge bg-info text-dark')">
                         {{ message.is_read ? 'Прочитано' : 'Не прочитано' }}
@@ -93,7 +93,7 @@
 
 <script>
 import axios from "axios";
-import moment from 'moment/min/moment-with-locales'
+import {changeDate} from "../../utils/ChangeDate";
 
 export default {
     name: "AdminMessages",
@@ -128,6 +128,7 @@ export default {
         this.loadMessages()
     },
     methods: {
+        changeDate,
         loadMessages() {
             this.loading = true
 
@@ -138,22 +139,6 @@ export default {
                 this.totalPages = response.data['meta'].last_page
                 this.loading = false
             })
-        },
-        convertDate(date) {
-            date = new Date(date)
-            const diff = moment.duration(moment().diff(date))
-            if (diff.asMinutes() < 60) {
-                let test = (new Date()).getTime() - date.getTime()
-                test = (new Date(test)).getMinutes()
-                return test + ' минут назад'
-            } else if (diff.asHours() < 24) {
-                return moment().subtract(diff).format('HH часов назад')
-            } else if (diff.asDays() < 2) {
-                return moment().subtract(diff).format('Вчера в HH:mm')
-            } else {
-                moment.locale('ru')
-                return moment(date).format('D MMMM в HH:mm YYYY')
-            }
         },
         prevPage() {
             if (this.currentPage > 1) {

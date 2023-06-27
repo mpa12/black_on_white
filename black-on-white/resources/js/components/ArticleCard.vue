@@ -1,7 +1,7 @@
 <template>
     <div class="newses__card col-12 d-flex flex-column flex-lg-row">
         <div class="col-lg-6 col-12 newses__card-desc">
-            <time>{{ this.createdAt }}</time>
+            <time>{{ changeDate(article.created_at) }}</time>
             <h1>{{ article.title }}</h1>
             <span class=newses__card-tag>{{ article.article_type.title }}</span>
             <img :src="'/storage/' + article.photo" :alt="article.title" class="d-lg-none d-block">
@@ -15,38 +15,15 @@
 </template>
 
 <script>
-import VButton from "./Button.vue"
-import moment from 'moment/min/moment-with-locales'
+import VButton from "./Button.vue";
+import {changeDate} from "../utils/ChangeDate";
 
 export default {
     name: "ArticleCard",
     components: { VButton },
     props: ['article'],
-    data() {
-        return {
-            createdAt: ''
-        }
-    },
-    mounted() {
-        this.changeCreatedAt(this.article.created_at)
-    },
     methods: {
-        changeCreatedAt(createdAt) {
-            const date = new Date(createdAt)
-            let diff = moment.duration(moment().diff(date))
-            if (diff.asMinutes() < 60) {
-                let test = (new Date()).getTime() - date.getTime()
-                test = (new Date(test)).getMinutes()
-                this.createdAt = test + ' минут назад'
-            } else if (diff.asHours() < 24) {
-                this.createdAt = moment().subtract(diff).format('HH часов назад')
-            } else if (diff.asDays() < 2) {
-                this.createdAt = moment().subtract(diff).format('Вчера в HH:mm')
-            } else {
-                moment.locale('ru')
-                this.createdAt = moment(date).format('D MMMM в HH:mm YYYY')
-            }
-        }
+        changeDate,
     }
 }
 </script>

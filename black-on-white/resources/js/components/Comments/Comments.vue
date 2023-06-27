@@ -46,36 +46,42 @@ export default {
             this.parentComments = this.comments.filter(item => item.parent_id === null)
         },
         loadComments() {
-            axios.get(process.env.VUE_APP_URL + `/api/comment/${this.article_id}`, {
-                headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
-            }).then(response => {
-                this.comments = response.data['data']
-                this.checkCanComment()
-                this.checkHasComments()
-                this.getParentComments()
-            })
+            const url = `/api/comment/${this.article_id}`;
+            const config = {
+                headers: { Authorization : `Bearer ${localStorage.getItem('token')}` }
+            };
+
+            axios.get(url, config).then(response => {
+                this.comments = response.data['data'];
+                this.checkCanComment();
+                this.checkHasComments();
+                this.getParentComments();
+            });
         },
         createComment() {
-            let formData = new FormData()
-            formData.append('body', this.body)
-            formData.append('article_id', this.article_id)
+            let formData = new FormData();
+            formData.append('body', this.body);
+            formData.append('article_id', this.article_id);
 
-            axios.post(process.env.VUE_APP_URL + '/api/comment', formData, {
+            const url = '/api/comment';
+            const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                    Authorization : `Bearer ${localStorage.getItem('token')}`
                 }
-            }).then((response) => {
-                this.errors = []
-                this.body = null
-                this.comments.push(response.data.success)
-                this.getParentComments()
+            };
+
+            axios.post(url, formData, config).then((response) => {
+                this.errors = [];
+                this.body = null;
+                this.comments.push(response.data.success);
+                this.getParentComments();
             }).catch(error => {
-                if (error.response.status === 422) {
-                    this.errors = []
-                    let errors = JSON.parse(error.request.responseText).errors
-                    for (const key in errors) this.errors[key] = errors[key][0]
-                }
+                if (error.response.status !== 422) return;
+
+                this.errors = [];
+                let errors = JSON.parse(error.request.responseText).errors;
+                for (const key in errors) this.errors[key] = errors[key][0];
             })
         }
     }

@@ -9,7 +9,7 @@
                 <tr><th>Имя</th><td>{{ message.name }}</td></tr>
                 <tr><th>Телефон</th><td>{{ message.phone }}</td></tr>
                 <tr><th>E-mail</th><td>{{ message.email }}</td></tr>
-                <tr><th>Отправлено</th><td>{{ createdAt }}</td></tr>
+                <tr><th>Отправлено</th><td>{{ changeDate(message.created_at) }}</td></tr>
             </tbody>
         </table>
     </div>
@@ -21,44 +21,27 @@
 
 <script>
 import axios from "axios";
-import moment from 'moment/min/moment-with-locales'
+import {changeDate} from "../../utils/ChangeDate";
 
 export default {
     name: "AdminMessagesView",
     data() {
         return {
             message: [],
-            createdAt: ''
         }
     },
     mounted() {
         this.loadMessage()
     },
     methods: {
+        changeDate,
         loadMessage() {
             axios.get(
                 process.env.VUE_APP_URL + '/api/message/read/' + this.$route.params.id,
                 {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
             ).then(response => {
                 this.message = response.data['data']
-                this.changeCreatedAt(this.message.created_at)
             })
-        },
-        changeCreatedAt(createdAt) {
-            const date = new Date(createdAt)
-            let diff = moment.duration(moment().diff(date))
-            if (diff.asMinutes() < 60) {
-                let test = (new Date()).getTime() - date.getTime()
-                test = (new Date(test)).getMinutes()
-                this.createdAt = test + ' минут назад'
-            } else if (diff.asHours() < 24) {
-                this.createdAt = moment().subtract(diff).format('HH часов назад')
-            } else if (diff.asDays() < 2) {
-                this.createdAt = moment().subtract(diff).format('Вчера в HH:mm')
-            } else {
-                moment.locale('ru')
-                this.createdAt = moment(date).format('D MMMM в HH:mm YYYY')
-            }
         }
     }
 }

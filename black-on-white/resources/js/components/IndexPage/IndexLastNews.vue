@@ -39,8 +39,9 @@ export default {
     },
     methods: {
         loadLastNews() {
-            axios.get(process.env.VUE_APP_URL + '/api/article/two-last').then(response => {
-                this.articles = response.data['data']
+            const url = '/api/article/two-last';
+            axios.get(url).then(response => {
+                this.articles = response.data['data'];
             })
         }
     }

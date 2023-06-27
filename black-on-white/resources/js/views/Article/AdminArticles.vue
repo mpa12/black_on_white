@@ -48,8 +48,8 @@
                     </td>
                     <td class=text-truncate :title="article.description">{{ article.description }}</td>
                     <td>{{ article.article_type.title }}</td>
-                    <td>{{ convertDate(article.created_at) }}</td>
-                    <td>{{ convertDate(article.updated_at) }}</td>
+                    <td>{{ changeDate(article.created_at) }}</td>
+                    <td>{{ changeDate(article.updated_at) }}</td>
                     <td>
                         <div class=dropdown>
                             <span type=button data-bs-toggle=dropdown>
@@ -92,8 +92,8 @@
 
 <script>
 import axios from "axios";
-import moment from 'moment/min/moment-with-locales'
 import ArticleSearch from "../../components/ArticleSearch.vue";
+import {changeDate} from "../../utils/ChangeDate";
 
 export default {
     name: "AdminArticles",
@@ -138,6 +138,7 @@ export default {
         }.bind(this))
     },
     methods: {
+        changeDate,
         loadArticles() {
             this.loading = true
 
@@ -150,22 +151,6 @@ export default {
                 this.totalPages = response.data['meta'].last_page
                 this.loading = false
             })
-        },
-        convertDate(date) {
-            date = new Date(date)
-            const diff = moment.duration(moment().diff(date))
-            if (diff.asMinutes() < 60) {
-                let test = (new Date()).getTime() - date.getTime()
-                test = (new Date(test)).getMinutes()
-                return test + ' минут назад'
-            } else if (diff.asHours() < 24) {
-                return moment().subtract(diff).format('HH часов назад')
-            } else if (diff.asDays() < 2) {
-                return moment().subtract(diff).format('Вчера в HH:mm')
-            } else {
-                moment.locale('ru')
-                return moment(date).format('D MMMM в HH:mm YYYY')
-            }
         },
         prevPage() {
             if (this.currentPage > 1) {

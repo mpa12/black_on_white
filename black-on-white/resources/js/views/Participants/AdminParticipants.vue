@@ -48,8 +48,8 @@
                         <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
                     </svg>
                 </td>
-                <td>{{ convertDate(participant.created_at) }}</td>
-                <td>{{ convertDate(participant.updated_at) }}</td>
+                <td>{{ changeDate(participant.created_at) }}</td>
+                <td>{{ changeDate(participant.updated_at) }}</td>
                 <td>
                     <div class=dropdown>
                         <span type=button data-bs-toggle=dropdown><img src=/images/three-dots-vertical.svg alt=three-dots-vertical type=button data-toggle=dropdown></span>
@@ -67,8 +67,8 @@
 
 <script>
 import axios from "axios";
-import moment from 'moment/min/moment-with-locales'
-import { directive } from 'vue-tippy'
+import { directive } from 'vue-tippy';
+import { changeDate } from "../../utils/ChangeDate";
 
 export default {
     name: "AdminParticipants",
@@ -85,26 +85,11 @@ export default {
         this.loadParticipants()
     },
     methods: {
+        changeDate,
         loadParticipants() {
             axios.get(process.env.VUE_APP_URL + '/api/participant').then(response => {
                 this.participants = response.data['data']
             })
-        },
-        convertDate(date) {
-            date = new Date(date)
-            const diff = moment.duration(moment().diff(date))
-            if (diff.asMinutes() < 60) {
-                let test = (new Date()).getTime() - date.getTime()
-                test = (new Date(test)).getMinutes()
-                return test + ' минут назад'
-            } else if (diff.asHours() < 24) {
-                return moment().subtract(diff).format('HH часов назад')
-            } else if (diff.asDays() < 2) {
-                return moment().subtract(diff).format('Вчера в HH:mm')
-            } else {
-                moment.locale('ru')
-                return moment(date).format('D MMMM в HH:mm YYYY')
-            }
         },
         getImgTag(src, alt) {
             return `<img width=150 style="border-radius: 10px" src="${src}" alt="${alt}">`

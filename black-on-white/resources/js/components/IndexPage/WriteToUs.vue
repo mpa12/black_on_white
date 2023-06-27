@@ -63,37 +63,37 @@ export default {
     methods: {
         createMessage() {
             if (!this.privacy_policy) {
-                this.errors = {'privacy_policy': 'Необходимо принять политику конфиденциальности'}
-                return
+                this.errors = { privacy_policy: 'Необходимо принять политику конфиденциальности' };
+                return;
             } else {
-                this.errors = {}
+                this.errors = {};
             }
-            this.created = false
+            this.created = false;
 
-            let formData = new FormData()
-            formData.append('name', this.name)
-            formData.append('phone', this.phone)
-            formData.append('email', this.email)
-            formData.append('message', this.message)
+            let formData = new FormData();
+            formData.append('name', this.name);
+            formData.append('phone', this.phone);
+            formData.append('email', this.email);
+            formData.append('message', this.message);
 
-            this.create(formData)
+            this.create(formData);
         },
         create(formData) {
-            axios.post( process.env.VUE_APP_URL + '/api/message', formData, {
-                headers: {'Content-Type': 'multipart/form-data'}
-            }).then(() => {
-                this.created = true
-                this.name = null
-                this.phone = null
-                this.email = null
-                this.message = null
-                this.privacy_policy = false
+            const url = '/api/message';
+            const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+            axios.post(url, formData, config).then(() => {
+                this.created = true;
+                this.name = null;
+                this.phone = null;
+                this.email = null;
+                this.message = null;
+                this.privacy_policy = false;
             }).catch(error => {
-                if (error.response.status === 422) {
-                    let errors_list = JSON.parse(error.request.responseText).errors
-                    for (const key in errors_list) this.errors[key] = errors_list[key][0]
-                }
-            })
+                if (error.response.status !== 422) return;
+
+                let errors_list = JSON.parse(error.request.responseText).errors;
+                for (const key in errors_list) this.errors[key] = errors_list[key][0];
+            });
         }
     }
 }
