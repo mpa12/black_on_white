@@ -1,27 +1,27 @@
 {
   "AdminArticleForm.css": {
-    "file": "assets/AdminArticleForm-5f84d7fc.css",
+    "file": "assets/AdminArticleForm-b7b78879.css",
     "src": "AdminArticleForm.css"
   },
   "ArticleSearch.css": {
-    "file": "assets/ArticleSearch-a27b9a36.css",
+    "file": "assets/ArticleSearch-b6b36db1.css",
     "src": "ArticleSearch.css"
   },
-  "_AdminArticleForm-ca801069.js": {
+  "_AdminArticleForm-a37aeea5.js": {
     "css": [
-      "assets/AdminArticleForm-5f84d7fc.css"
+      "assets/AdminArticleForm-b7b78879.css"
     ],
-    "file": "assets/AdminArticleForm-ca801069.js",
+    "file": "assets/AdminArticleForm-a37aeea5.js",
     "imports": [
       "__commonjsHelpers-87174ba5.js",
       "resources/js/app.js"
     ]
   },
-  "_ArticleSearch-3467c04b.js": {
+  "_ArticleSearch-bbaa1cb1.js": {
     "css": [
-      "assets/ArticleSearch-a27b9a36.css"
+      "assets/ArticleSearch-b6b36db1.css"
     ],
-    "file": "assets/ArticleSearch-3467c04b.js",
+    "file": "assets/ArticleSearch-bbaa1cb1.js",
     "imports": [
       "resources/js/app.js"
     ]
@@ -32,8 +32,8 @@
       "__commonjsHelpers-87174ba5.js"
     ]
   },
-  "_Toast-ca758b27.js": {
-    "file": "assets/Toast-ca758b27.js",
+  "_Toast-946d871f.js": {
+    "file": "assets/Toast-946d871f.js",
     "imports": [
       "resources/js/app.js"
     ]
@@ -52,12 +52,12 @@
     "src": "resources/css/app.css"
   },
   "resources/js/app.css": {
-    "file": "assets/app-44b30d42.css",
+    "file": "assets/app-72a286ad.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
     "css": [
-      "assets/app-44b30d42.css"
+      "assets/app-72a286ad.css"
     ],
     "dynamicImports": [
       "resources/js/views/Index.vue",
@@ -83,7 +83,7 @@
       "resources/js/views/Messages/AdminMessages.vue",
       "resources/js/views/Messages/AdminMessagesView.vue"
     ],
-    "file": "assets/app-77659426.js",
+    "file": "assets/app-e9fbd619.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
@@ -95,7 +95,7 @@
     "css": [
       "assets/AdminIndex-e1b41c92.css"
     ],
-    "file": "assets/AdminIndex-32b34616.js",
+    "file": "assets/AdminIndex-b9a8d137.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -103,17 +103,17 @@
     "src": "resources/js/views/Admin/AdminIndex.vue"
   },
   "resources/js/views/Article/AdminArticleCreate.css": {
-    "file": "assets/AdminArticleCreate-b2126558.css",
+    "file": "assets/AdminArticleCreate-54467842.css",
     "src": "resources/js/views/Article/AdminArticleCreate.css"
   },
   "resources/js/views/Article/AdminArticleCreate.vue": {
     "css": [
-      "assets/AdminArticleCreate-b2126558.css"
+      "assets/AdminArticleCreate-54467842.css"
     ],
-    "file": "assets/AdminArticleCreate-73e7bc76.js",
+    "file": "assets/AdminArticleCreate-60412f69.js",
     "imports": [
-      "_AdminArticleForm-ca801069.js",
-      "_Toast-ca758b27.js",
+      "_AdminArticleForm-a37aeea5.js",
+      "_Toast-946d871f.js",
       "resources/js/app.js",
       "__commonjsHelpers-87174ba5.js"
     ],
@@ -128,10 +128,10 @@
     "css": [
       "assets/AdminArticleUpdate-3e542d52.css"
     ],
-    "file": "assets/AdminArticleUpdate-d1eae0fa.js",
+    "file": "assets/AdminArticleUpdate-37b5de7d.js",
     "imports": [
-      "_AdminArticleForm-ca801069.js",
-      "_Toast-ca758b27.js",
+      "_AdminArticleForm-a37aeea5.js",
+      "_Toast-946d871f.js",
       "resources/js/app.js",
       "__commonjsHelpers-87174ba5.js"
     ],
@@ -146,10 +146,10 @@
     "css": [
       "assets/AdminArticles-a400cc61.css"
     ],
-    "file": "assets/AdminArticles-4e16afee.js",
+    "file": "assets/AdminArticles-570d19b8.js",
     "imports": [
       "resources/js/app.js",
-      "_ArticleSearch-3467c04b.js",
+      "_ArticleSearch-bbaa1cb1.js",
       "_ChangeDate-db5be761.js",
       "__commonjsHelpers-87174ba5.js"
     ],
@@ -157,14 +157,14 @@
     "src": "resources/js/views/Article/AdminArticles.vue"
   },
   "resources/js/views/Article/Article.css": {
-    "file": "assets/Article-3f45c3b7.css",
+    "file": "assets/Article-826a0288.css",
     "src": "resources/js/views/Article/Article.css"
   },
   "resources/js/views/Article/Article.vue": {
     "css": [
-      "assets/Article-3f45c3b7.css"
+      "assets/Article-826a0288.css"
     ],
-    "file": "assets/Article-61279981.js",
+    "file": "assets/Article-619e1f73.js",
     "imports": [
       "resources/js/app.js",
       "_ChangeDate-db5be761.js",
@@ -181,9 +181,9 @@
     "css": [
       "assets/Articles-90faf549.css"
     ],
-    "file": "assets/Articles-2b75448d.js",
+    "file": "assets/Articles-50c01612.js",
     "imports": [
-      "_ArticleSearch-3467c04b.js",
+      "_ArticleSearch-bbaa1cb1.js",
       "resources/js/app.js",
       "_ChangeDate-db5be761.js",
       "__commonjsHelpers-87174ba5.js"
@@ -199,7 +199,7 @@
     "css": [
       "assets/Login-26d4a29e.css"
     ],
-    "file": "assets/Login-9cdac756.js",
+    "file": "assets/Login-77b38cab.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -207,7 +207,7 @@
     "src": "resources/js/views/Auth/Login.vue"
   },
   "resources/js/views/Auth/Logout.vue": {
-    "file": "assets/Logout-97621c7b.js",
+    "file": "assets/Logout-398badd6.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -222,9 +222,9 @@
     "css": [
       "assets/Register-70c0ea11.css"
     ],
-    "file": "assets/Register-7c35d199.js",
+    "file": "assets/Register-d41da3dc.js",
     "imports": [
-      "_Toast-ca758b27.js",
+      "_Toast-946d871f.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -238,9 +238,9 @@
     "css": [
       "assets/ResetPassword-c46a8b16.css"
     ],
-    "file": "assets/ResetPassword-f40c5fe9.js",
+    "file": "assets/ResetPassword-0b42d780.js",
     "imports": [
-      "_Toast-ca758b27.js",
+      "_Toast-946d871f.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -254,9 +254,9 @@
     "css": [
       "assets/ResetPasswordResponse-0d2a9864.css"
     ],
-    "file": "assets/ResetPasswordResponse-14401620.js",
+    "file": "assets/ResetPasswordResponse-1b99dd12.js",
     "imports": [
-      "_Toast-ca758b27.js",
+      "_Toast-946d871f.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -270,7 +270,7 @@
     "css": [
       "assets/Index-8fa13008.css"
     ],
-    "file": "assets/Index-922df60a.js",
+    "file": "assets/Index-c6c24e1a.js",
     "imports": [
       "resources/js/app.js",
       "__commonjsHelpers-87174ba5.js"
@@ -286,7 +286,7 @@
     "css": [
       "assets/AdminMessages-7f2638bf.css"
     ],
-    "file": "assets/AdminMessages-52dac122.js",
+    "file": "assets/AdminMessages-7690f014.js",
     "imports": [
       "resources/js/app.js",
       "_ChangeDate-db5be761.js",
@@ -303,7 +303,7 @@
     "css": [
       "assets/AdminMessagesView-1555e3ad.css"
     ],
-    "file": "assets/AdminMessagesView-8140f89f.js",
+    "file": "assets/AdminMessagesView-b981aff6.js",
     "imports": [
       "resources/js/app.js",
       "_ChangeDate-db5be761.js",
@@ -320,7 +320,7 @@
     "css": [
       "assets/AdminParticipants-eadd95fe.css"
     ],
-    "file": "assets/AdminParticipants-3c2b4042.js",
+    "file": "assets/AdminParticipants-9a993c39.js",
     "imports": [
       "resources/js/app.js",
       "_ChangeDate-db5be761.js",
@@ -337,9 +337,9 @@
     "css": [
       "assets/AdminParticipantsCreate-47e586d9.css"
     ],
-    "file": "assets/AdminParticipantsCreate-266d1438.js",
+    "file": "assets/AdminParticipantsCreate-2a0a84e5.js",
     "imports": [
-      "_Toast-ca758b27.js",
+      "_Toast-946d871f.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -353,9 +353,9 @@
     "css": [
       "assets/AdminParticipantsUpdate-928daea9.css"
     ],
-    "file": "assets/AdminParticipantsUpdate-d463ea5d.js",
+    "file": "assets/AdminParticipantsUpdate-96c6873f.js",
     "imports": [
-      "_Toast-ca758b27.js",
+      "_Toast-946d871f.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -369,7 +369,7 @@
     "css": [
       "assets/Participants-caca120d.css"
     ],
-    "file": "assets/Participants-349f58c7.js",
+    "file": "assets/Participants-aba2a42f.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -384,7 +384,7 @@
     "css": [
       "assets/AdminPhotoGallery-679c76b3.css"
     ],
-    "file": "assets/AdminPhotoGallery-c60a3b57.js",
+    "file": "assets/AdminPhotoGallery-88be0292.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -399,7 +399,7 @@
     "css": [
       "assets/PhotoGallery-6036630d.css"
     ],
-    "file": "assets/PhotoGallery-f2200cb7.js",
+    "file": "assets/PhotoGallery-48600210.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -414,7 +414,7 @@
     "css": [
       "assets/PrivacyPolicy-ae801acf.css"
     ],
-    "file": "assets/PrivacyPolicy-bdd4c32b.js",
+    "file": "assets/PrivacyPolicy-374d1afb.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -422,7 +422,7 @@
     "src": "resources/js/views/PrivacyPolicy.vue"
   },
   "resources/js/views/Users/AdminUsers.vue": {
-    "file": "assets/AdminUsers-218e4ad7.js",
+    "file": "assets/AdminUsers-aa38d5a9.js",
     "imports": [
       "resources/js/app.js"
     ],
