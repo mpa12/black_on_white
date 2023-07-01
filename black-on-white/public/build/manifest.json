@@ -7,21 +7,27 @@
     "file": "assets/ArticleSearch-783835ae.css",
     "src": "ArticleSearch.css"
   },
-  "_AdminArticleForm-317fe0b6.js": {
+  "_AdminArticleForm-fe9c8460.js": {
     "css": [
       "assets/AdminArticleForm-f28e744e.css"
     ],
-    "file": "assets/AdminArticleForm-317fe0b6.js",
+    "file": "assets/AdminArticleForm-fe9c8460.js",
     "imports": [
       "__commonjsHelpers-87174ba5.js",
       "resources/js/app.js"
     ]
   },
-  "_ArticleSearch-290175f4.js": {
+  "_ArticleSearch-6ed6026c.js": {
     "css": [
       "assets/ArticleSearch-783835ae.css"
     ],
-    "file": "assets/ArticleSearch-290175f4.js",
+    "file": "assets/ArticleSearch-6ed6026c.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_ArticleService-0e254c19.js": {
+    "file": "assets/ArticleService-0e254c19.js",
     "imports": [
       "resources/js/app.js"
     ]
@@ -32,8 +38,8 @@
       "__commonjsHelpers-87174ba5.js"
     ]
   },
-  "_Toast-6f643973.js": {
-    "file": "assets/Toast-6f643973.js",
+  "_Toast-d9fb1dce.js": {
+    "file": "assets/Toast-d9fb1dce.js",
     "imports": [
       "resources/js/app.js"
     ]
@@ -52,12 +58,12 @@
     "src": "resources/css/app.css"
   },
   "resources/js/app.css": {
-    "file": "assets/app-63727342.css",
+    "file": "assets/app-38b2534f.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
     "css": [
-      "assets/app-63727342.css"
+      "assets/app-38b2534f.css"
     ],
     "dynamicImports": [
       "resources/js/views/Index.vue",
@@ -83,7 +89,7 @@
       "resources/js/views/Messages/AdminMessages.vue",
       "resources/js/views/Messages/AdminMessagesView.vue"
     ],
-    "file": "assets/app-f65f30b7.js",
+    "file": "assets/app-bded94c7.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
@@ -95,7 +101,7 @@
     "css": [
       "assets/AdminIndex-e1b41c92.css"
     ],
-    "file": "assets/AdminIndex-129f0262.js",
+    "file": "assets/AdminIndex-ebf73d00.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -110,10 +116,10 @@
     "css": [
       "assets/AdminArticleCreate-54467842.css"
     ],
-    "file": "assets/AdminArticleCreate-d0a56bb1.js",
+    "file": "assets/AdminArticleCreate-f4a7e509.js",
     "imports": [
-      "_AdminArticleForm-317fe0b6.js",
-      "_Toast-6f643973.js",
+      "_AdminArticleForm-fe9c8460.js",
+      "_Toast-d9fb1dce.js",
       "resources/js/app.js",
       "__commonjsHelpers-87174ba5.js"
     ],
@@ -128,10 +134,10 @@
     "css": [
       "assets/AdminArticleUpdate-dcdc9f86.css"
     ],
-    "file": "assets/AdminArticleUpdate-c2de1ff5.js",
+    "file": "assets/AdminArticleUpdate-84482034.js",
     "imports": [
-      "_AdminArticleForm-317fe0b6.js",
-      "_Toast-6f643973.js",
+      "_AdminArticleForm-fe9c8460.js",
+      "_Toast-d9fb1dce.js",
       "resources/js/app.js",
       "__commonjsHelpers-87174ba5.js"
     ],
@@ -139,18 +145,19 @@
     "src": "resources/js/views/Article/AdminArticleUpdate.vue"
   },
   "resources/js/views/Article/AdminArticles.css": {
-    "file": "assets/AdminArticles-3e87dc9a.css",
+    "file": "assets/AdminArticles-83c5f05c.css",
     "src": "resources/js/views/Article/AdminArticles.css"
   },
   "resources/js/views/Article/AdminArticles.vue": {
     "css": [
-      "assets/AdminArticles-3e87dc9a.css"
+      "assets/AdminArticles-83c5f05c.css"
     ],
-    "file": "assets/AdminArticles-6e6cbede.js",
+    "file": "assets/AdminArticles-22fd6512.js",
     "imports": [
       "resources/js/app.js",
-      "_ArticleSearch-290175f4.js",
+      "_ArticleSearch-6ed6026c.js",
       "_ChangeDate-db5be761.js",
+      "_ArticleService-0e254c19.js",
       "__commonjsHelpers-87174ba5.js"
     ],
     "isDynamicEntry": true,
@@ -164,10 +171,11 @@
     "css": [
       "assets/Article-d2a3129b.css"
     ],
-    "file": "assets/Article-65ae0da0.js",
+    "file": "assets/Article-7f882ae0.js",
     "imports": [
       "resources/js/app.js",
       "_ChangeDate-db5be761.js",
+      "_ArticleService-0e254c19.js",
       "__commonjsHelpers-87174ba5.js"
     ],
     "isDynamicEntry": true,
@@ -181,11 +189,12 @@
     "css": [
       "assets/Articles-90faf549.css"
     ],
-    "file": "assets/Articles-58a7dfcc.js",
+    "file": "assets/Articles-3b48aaa8.js",
     "imports": [
-      "_ArticleSearch-290175f4.js",
+      "_ArticleSearch-6ed6026c.js",
       "resources/js/app.js",
       "_ChangeDate-db5be761.js",
+      "_ArticleService-0e254c19.js",
       "__commonjsHelpers-87174ba5.js"
     ],
     "isDynamicEntry": true,
@@ -199,7 +208,7 @@
     "css": [
       "assets/Login-8e641531.css"
     ],
-    "file": "assets/Login-4eccbdfe.js",
+    "file": "assets/Login-e1dc688a.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -207,7 +216,7 @@
     "src": "resources/js/views/Auth/Login.vue"
   },
   "resources/js/views/Auth/Logout.vue": {
-    "file": "assets/Logout-977e3488.js",
+    "file": "assets/Logout-e5b2c689.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -222,9 +231,9 @@
     "css": [
       "assets/Register-e2160fc2.css"
     ],
-    "file": "assets/Register-5ced33b2.js",
+    "file": "assets/Register-52b14b8b.js",
     "imports": [
-      "_Toast-6f643973.js",
+      "_Toast-d9fb1dce.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -238,9 +247,9 @@
     "css": [
       "assets/ResetPassword-7b964952.css"
     ],
-    "file": "assets/ResetPassword-6c300fc6.js",
+    "file": "assets/ResetPassword-4dd9e7a4.js",
     "imports": [
-      "_Toast-6f643973.js",
+      "_Toast-d9fb1dce.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -254,9 +263,9 @@
     "css": [
       "assets/ResetPasswordResponse-37c10a2a.css"
     ],
-    "file": "assets/ResetPasswordResponse-abc9ad15.js",
+    "file": "assets/ResetPasswordResponse-b247f3a7.js",
     "imports": [
-      "_Toast-6f643973.js",
+      "_Toast-d9fb1dce.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -270,7 +279,7 @@
     "css": [
       "assets/Index-7074c9e5.css"
     ],
-    "file": "assets/Index-12cae2ac.js",
+    "file": "assets/Index-1540b6ae.js",
     "imports": [
       "resources/js/app.js",
       "__commonjsHelpers-87174ba5.js"
@@ -286,7 +295,7 @@
     "css": [
       "assets/AdminMessages-9ca43170.css"
     ],
-    "file": "assets/AdminMessages-94b88980.js",
+    "file": "assets/AdminMessages-2f984d6d.js",
     "imports": [
       "resources/js/app.js",
       "_ChangeDate-db5be761.js",
@@ -303,7 +312,7 @@
     "css": [
       "assets/AdminMessagesView-80acfd39.css"
     ],
-    "file": "assets/AdminMessagesView-f0c51998.js",
+    "file": "assets/AdminMessagesView-2ce52011.js",
     "imports": [
       "resources/js/app.js",
       "_ChangeDate-db5be761.js",
@@ -320,7 +329,7 @@
     "css": [
       "assets/AdminParticipants-21d23740.css"
     ],
-    "file": "assets/AdminParticipants-f99692ff.js",
+    "file": "assets/AdminParticipants-6533ea24.js",
     "imports": [
       "resources/js/app.js",
       "_ChangeDate-db5be761.js",
@@ -337,9 +346,9 @@
     "css": [
       "assets/AdminParticipantsCreate-2a3d0f9b.css"
     ],
-    "file": "assets/AdminParticipantsCreate-eb7fb2d2.js",
+    "file": "assets/AdminParticipantsCreate-2d4cde7c.js",
     "imports": [
-      "_Toast-6f643973.js",
+      "_Toast-d9fb1dce.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -353,9 +362,9 @@
     "css": [
       "assets/AdminParticipantsUpdate-91e00966.css"
     ],
-    "file": "assets/AdminParticipantsUpdate-9816917d.js",
+    "file": "assets/AdminParticipantsUpdate-1b02c326.js",
     "imports": [
-      "_Toast-6f643973.js",
+      "_Toast-d9fb1dce.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -369,7 +378,7 @@
     "css": [
       "assets/Participants-df5d839c.css"
     ],
-    "file": "assets/Participants-a23aa95b.js",
+    "file": "assets/Participants-0378af3b.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -384,7 +393,7 @@
     "css": [
       "assets/AdminPhotoGallery-17c2f7a9.css"
     ],
-    "file": "assets/AdminPhotoGallery-3e75b40d.js",
+    "file": "assets/AdminPhotoGallery-245e4cd0.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -399,7 +408,7 @@
     "css": [
       "assets/PhotoGallery-704f651a.css"
     ],
-    "file": "assets/PhotoGallery-df994991.js",
+    "file": "assets/PhotoGallery-541638ac.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -414,7 +423,7 @@
     "css": [
       "assets/PrivacyPolicy-ae801acf.css"
     ],
-    "file": "assets/PrivacyPolicy-e177e668.js",
+    "file": "assets/PrivacyPolicy-0be575e4.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -422,7 +431,7 @@
     "src": "resources/js/views/PrivacyPolicy.vue"
   },
   "resources/js/views/Users/AdminUsers.vue": {
-    "file": "assets/AdminUsers-7d00c54d.js",
+    "file": "assets/AdminUsers-098d2a1b.js",
     "imports": [
       "resources/js/app.js"
     ],

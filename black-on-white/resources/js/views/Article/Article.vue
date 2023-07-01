@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import axios from "axios";
 import Comments from "../../components/Comments/Comments.vue";
 import ArticleRating from "../../components/ArticleRating.vue";
 import {changeDate} from "../../utils/ChangeDate";
+import ArticleService from "../../services/api/ArticleService";
 
 export default {
     name: "Article",
@@ -29,11 +29,8 @@ export default {
     },
     methods: {
         changeDate,
-        loadArticle() {
-            const url = '/api/article/' + this.$route.params.id;
-            axios.get(url).then(response => {
-                this.article = response.data['data'];
-            })
+        async loadArticle() {
+            this.article = await ArticleService.show(this.$route.params.id);
         },
     }
 }

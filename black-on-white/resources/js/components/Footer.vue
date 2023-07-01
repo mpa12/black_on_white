@@ -18,6 +18,9 @@
                 <a href="/privacy_policy">Политика конфиденциальности</a>
             </div>
         </div>
+        <div class="d-flex justify-content-center mt-3 footer__copyright">
+            <span>Made by <a href="https://github.com/mpa12" target="_blank">mpa12</a> © 2023</span>
+        </div>
     </footer>
 </template>
 
@@ -43,5 +46,21 @@ export default {
 .footer__inner a {
     margin-bottom: 0;
     color: var(--my-gray);
+}
+
+.footer__copyright {
+    border-radius: 20px;
+    background-color: var(--my-white);
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.footer__copyright span {
+    font-size: 12px;
+}
+
+.footer__copyright a {
+    text-decoration: none;
+    color: var(--my-black);
 }
 </style>

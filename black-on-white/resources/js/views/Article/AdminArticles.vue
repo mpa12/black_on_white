@@ -95,6 +95,7 @@ import axios from "axios";
 import ArticleSearch from "../../components/ArticleSearch.vue";
 import {changeDate} from "../../utils/ChangeDate";
 import User from "../../models/User";
+import ArticleService from "../../services/api/ArticleService";
 
 export default {
     name: "AdminArticles",
@@ -129,29 +130,30 @@ export default {
         },
     },
     mounted() {
-        this.loadArticles()
+        this.loadArticles();
         window.addEventListener('search', function (event) {
-            this.selectedFilters = [...event.detail.selectedFilters] // Массив с id типов статей
-            this.text = event.detail.text
-            this.articles = [] // очищаем массив статей
-            this.page = 1 // начинаем с первой страницы
-            this.loadArticles()
-        }.bind(this))
+            this.selectedFilters = [...event.detail.selectedFilters];
+            this.text = event.detail.text;
+            this.articles = [];
+            this.page = 1;
+            this.loadArticles();
+        }.bind(this));
     },
     methods: {
         changeDate,
-        loadArticles() {
-            this.loading = true
+        async loadArticles() {
+            this.loading = true;
 
-            let params = { page: this.currentPage }
-            if (this.text !== '') params['text'] = this.text
-            if (this.selectedFilters.length > 0) params['article_type'] = this.selectedFilters.join(",")
+            const response = await ArticleService.index(
+                this.currentPage,
+                this.text,
+                this.selectedFilters,
+                []
+            );
 
-            axios.get('/api/article', { params }).then(response => {
-                this.articles = response.data['data']
-                this.totalPages = response.data['meta'].last_page
-                this.loading = false
-            })
+            this.articles = response.articles;
+            this.totalPages = response.totalPages;
+            this.loading = false;
         },
         prevPage() {
             if (this.currentPage > 1) {
@@ -171,10 +173,8 @@ export default {
                 this.loadArticles()
             }
         },
-        loadDeleteArticle(id) {
-            axios.get('/api/article/' + id).then(response => {
-                this.deleteArticleInfo = response.data['data']
-            })
+        async loadDeleteArticle(id) {
+            this.deleteArticleInfo = await ArticleService.show(id);
         },
         deleteArticle(id) {
             const url = '/api/article/' + id;
