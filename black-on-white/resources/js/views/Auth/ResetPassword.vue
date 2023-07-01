@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         resetPassword() {
-            axios.post(process.env.VUE_APP_URL + '/api/auth/reset-password', {
+            axios.post('/api/auth/reset-password', {
                 email: this.email,
             }).then(() => {
                 this.success = true

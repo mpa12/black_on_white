@@ -22,6 +22,7 @@
 <script>
 import axios from "axios";
 import {changeDate} from "../../utils/ChangeDate";
+import User from "../../models/User";
 
 export default {
     name: "AdminMessagesView",
@@ -36,10 +37,13 @@ export default {
     methods: {
         changeDate,
         loadMessage() {
-            axios.get(
-                process.env.VUE_APP_URL + '/api/message/read/' + this.$route.params.id,
-                {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
-            ).then(response => {
+            const url = '/api/message/read/' + this.$route.params.id;
+            const config = {
+                headers: {
+                    Authorization: User.getAuthorizationString()
+                }
+            };
+            axios.get(url, config).then(response => {
                 this.message = response.data['data']
             })
         }

@@ -94,6 +94,7 @@
 <script>
 import axios from "axios";
 import {changeDate} from "../../utils/ChangeDate";
+import User from "../../models/User";
 
 export default {
     name: "AdminMessages",
@@ -130,14 +131,18 @@ export default {
     methods: {
         changeDate,
         loadMessages() {
-            this.loading = true
+            this.loading = true;
 
-            axios.get(process.env.VUE_APP_URL + '/api/message?page=' + this.currentPage, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
-            }).then(response => {
-                this.messages = response.data['data']
-                this.totalPages = response.data['meta'].last_page
-                this.loading = false
+            const url = '/api/message?page=' + this.currentPage;
+            const config = {
+                headers: {
+                    Authorization: User.getAuthorizationString()
+                }
+            };
+            axios.get(url, config).then(response => {
+                this.messages = response.data['data'];
+                this.totalPages = response.data['meta'].last_page;
+                this.loading = false;
             })
         },
         prevPage() {
@@ -154,30 +159,32 @@ export default {
         },
         goToPage(index) {
             if (this.currentPage !== index) {
-                this.currentPage = index
-                this.loadMessages()
+                this.currentPage = index;
+                this.loadMessages();
             }
         },
         loadDeleteMessage(id) {
-            axios.get(
-                process.env.VUE_APP_URL + '/api/message/' + id,
-                {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}}
-            ).then(response => {
+            const url = '/api/message/' + id;
+            const config = {
+                headers: {
+                    Authorization: User.getAuthorizationString()
+                }
+            };
+            axios.get(url, config).then(response => {
                 this.deleteMessageInfo = response.data['data']
-            })
+            });
         },
         deleteMessage(id) {
-            axios.post(
-                process.env.VUE_APP_URL + '/api/message/' + id,
-                {
-                    _method: 'delete',
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
-                    }
+            const url = '/api/message/' + id;
+            const data = {
+                _method: 'delete',
+            };
+            const config = {
+                headers: {
+                    Authorization: User.getAuthorizationString()
                 }
-            ).then(this.loadMessages).catch(console.error)
+            };
+            axios.post(url, data, config).then(this.loadMessages).catch(console.error);
         }
     }
 }

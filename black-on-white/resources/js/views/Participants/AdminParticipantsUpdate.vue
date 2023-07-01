@@ -6,7 +6,7 @@
     </div>
 
     <div class=form-wrapper>
-        <form @submit.prevent=create>
+        <form @submit.prevent=update>
             <div class=mb-3>
                 <label for=name class=form-label>ФИО участника</label>
                 <input v-model=name type=text class=form-control id=name>
@@ -35,6 +35,7 @@
 
 <script>
 import Toast from "../../components/Toast.vue";
+import User from "../../models/User";
 
 export default {
     name: "AdminParticipantsUpdate",
@@ -51,56 +52,60 @@ export default {
         }
     },
     mounted() {
-        this.loadParticipant()
+        this.loadParticipant();
     },
     methods: {
         loadParticipant() {
-            axios.get(process.env.VUE_APP_URL + `/api/participant/${this.$route.params.id}`, null, {
+            const url = `/api/participant/${this.$route.params.id}`;
+            const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                    Authorization: User.getAuthorizationString()
                 }
-            }).then((response) => {
-                this.name = response.data['data']['name']
-                this.role = response.data['data']['role']
-                this.installedPhoto = response.data['data']['photo']
-            }).catch(error => {
-                console.log(error)
-            })
+            };
+            axios.get(url, config).then((response) => {
+                this.name = response.data['data']['name'];
+                this.role = response.data['data']['role'];
+                this.installedPhoto = response.data['data']['photo'];
+            }).catch(console.error);
         },
         handlePhotoUpload() {
-            this.photo = this.$refs.files.files[0]
+            this.photo = this.$refs.files.files[0];
         },
         getData() {
-            let formData = new FormData()
-            formData.append('name', this.name)
-            formData.append('role', this.role)
-            formData.append('photo', this.photo)
+            let formData = new FormData();
+            formData.append('name', this.name);
+            formData.append('role', this.role);
+            formData.append('photo', this.photo);
 
-            this.data = formData
+            this.data = formData;
         },
-        create() {
-            this.getData()
+        handleResponseUpdate(response) {
+            this.errors = [];
+            this.name = response.data['success']['name'];
+            this.role = response.data['success']['role'];
+            this.photo = null;
+            this.installedPhoto = response.data['success']['photo'];
+            this.updated = true;
+        },
+        handleErrorUpdate(error) {
+            if (error.response.status === 422) {
+                this.errors = [];
+                let errors = JSON.parse(error.request.responseText).errors;
+                for (const key in errors) this.errors[key] = errors[key][0];
+            }
+        },
+        update() {
+            this.getData();
 
-            axios.post(process.env.VUE_APP_URL + `/api/participant/${this.$route.params.id}`, this.data, {
+            const url = `/api/participant/${this.$route.params.id}`;
+            const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                    Authorization: User.getAuthorizationString()
                 }
-            }).then((response) => {
-                this.errors = []
-                this.name = response.data['success']['name']
-                this.role = response.data['success']['role']
-                this.photo = null
-                this.installedPhoto = response.data['success']['photo']
-                this.updated = true
-            }).catch(error => {
-                if (error.response.status === 422) {
-                    this.errors = []
-                    let errors = JSON.parse(error.request.responseText).errors
-                    for (const key in errors) this.errors[key] = errors[key][0]
-                }
-            })
+            };
+            axios.post(url, this.data, config).then(this.handleResponseUpdate).catch(this.handleErrorUpdate)
         }
     }
 }

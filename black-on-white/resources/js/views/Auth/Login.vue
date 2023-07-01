@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import User from "../../models/User";
+
 export default {
     name: "Login",
     data() {
@@ -34,11 +36,11 @@ export default {
     },
     methods: {
         login() {
-            axios.post(process.env.VUE_APP_URL + '/api/auth/login', {
+            axios.post('/api/auth/login', {
                 email: this.email,
                 password: this.password
             }).then(response => {
-                localStorage.setItem('token', response.data.user.api_token)
+                User.login(response.data.user.api_token)
 
                 let evt = new CustomEvent('localStorageUpdated', { detail: null })
                 window.dispatchEvent(evt);

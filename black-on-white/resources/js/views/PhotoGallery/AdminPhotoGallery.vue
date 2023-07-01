@@ -57,6 +57,7 @@
 
 <script>
 import axios from "axios";
+import User from "../../models/User";
 
 export default {
     name: "AdminPhotoGallery",
@@ -91,7 +92,7 @@ export default {
         loadImages() {
             this.loading = true
             let params = { page: this.page }
-            axios.get(process.env.VUE_APP_URL + '/api/photo-gallery', {params}).then(response => {
+            axios.get('/api/photo-gallery', { params }).then(response => {
                 let newData = response.data['data'].map(x => ({src: x.photo, show: false, id: x.id}))
                 this.images = [...this.images, ...newData]
                 this.totalPages = response.data['meta'].last_page
@@ -112,40 +113,41 @@ export default {
             this.deleteIndex = index
         },
         deleteImage(id, index) {
-            axios.post(
-                process.env.VUE_APP_URL + `/api/photo-gallery/${id}`,
-                {
-                    _method: 'delete',
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
-                    }
+            const url = `/api/photo-gallery/${id}`;
+            const data = {
+                _method: 'delete',
+            };
+            const config = {
+                headers: {
+                    Authorization: User.getAuthorizationString()
                 }
-            ).then(() => {
+            };
+            axios.post(url, data, config).then(() => {
                 this.images.splice(index,1);
             }).catch(console.error)
         },
         create() {
-            let formData = new FormData()
-            formData.append('photo', this.photo)
+            let formData = new FormData();
+            formData.append('photo', this.photo);
 
-            axios.post(process.env.VUE_APP_URL + '/api/photo-gallery', formData, {
+            const url = '/api/photo-gallery';
+            const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization : `Bearer ${localStorage.getItem('token')}`
+                    Authorization: User.getAuthorizationString()
                 }
-            }).then(() => {
-                this.photo = null
-                this.images = []
-                this.page = 1
-                this.totalPages = null
-                this.loading = true
-                this.loadImages()
-            }).catch(console.error)
+            };
+            axios.post(url, formData, config).then(() => {
+                this.photo = null;
+                this.images = [];
+                this.page = 1;
+                this.totalPages = null;
+                this.loading = true;
+                this.loadImages();
+            }).catch(console.error);
         },
         handlePhotoUpload() {
-            this.photo = this.$refs.files.files[0]
+            this.photo = this.$refs.files.files[0];
         },
     }
 }

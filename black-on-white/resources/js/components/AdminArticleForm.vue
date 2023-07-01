@@ -81,7 +81,7 @@ export default {
             this.photo = this.$refs.files.files[0]
         },
         loadArticleTypes() {
-            axios.get(process.env.VUE_APP_URL + '/api/article-type/').then(response => {
+            axios.get('/api/article-type/').then(response => {
                 this.articleTypes = response.data['data']
             })
         },
@@ -89,7 +89,7 @@ export default {
             let article_id = this.$route.params.id
 
             if (article_id) {
-                axios.get(process.env.VUE_APP_URL + '/api/article/' + article_id).then(response => {
+                axios.get('/api/article/' + article_id).then(response => {
                     this.title = response.data['data'].title
                     this.text = response.data['data'].text
                     this.article_type_id = response.data['data'].article_type.id
@@ -116,7 +116,7 @@ export default {
                         const formData = new FormData();
                         formData.append("image", file);
 
-                        axios.post(process.env.VUE_APP_URL + '/api/article/upload/image', formData, {
+                        axios.post('/api/article/upload/image', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data',
                                 "Authorization" : User.getAuthorizationString()

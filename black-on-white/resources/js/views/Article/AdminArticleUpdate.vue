@@ -9,6 +9,7 @@
 <script>
 import AdminArticleForm from "../../components/AdminArticleForm.vue";
 import Toast from "../../components/Toast.vue";
+import User from "../../models/User";
 
 export default {
     name: "AdminArticleUpdate",
@@ -29,25 +30,26 @@ export default {
     },
     methods: {
         update(formData) {
-            axios.post( process.env.VUE_APP_URL + '/api/article/' + this.$route.params.id, formData, {
+            axios.post( '/api/article/' + this.$route.params.id, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                    "Authorization" : User.getAuthorizationString()
                 }
             }).then(() => {
                 this.updated = true
                 this.formKey++
-            }).catch(error => {
-                if (error.response.status === 422) {
-                    let errors = JSON.parse(error.request.responseText).errors
+            }).catch(this.updateErrorHandler)
+        },
+        updateErrorHandler(error) {
+            if (error.response.status === 422) {
+                let errors = JSON.parse(error.request.responseText).errors
 
-                    for (const key in errors) errors[key] = errors[key][0]
+                for (const key in errors) errors[key] = errors[key][0]
 
-                    let evt = new CustomEvent('setErrors', { detail: { errors: errors } })
-                    window.dispatchEvent(evt)
-                    console.log(errors)
-                }
-            })
+                let evt = new CustomEvent('setErrors', { detail: { errors: errors } })
+                window.dispatchEvent(evt)
+                console.error(errors)
+            }
         }
     }
 }

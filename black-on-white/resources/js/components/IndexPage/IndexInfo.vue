@@ -28,11 +28,11 @@ export default {
     },
     methods: {
         getYear() {
-            this.year = new Date().getFullYear() - 2019
+            this.year = new Date().getFullYear() - 2019;
         },
         getParticipants() {
-            axios.get(process.env.VUE_APP_URL + '/api/participant/count').then(response => {
-                this.participants = response.data
+            axios.get('/api/participant/count').then(response => {
+                this.participants = response.data;
             })
         }
     }

@@ -45,6 +45,14 @@ class User {
      * @returns {boolean}
      */
     static isAuth = () => !!this.getCurrentToken();
+
+    static logout = () => {
+        localStorage.removeItem('token');
+    }
+
+    static login = api_token => {
+        localStorage.setItem('token', api_token);
+    }
 }
 
 export default User;

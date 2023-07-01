@@ -38,7 +38,7 @@ export default {
     },
     methods: {
         checkCanComment() {
-            this.canComment = !!localStorage.getItem('token')
+            this.canComment = User.isAuth();
         },
         checkHasComments() {
             this.hasComments = !!this.comments

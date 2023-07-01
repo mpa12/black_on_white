@@ -35,6 +35,7 @@
 
 <script>
 import Toast from "../../components/Toast.vue";
+import User from "../../models/User";
 
 export default {
     name: "AdminParticipantsCreate",
@@ -52,35 +53,35 @@ export default {
     },
     methods: {
         handlePhotoUpload() {
-            this.photo = this.$refs.files.files[0]
+            this.photo = this.$refs.files.files[0];
         },
         getData() {
-            let formData = new FormData()
-            formData.append('name', this.name)
-            formData.append('role', this.role)
-            formData.append('photo', this.photo)
+            let formData = new FormData();
+            formData.append('name', this.name);
+            formData.append('role', this.role);
+            formData.append('photo', this.photo);
 
-            this.data = formData
+            this.data = formData;
         },
         create() {
-            this.getData()
+            this.getData();
 
-            axios.post(process.env.VUE_APP_URL + '/api/participant', this.data, {
+            axios.post('/api/participant', this.data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    "Authorization" : `Bearer ${localStorage.getItem('token')}`
+                    Authorization: User.getAuthorizationString()
                 }
             }).then(() => {
-                this.errors = []
-                this.name = null
-                this.role = null
-                this.photo = null
-                this.created = true
+                this.errors = [];
+                this.name = null;
+                this.role = null;
+                this.photo = null;
+                this.created = true;
             }).catch(error => {
                 if (error.response.status === 422) {
-                    this.errors = []
-                    let errors = JSON.parse(error.request.responseText).errors
-                    for (const key in errors) this.errors[key] = errors[key][0]
+                    this.errors = [];
+                    let errors = JSON.parse(error.request.responseText).errors;
+                    for (const key in errors) this.errors[key] = errors[key][0];
                 }
             })
         }

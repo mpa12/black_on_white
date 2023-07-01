@@ -41,7 +41,7 @@ export default {
             this.showFilters = !this.showFilters;
         },
         loadFilters() {
-            axios.get(process.env.VUE_APP_URL + '/api/article-type/').then(response => {
+            axios.get('/api/article-type/').then(response => {
                 this.filters = response.data['data']
             })
         },

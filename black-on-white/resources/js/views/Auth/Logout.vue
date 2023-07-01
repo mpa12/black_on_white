@@ -3,10 +3,12 @@
 </template>
 
 <script>
+import User from "../../models/User";
+
 export default {
     name: "Logout",
     created() {
-        localStorage.removeItem('token');
+        User.logout();
 
         let evt = new CustomEvent('localStorageUpdated', { detail: null });
         window.dispatchEvent(evt);

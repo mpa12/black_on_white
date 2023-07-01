@@ -94,6 +94,7 @@
 import axios from "axios";
 import ArticleSearch from "../../components/ArticleSearch.vue";
 import {changeDate} from "../../utils/ChangeDate";
+import User from "../../models/User";
 
 export default {
     name: "AdminArticles",
@@ -146,7 +147,7 @@ export default {
             if (this.text !== '') params['text'] = this.text
             if (this.selectedFilters.length > 0) params['article_type'] = this.selectedFilters.join(",")
 
-            axios.get(process.env.VUE_APP_URL + '/api/article', { params }).then(response => {
+            axios.get('/api/article', { params }).then(response => {
                 this.articles = response.data['data']
                 this.totalPages = response.data['meta'].last_page
                 this.loading = false
@@ -171,22 +172,21 @@ export default {
             }
         },
         loadDeleteArticle(id) {
-            axios.get(process.env.VUE_APP_URL + '/api/article/' + id).then(response => {
+            axios.get('/api/article/' + id).then(response => {
                 this.deleteArticleInfo = response.data['data']
             })
         },
         deleteArticle(id) {
-            axios.post(
-                process.env.VUE_APP_URL + '/api/article/' + id,
-                {
-                    _method: 'delete',
-                },
-            {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
-                    }
+            const url = '/api/article/' + id;
+            const data = {
+                _method: 'delete'
+            };
+            const config = {
+                headers: {
+                    Authorization: User.getAuthorizationString()
                 }
-            ).then(this.loadArticles).catch(console.error)
+            };
+            axios.post(url, data, config).then(this.loadArticles).catch(console.error)
         }
     }
 }

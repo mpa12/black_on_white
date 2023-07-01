@@ -52,7 +52,7 @@ export default {
     methods: {
         changeDate,
         checkCanComment() {
-            this.canComment = !!localStorage.getItem('token')
+            this.canComment = User.isAuth();
         },
         checkCanDeleteComment() {
             this.canDeleteComment = this.comment.can_delete;

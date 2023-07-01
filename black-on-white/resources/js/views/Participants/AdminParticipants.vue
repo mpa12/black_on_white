@@ -69,6 +69,7 @@
 import axios from "axios";
 import { directive } from 'vue-tippy';
 import { changeDate } from "../../utils/ChangeDate";
+import User from "../../models/User";
 
 export default {
     name: "AdminParticipants",
@@ -87,7 +88,7 @@ export default {
     methods: {
         changeDate,
         loadParticipants() {
-            axios.get(process.env.VUE_APP_URL + '/api/participant').then(response => {
+            axios.get('/api/participant').then(response => {
                 this.participants = response.data['data']
             })
         },
@@ -95,22 +96,21 @@ export default {
             return `<img width=150 style="border-radius: 10px" src="${src}" alt="${alt}">`
         },
         loadDeleteParticipant(id) {
-            axios.get(process.env.VUE_APP_URL + '/api/participant/' + id).then(response => {
+            axios.get('/api/participant/' + id).then(response => {
                 this.deleteParticipantInfo = response.data['data']
             })
         },
         deleteParticipant(id) {
-            axios.post(
-                process.env.VUE_APP_URL + '/api/participant/' + id,
-                {
-                    _method: 'delete',
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
-                    }
+            const url = '/api/participant/' + id;
+            const data = {
+                _method: 'delete',
+            };
+            const config = {
+                headers: {
+                    Authorization: User.getAuthorizationString()
                 }
-            ).then(this.loadParticipants).catch(console.error)
+            };
+            axios.post(url, data, config).then(this.loadParticipants).catch(console.error)
         }
     }
 }

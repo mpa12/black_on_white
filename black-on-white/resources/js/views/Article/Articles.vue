@@ -42,10 +42,12 @@ export default {
     methods: {
         loadArticles() {
             this.loading = true
+
             let params = { page: this.page }
             if (this.text !== '') params['text'] = this.text
             if (this.selectedFilters.length > 0) params['article_type'] = this.selectedFilters.join(",")
-            axios.get(process.env.VUE_APP_URL + '/api/article', { params }).then(response => {
+
+            axios.get('/api/article', { params }).then(response => {
                 this.articles = [...this.articles, ...response.data['data']]
                 this.totalPages = response.data['meta'].last_page
                 this.loading = false

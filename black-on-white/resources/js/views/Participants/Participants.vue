@@ -3,7 +3,12 @@
         <h1>Участники театра</h1>
     </div>
     <section class="participants-section my-3">
-        <participant-card v-for="participant in participants" :name="participant.name" :role="participant.role" :src="participant.photo"/>
+        <participant-card
+            v-for="participant in participants"
+            :name="participant.name"
+            :role="participant.role"
+            :src="participant.photo"
+        />
     </section>
 </template>
 
@@ -23,7 +28,7 @@ export default {
     },
     methods: {
         loadParticipants() {
-            axios.get(process.env.VUE_APP_URL + '/api/participant').then(response => {
+            axios.get('/api/participant').then(response => {
                 this.participants = response.data['data']
             })
         }

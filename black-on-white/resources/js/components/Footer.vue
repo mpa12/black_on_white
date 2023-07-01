@@ -5,7 +5,7 @@
                 <h5>КОНТАКТЫ</h5>
                 <hr>
                 <p>+7 (999) 999 99 99</p>
-                <p>black.on.white@mail.ru</p>
+                <p>theatre.black.on.white@gmail.com</p>
             </div>
             <div class="flex-grow-1">
                 <h5>АДРЕС</h5>
