@@ -7,7 +7,7 @@
             v-for="participant in participants"
             :name="participant.name"
             :role="participant.role"
-            :src="participant.photo"
+            :src="'/storage/' + participant.photo"
         />
     </section>
 </template>

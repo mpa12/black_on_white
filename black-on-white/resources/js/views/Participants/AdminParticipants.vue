@@ -93,6 +93,7 @@ export default {
             })
         },
         getImgTag(src, alt) {
+            src = `/storage/${src}`;
             return `<img width=150 style="border-radius: 10px" src="${src}" alt="${alt}">`
         },
         loadDeleteParticipant(id) {

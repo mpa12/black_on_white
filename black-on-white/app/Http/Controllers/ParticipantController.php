@@ -7,8 +7,9 @@ use App\Http\Requests\UpdateParticipantRequest;
 use App\Http\Resources\ParticipantResource;
 use App\Models\Participant;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ParticipantController extends Controller
 {
@@ -38,16 +39,20 @@ class ParticipantController extends Controller
      * @param CreateParticipantRequest $request
      * @return JsonResponse
      */
-    public function create(CreateParticipantRequest $request)
+    public function create(CreateParticipantRequest $request): JsonResponse
     {
-        $image = $request->file('photo');
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('participant'), $imageName);
+        $path = $request->file('photo')->store('participant', 'public');
+        Image::make(public_path('storage/' . $path))
+            ->encode('webp', 0)
+            ->resize(400, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->save();
 
         $participant = Participant::create([
             'name' => $request->name,
             'role' => $request->role,
-            'photo' => '/participant/' . $imageName,
+            'photo' => $path,
         ]);
 
         return response()->json(['success' => new ParticipantResource($participant)]);
@@ -80,9 +85,15 @@ class ParticipantController extends Controller
 
         $image = $request->file('photo');
         if ($image) {
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('articles'), $imageName);
-            $participant->photo = '/articles/' . $imageName;
+            $storage = Storage::disk('public');
+            if ($storage->exists($participant->photo)) $storage->delete($participant->photo);
+            $participant->photo = $image->store('articles', 'public');
+            Image::make(public_path('storage/' . $participant->photo))
+                ->encode('webp', 0)
+                ->resize(400, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->save();
         }
 
         try {
@@ -103,6 +114,7 @@ class ParticipantController extends Controller
     public function destroy(Participant $participant): JsonResponse
     {
         try {
+            Storage::disk('public')->delete($participant->photo);
             $participant->delete();
             return response()->json(['success' => 'Участник успешно удален']);
         } catch (\Exception $e) {

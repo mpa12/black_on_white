@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ArticleController extends Controller
 {
@@ -40,6 +41,12 @@ class ArticleController extends Controller
     public function create(StoreArticleRequest $request): JsonResponse
     {
         $path = $request->file('photo')->store('articles', 'public');
+        Image::make(public_path('storage/' . $path))
+            ->encode('webp', 0)
+            ->resize(1280, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->save();
 
         $article = Article::create([
             'title' => $request->title,
@@ -80,6 +87,12 @@ class ArticleController extends Controller
             $storage = Storage::disk('public');
             if ($storage->exists($article->photo)) $storage->delete($article->photo);
             $article->photo = $image->store('articles', 'public');
+            Image::make(public_path('storage/' . $article->photo))
+                ->encode('webp', 0)
+                ->resize(1280, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->save();
         }
 
         try {

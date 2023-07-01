@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PhotoGalleryController extends Controller
 {
@@ -26,9 +27,15 @@ class PhotoGalleryController extends Controller
      * @param CreatePhotoGalleryRequest $request
      * @return JsonResponse
      */
-    public function create(CreatePhotoGalleryRequest $request)
+    public function create(CreatePhotoGalleryRequest $request): JsonResponse
     {
         $path = $request->file('photo')->store('photo-gallery', 'public');
+        Image::make(public_path('storage/' . $path))
+            ->encode('webp', 0)
+            ->resize(1280, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->save();
 
         $photo = PhotoGallery::create(['photo' => $path]);
 
