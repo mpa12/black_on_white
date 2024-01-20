@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Actions\Article\ArticleCreateAction;
+use App\Http\Actions\Article\ArticleDestroyAction;
+use App\Http\Actions\Article\ArticleIndexAction;
+use App\Http\Actions\Article\ArticleUpdateAction;
+use App\Http\Actions\Article\ArticleUploadImageAction;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resources\ArticleResource;
@@ -9,59 +14,40 @@ use App\Models\Article;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 
 class ArticleController extends Controller
 {
     /**
-     * Получение списка новостей
+     * Получение списка новостей.
      *
+     * @param ArticleIndexAction $action
      * @param Request $request
+     *
      * @return AnonymousResourceCollection
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(ArticleIndexAction $action, Request $request): AnonymousResourceCollection
     {
-        $articlesQuery = Article::orderByDesc('created_at');
-
-        if ($request->has('article_type'))
-            $articlesQuery->whereIn('article_type_id', explode(',', $request->input('article_type')));
-
-        if ($request->has('text'))
-            $articlesQuery->where('title', 'LIKE', '%' . $request->input('text') . '%');
-
-        return ArticleResource::collection($articlesQuery->paginate(20, ['*'], 'page'));
+        return ($action)($request);
     }
 
     /**
-     * Добавление новости
+     * Добавление новости.
+     *
+     * @param ArticleCreateAction $action
      * @param StoreArticleRequest $request
+     *
      * @return JsonResponse
      */
-    public function create(StoreArticleRequest $request): JsonResponse
+    public function create(ArticleCreateAction $action, StoreArticleRequest $request): JsonResponse
     {
-        $path = $request->file('photo')->store('articles', 'public');
-        Image::make(public_path('storage/' . $path))
-            ->encode('webp', 0)
-            ->resize(1280, null, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })->save();
-
-        $article = Article::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'text' => $request->text,
-            'photo' => $path,
-            'article_type_id' => $request->article_type_id,
-        ]);
-
-        return response()->json(['success' => new ArticleResource($article)]);
+        return ($action)($request);
     }
 
     /**
-     * Просмотр новости
+     * Просмотр новости.
+     *
      * @param Article $article
+     *
      * @return ArticleResource
      */
     public function show(Article $article): ArticleResource
@@ -70,75 +56,54 @@ class ArticleController extends Controller
     }
 
     /**
-     * Редактрирование новости
+     * Редактирование новости.
+     *
+     * @param ArticleUpdateAction $action
      * @param UpdateArticleRequest $request
      * @param Article $article
+     *
      * @return JsonResponse
      */
-    public function update(UpdateArticleRequest $request, Article $article): JsonResponse
+    public function update(ArticleUpdateAction $action, UpdateArticleRequest $request, Article $article): JsonResponse
     {
-        foreach ($article->fillable as $item) {
-            if ($item === 'photo') continue;
-            $article->$item = $request->$item ?? $article->$item;
-        }
-
-        $image = $request->file('photo');
-        if ($image) {
-            $storage = Storage::disk('public');
-            if ($storage->exists($article->photo)) $storage->delete($article->photo);
-            $article->photo = $image->store('articles', 'public');
-            Image::make(public_path('storage/' . $article->photo))
-                ->encode('webp', 0)
-                ->resize(1280, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })->save();
-        }
-
-        try {
-            $article->save();
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->errorInfo]);
-        }
-
-        return response()->json(['success' => new ArticleResource($article)]);
+        return ($action)($request, $article);
     }
 
     /**
-     * Удаление новости
+     * Удаление новости.
+     *
+     * @param ArticleDestroyAction $action
      * @param Article $article
+     *
      * @return JsonResponse
      */
-    public function destroy(Article $article): JsonResponse
+    public function destroy(ArticleDestroyAction $action, Article $article): JsonResponse
     {
-        try {
-            Storage::disk('public')->delete($article->photo);
-            $article->delete();
-            return response()->json(['success' => 'Новость успешно удалена']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->errorInfo]);
-        }
+        return ($action)($article);
     }
 
     /**
-     * Получение двух последних новостей
+     * Получение двух последних новостей.
+     *
      * @return AnonymousResourceCollection
      */
     public function two_last(): AnonymousResourceCollection
     {
-        return ArticleResource::collection(Article::limit(2)->orderByDesc('created_at')->get());
+        return ArticleResource::collection(
+            Article::limit(2)->orderByDesc('created_at')->get()
+        );
     }
 
-    public function uploadImage(Request $request)
+    /**
+     * Загрузка изображения.
+     *
+     * @param ArticleUploadImageAction $action
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function uploadImage(ArticleUploadImageAction $action, Request $request): JsonResponse
     {
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('article-images'), $filename);
-            $url = asset('article-images/' . $filename);
-            return response()->json(['url' => $url]);
-        } else {
-            return response()->json(['error' => 'Image not found'], 400);
-        }
+        return ($action)($request);
     }
 }

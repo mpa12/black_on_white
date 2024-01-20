@@ -1,9 +1,9 @@
 <template>
-    <toast v-if=updated title="Новость успешно изменена" />
-    <div class="article-form-title my-3">
+    <toast v-if=updated title='Новость успешно изменена' />
+    <div class='article-form-title my-3'>
         <h1>Редактирование новости</h1>
     </div>
-    <admin-article-form :key=formKey />
+    <admin-article-form :key=formKey :callback={update} :errors={errors} />
 </template>
 
 <script>
@@ -12,43 +12,44 @@ import Toast from "../../components/Toast.vue";
 import User from "../../models/User";
 
 export default {
-    name: "AdminArticleUpdate",
+    name: 'AdminArticleUpdate',
     components: { AdminArticleForm, Toast },
     data() {
         return {
             article_id: null,
             updated: false,
             formKey: 0,
+            errors: {},
         }
     },
     mounted() {
         this.article_id = this.$route.params.id
-        window.addEventListener('getData', function (event) {
-            this.formData = event.detail.formData
-            this.update(this.formData)
-        }.bind(this))
     },
     methods: {
         update(formData) {
-            axios.post( '/api/article/' + this.$route.params.id, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    "Authorization" : User.getAuthorizationString()
+            axios.post(
+                '/api/article/' + this.$route.params.id,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization' : User.getAuthorizationString()
+                    }
                 }
-            }).then(() => {
-                this.updated = true
-                this.formKey++
-            }).catch(this.updateErrorHandler)
+            )
+                .then(() => {
+                    this.updated = true
+                    this.formKey++
+                })
+                .catch(this.updateErrorHandler);
         },
         updateErrorHandler(error) {
             if (error.response.status === 422) {
-                let errors = JSON.parse(error.request.responseText).errors
+                let errors = JSON.parse(error.request.responseText).errors;
 
-                for (const key in errors) errors[key] = errors[key][0]
+                for (const key in errors) errors[key] = errors[key][0];
 
-                let evt = new CustomEvent('setErrors', { detail: { errors: errors } })
-                window.dispatchEvent(evt)
-                console.error(errors)
+                this.errors = errors;
             }
         }
     }

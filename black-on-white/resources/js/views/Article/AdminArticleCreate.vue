@@ -3,7 +3,7 @@
     <div class="article-form-title my-3">
         <h1>Добавление новости</h1>
     </div>
-    <admin-article-form :key=formKey />
+    <admin-article-form :key=formKey :callback={create} :errors={errors} />
 </template>
 
 <script>
@@ -18,14 +18,9 @@ export default {
         return {
             formData: null,
             created: false,
-            formKey: 0
-        }
-    },
-    mounted() {
-        window.addEventListener('getData', function (event) {
-            this.formData = event.detail.formData
-            this.create(this.formData)
-        }.bind(this))
+            formKey: 0,
+            errors: {},
+        };
     },
     methods: {
         create(formData) {
@@ -36,19 +31,20 @@ export default {
                     Authorization: User.getAuthorizationString()
                 }
             };
-            axios.post(url, formData, config).then(() => {
-                this.created = true
-                this.formKey++
-            }).catch(error => {
-                if (error.response.status === 422) {
-                    let errors = JSON.parse(error.request.responseText).errors
+            axios.post(url, formData, config)
+                .then(() => {
+                    this.created = true;
+                    this.formKey++;
+                })
+                .catch(error => {
+                    if (error.response.status === 422) {
+                        let errors = JSON.parse(error.request.responseText).errors;
 
-                    for (const key in errors) errors[key] = errors[key][0]
+                        for (const key in errors) errors[key] = errors[key][0];
 
-                    let evt = new CustomEvent('setErrors', { detail: { errors: errors } })
-                    window.dispatchEvent(evt)
-                }
-            })
+                        this.errors = errors;
+                    }
+                })
         }
     }
 }

@@ -49,8 +49,12 @@ import axios from "axios";
 import User from "../models/User";
 
 export default {
-    name: "AdminArticleForm",
+    name: 'AdminArticleForm',
     components: { QuillEditor },
+    props: {
+        callback,
+        errors: {},
+    },
     data() {
         return {
             text: null,
@@ -60,7 +64,6 @@ export default {
             installedPhoto: null,
             description: null,
             articleTypes: [],
-            errors: [],
         }
     },
     methods: {
@@ -72,10 +75,7 @@ export default {
             formData.append('photo', this.photo)
             formData.append('description', this.description)
 
-            let evt = new CustomEvent('getData', {
-                detail: { formData: formData }
-            })
-            window.dispatchEvent(evt)
+            this.callback(formData);
         },
         handlePhotoUpload() {
             this.photo = this.$refs.files.files[0]
@@ -100,11 +100,8 @@ export default {
         }
     },
     mounted() {
-        this.loadArticleTypes()
-        window.addEventListener('setErrors', function (event) {
-            this.errors = event.detail.errors
-        }.bind(this))
-        this.loadArticle()
+        this.loadArticleTypes();
+        this.loadArticle();
     },
     setup: () => {
         const modules = {
