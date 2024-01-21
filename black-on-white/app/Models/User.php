@@ -49,7 +49,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
-    public function getJWTIdentifier()
+    public function getJWTIdentifier(): mixed
     {
         return $this->getKey();
     }
@@ -59,19 +59,19 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
 
     public function refreshToken()
     {
-        $this->api_token = Str::random(80);
+        $this->api_token = Str::random(255);
         $this->save();
         return $this->api_token;
     }
 
-    public function generateResetPasswordToken()
+    public function generateResetPasswordToken(): void
     {
         $this->remember_token = Str::random(80);
         $this->save();

@@ -8,6 +8,7 @@ use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use Illuminate\Http\JsonResponse;
 use Intervention\Image\Facades\Image;
+use Symfony\Component\HttpFoundation\Response;
 
 class ArticleCreateAction extends Controller
 {
@@ -37,6 +38,9 @@ class ArticleCreateAction extends Controller
             'article_type_id' => $request->article_type_id,
         ]);
 
-        return response()->json(['success' => new ArticleResource($article)]);
+        return response()->json(
+            ['success' => new ArticleResource($article)],
+            Response::HTTP_CREATED
+        );
     }
 }

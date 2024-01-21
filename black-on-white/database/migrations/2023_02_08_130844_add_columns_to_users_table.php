@@ -17,16 +17,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('is_admin')->default(false);
-            $table->string('api_token', 80)->after('password')->unique()->nullable(false);
+            $table->string('api_token', 255)->after('password')->unique()->nullable(false);
         });
-
-//        \Illuminate\Support\Facades\DB::table('users')->insert([
-//            'name' => 'admin',
-//            'email' => 'admin@mail.ru',
-//            'password' => Hash::make('admin'),
-//            'is_admin' => true,
-//            'api_token' => Str::random(80)
-//        ]);
     }
 
     /**

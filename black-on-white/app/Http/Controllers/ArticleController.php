@@ -31,7 +31,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Добавление новости.
+     * Создание новости.
      *
      * @param ArticleCreateAction $action
      * @param CreateArticleRequest $request
