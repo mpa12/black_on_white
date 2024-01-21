@@ -3,7 +3,7 @@
 namespace App\Http\Actions\Article;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\Article\CreateArticleRequest;
 use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use Illuminate\Http\JsonResponse;
@@ -14,11 +14,11 @@ class ArticleCreateAction extends Controller
     /**
      * Добавление новости.
      *
-     * @param StoreArticleRequest $request
+     * @param CreateArticleRequest $request
      *
      * @return JsonResponse
      */
-    public function __invoke(StoreArticleRequest $request): JsonResponse
+    public function __invoke(CreateArticleRequest $request): JsonResponse
     {
         $path = $request->file('photo')->store('articles', 'public');
 

@@ -1,26 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Article;
 
+use App\Http\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreArticleRequest extends FormRequest
+class CreateArticleRequest extends FormRequest
 {
-    protected function failedValidation(Validator $validator)
-    {
-        $errors = (new ValidationException($validator))->errors();
-
-        throw new HttpResponseException(
-            response()->json([
-                'message' => "",
-                'errors' => $errors
-            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
-        );
-    }
+    use FailedValidation;
 
     /**
      * Determine if the user is authorized to make this request.

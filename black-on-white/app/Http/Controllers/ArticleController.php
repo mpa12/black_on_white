@@ -7,8 +7,8 @@ use App\Http\Actions\Article\ArticleDestroyAction;
 use App\Http\Actions\Article\ArticleIndexAction;
 use App\Http\Actions\Article\ArticleUpdateAction;
 use App\Http\Actions\Article\ArticleUploadImageAction;
-use App\Http\Requests\StoreArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Requests\Article\CreateArticleRequest;
+use App\Http\Requests\Article\UpdateArticleRequest;
 use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use Illuminate\Http\JsonResponse;
@@ -34,11 +34,11 @@ class ArticleController extends Controller
      * Добавление новости.
      *
      * @param ArticleCreateAction $action
-     * @param StoreArticleRequest $request
+     * @param CreateArticleRequest $request
      *
      * @return JsonResponse
      */
-    public function create(ArticleCreateAction $action, StoreArticleRequest $request): JsonResponse
+    public function create(ArticleCreateAction $action, CreateArticleRequest $request): JsonResponse
     {
         return ($action)($request);
     }

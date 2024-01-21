@@ -3,7 +3,7 @@
 namespace App\Http\Actions\Article;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Requests\Article\UpdateArticleRequest;
 use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use Illuminate\Http\JsonResponse;

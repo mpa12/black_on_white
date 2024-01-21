@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterAuthRequest;
-use App\Http\Requests\ResetPasswordAuthRequest;
-use App\Http\Requests\ResetPasswordResponseRequest;
-use App\Http\Requests\ValidateTokenRequest;
+use App\Http\Requests\Auth\RegisterAuthRequest;
+use App\Http\Requests\Auth\ResetPasswordAuthRequest;
+use App\Http\Requests\Auth\ResetPasswordResponseRequest;
+use App\Http\Requests\Auth\ValidateTokenRequest;
 use App\Mail\ResetPasswordEmail;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 

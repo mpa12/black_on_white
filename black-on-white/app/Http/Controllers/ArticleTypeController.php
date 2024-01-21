@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Actions\ArticleType\ArticleTypeCreateAction;
+use App\Http\Requests\ArticleType\CreateArticleTypeRequest;
 use App\Http\Resources\ArticleTypeResource;
 use App\Models\ArticleType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
+// TODO: Сделать CRUD для типов.
 class ArticleTypeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Получение списка типов новостей.
      *
      * @return AnonymousResourceCollection
      */
@@ -21,46 +24,16 @@ class ArticleTypeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Создание типа новости.
      *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * @param ArticleTypeCreateAction $action
+     * @param CreateArticleTypeRequest $request
      *
-     * @param Request $request
-     * @return Response
+     * @return ArticleTypeResource
      */
-    public function store(Request $request)
+    public function create(ArticleTypeCreateAction $action, CreateArticleTypeRequest $request): ArticleTypeResource
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
+        return ($action)($request);
     }
 
     /**

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateParticipantRequest;
-use App\Http\Requests\UpdateParticipantRequest;
+use App\Http\Requests\Participant\CreateParticipantRequest;
+use App\Http\Requests\Participant\UpdateParticipantRequest;
 use App\Http\Resources\ParticipantResource;
 use App\Models\Participant;
 use Illuminate\Http\JsonResponse;

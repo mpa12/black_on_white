@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use App\Http\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreatePhotoGalleryRequest extends FormRequest
+class ValidateTokenRequest extends FormRequest
 {
     use FailedValidation;
 
@@ -26,6 +26,8 @@ class CreatePhotoGalleryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return ['photo' => 'required|image'];
+        return [
+            'remember_token' => 'required|string|exists:users',
+        ];
     }
 }
