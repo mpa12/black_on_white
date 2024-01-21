@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Actions\ArticleType\ArticleTypeCreateAction;
+use App\Http\Actions\ArticleType\ArticleTypeDestroyAction;
+use App\Http\Actions\ArticleType\ArticleTypeUpdateAction;
 use App\Http\Requests\ArticleType\CreateArticleTypeRequest;
+use App\Http\Requests\ArticleType\UpdateArticleTypeRequest;
 use App\Http\Resources\ArticleTypeResource;
 use App\Models\ArticleType;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
-// TODO: Сделать CRUD для типов.
 class ArticleTypeController extends Controller
 {
     /**
@@ -37,25 +38,31 @@ class ArticleTypeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Редактирование типа новости.
      *
-     * @param Request $request
-     * @param  int  $id
-     * @return Response
+     * @param ArticleTypeUpdateAction $action
+     * @param UpdateArticleTypeRequest $request
+     * @param ArticleType $articleType
+     *
+     * @return ArticleTypeResource
      */
-    public function update(Request $request, $id)
+    public function update(
+        ArticleTypeUpdateAction $action, UpdateArticleTypeRequest $request, ArticleType $articleType
+    ): ArticleTypeResource
     {
-        //
+        return ($action)($request, $articleType);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Удаление типа новости.
      *
-     * @param  int  $id
-     * @return Response
+     * @param ArticleTypeDestroyAction $action
+     * @param ArticleType $articleType
+     *
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(ArticleTypeDestroyAction $action, ArticleType $articleType): JsonResponse
     {
-        //
+        return ($action)($articleType);
     }
 }
