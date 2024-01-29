@@ -8,14 +8,16 @@ use App\Models\Comment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
     /**
-     * Просмотр комментареив
+     * Просмотр комментариев.
      *
      * @param int $article_id ID новости
+     *
      * @return AnonymousResourceCollection
      */
     public function index(int $article_id): AnonymousResourceCollection
@@ -25,9 +27,10 @@ class CommentController extends Controller
     }
 
     /**
-     * Создание комментария
+     * Создание комментария.
      *
      * @param CreateCommentRequest $request
+     *
      * @return JsonResponse
      */
     public function create(CreateCommentRequest $request): JsonResponse
@@ -43,11 +46,12 @@ class CommentController extends Controller
     }
 
     /**
-     * Редактирование комментария
+     * Редактирование комментария.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -55,9 +59,10 @@ class CommentController extends Controller
     }
 
     /**
-     * Удаление комментария
+     * Удаление комментария.
      *
      * @param Comment $comment
+     *
      * @return JsonResponse
      */
     public function destroy(Comment $comment)

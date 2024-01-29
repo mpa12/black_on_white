@@ -14,7 +14,7 @@ use Intervention\Image\Facades\Image;
 class ParticipantController extends Controller
 {
     /**
-     * Список участников
+     * Список участников.
      *
      * @return AnonymousResourceCollection
      */
@@ -24,7 +24,7 @@ class ParticipantController extends Controller
     }
 
     /**
-     * Количество участников
+     * Количество участников.
      *
      * @return int
      */
@@ -34,9 +34,10 @@ class ParticipantController extends Controller
     }
 
     /**
-     * Создание участника
+     * Создание участника.
      *
      * @param CreateParticipantRequest $request
+     *
      * @return JsonResponse
      */
     public function create(CreateParticipantRequest $request): JsonResponse
@@ -59,9 +60,10 @@ class ParticipantController extends Controller
     }
 
     /**
-     * Просмотр участника
+     * Просмотр участника.
      *
      * @param Participant $participant
+     *
      * @return ParticipantResource
      */
     public function show(Participant $participant): ParticipantResource
@@ -70,30 +72,41 @@ class ParticipantController extends Controller
     }
 
     /**
-     * Редактирование участника
+     * Редактирование участника.
      *
      * @param UpdateParticipantRequest $request
      * @param Participant $participant
+     *
      * @return JsonResponse
      */
     public function update(UpdateParticipantRequest $request, Participant $participant): JsonResponse
     {
         foreach ($participant->fillable as $item) {
-            if ($item === 'photo') continue;
+            if ($item === 'photo') {
+                continue;
+            }
             $participant->$item = $request->$item ?? $participant->$item;
         }
 
+        // TODO: Провести рефакторинг сохранения изображений.
         $image = $request->file('photo');
+
         if ($image) {
             $storage = Storage::disk('public');
-            if ($storage->exists($participant->photo)) $storage->delete($participant->photo);
+
+            if ($storage->exists($participant->photo)) {
+                $storage->delete($participant->photo);
+            }
+
             $participant->photo = $image->store('articles', 'public');
+
             Image::make(public_path('storage/' . $participant->photo))
                 ->encode('webp', 0)
                 ->resize(400, null, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
-                })->save();
+                })
+                ->save();
         }
 
         try {
@@ -106,9 +119,10 @@ class ParticipantController extends Controller
     }
 
     /**
-     * Удаление участника
+     * Удаление участника.
      *
      * @param Participant $participant
+     *
      * @return JsonResponse
      */
     public function destroy(Participant $participant): JsonResponse

@@ -6,7 +6,6 @@ use App\Http\Requests\CreateMessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MessageController extends Controller
@@ -17,7 +16,7 @@ class MessageController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Получение списка сообщений.
      *
      * @return AnonymousResourceCollection
      */
@@ -28,9 +27,10 @@ class MessageController extends Controller
     }
 
     /**
-     * Создание сообщения
+     * Создание сообщения.
      *
      * @param CreateMessageRequest $request
+     *
      * @return JsonResponse
      */
     public function create(CreateMessageRequest $request): JsonResponse
@@ -47,9 +47,10 @@ class MessageController extends Controller
     }
 
     /**
-     * Просмотр сообщения
+     * Просмотр сообщения.
      *
      * @param Message $message
+     *
      * @return MessageResource
      */
     public function show(Message $message): MessageResource
@@ -58,9 +59,10 @@ class MessageController extends Controller
     }
 
     /**
-     * Чтение сообщения
+     * Чтение сообщения.
      *
      * @param Message $message
+     *
      * @return MessageResource
      */
     public function read(Message $message): MessageResource
@@ -71,9 +73,10 @@ class MessageController extends Controller
     }
 
     /**
-     * Удаление сообщения
+     * Удаление сообщения.
      *
      * @param Message $message
+     *
      * @return JsonResponse
      */
     public function destroy(Message $message): JsonResponse

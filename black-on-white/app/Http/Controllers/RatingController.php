@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Auth;
 class RatingController extends Controller
 {
     /**
-     * Получения рейтинга новости
+     * Получения рейтинга новости.
      *
      * @param int $article_id
+     *
      * @return array
      */
-    public function index(int $article_id)
+    // TODO: Провести рефакторинг.
+    public function index(int $article_id): array
     {
         return [
             'rating' => Rating::where('article_id', $article_id)->count(),
@@ -26,9 +28,10 @@ class RatingController extends Controller
     }
 
     /**
-     * Установка рейтинга новости
+     * Установка рейтинга новости.
      *
      * @param SetRatingRequest $request
+     *
      * @return JsonResponse
      */
     public function setRating(SetRatingRequest $request)
@@ -37,11 +40,13 @@ class RatingController extends Controller
     }
 
     /**
-     * Установка рейтинга новости при отсутствии
+     * Установка рейтинга новости при отсутствии.
      *
      * @param SetRatingRequest $request
+     *
      * @return JsonResponse
      */
+    // TODO: Провести рефакторинг. Этого не должно быть в контроллере!
     protected function create(SetRatingRequest $request)
     {
         if (Rating::where('article_id', $request->article_id)->exists())
@@ -66,9 +71,13 @@ class RatingController extends Controller
     }
 
     /**
+     * Удаление рейтинга новости при наличии.
+     *
      * @param SetRatingRequest $request
+     *
      * @return JsonResponse
      */
+    // TODO: Провести рефакторинг. Этого не должно быть в контроллере!
     protected function destroy(SetRatingRequest $request)
     {
         Rating::where('article_id', $request->article_id)

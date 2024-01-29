@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Actions\Auth\LoginAction;
+use App\Http\Actions\Auth\RefreshAction;
+use App\Http\Actions\Auth\RegisterAction;
+use App\Http\Actions\Auth\ResetPasswordAction;
+use App\Http\Actions\Auth\ResetPasswordResponseAction;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterAuthRequest;
 use App\Http\Requests\Auth\ResetPasswordAuthRequest;
 use App\Http\Requests\Auth\ResetPasswordResponseRequest;
 use App\Http\Requests\Auth\ValidateTokenRequest;
-use App\Mail\ResetPasswordEmail;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -39,65 +38,68 @@ class AuthController extends Controller
         return ($action)($request);
     }
 
-    public function register(RegisterAuthRequest $request): JsonResponse
+    /**
+     * Регистрация пользователя.
+     *
+     * @param RegisterAction $action
+     * @param RegisterAuthRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function register(RegisterAction $action, RegisterAuthRequest $request): JsonResponse
     {
-        $token = Str::random(80);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'api_token' => $token,
-        ]);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User created successfully',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
-        ]);
+        return ($action)($request);
     }
 
-    public function refresh(): JsonResponse
+    /**
+     * Обновление токена.
+     *
+     * @param RefreshAction $action
+     *
+     * @return JsonResponse
+     */
+    public function refresh(RefreshAction $action): JsonResponse
     {
-        $user = Auth::user();
-
-        return response()->json([
-            'status' => 'success',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $user->refreshToken(),
-                'type' => 'bearer',
-            ]
-        ]);
+        return ($action)();
     }
 
+    /**
+     * Проверка на админа по accessToken.
+     *
+     * @return bool
+     */
     public function isAdmin(): bool
     {
         return (bool)Auth::user()['is_admin'];
     }
 
-    public function resetPassword(ResetPasswordAuthRequest $request): JsonResponse
+    /**
+     * Запрос на восстановление пароля.
+     *
+     * @param ResetPasswordAction $action
+     * @param ResetPasswordAuthRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function resetPassword(ResetPasswordAction $action, ResetPasswordAuthRequest $request): JsonResponse
     {
-        $user = User::where('email', $request->email)->first();
-        $user->generateResetPasswordToken();
-
-        Mail::to($user->email)->queue(new ResetPasswordEmail($user));
-
-        return response()->json(['status' => 'success']);
+        return ($action)($request);
     }
 
-    public function resetPasswordResponse(ResetPasswordResponseRequest $request): JsonResponse
+    /**
+     * Восстановление пароля.
+     *
+     * @param ResetPasswordResponseAction $action
+     * @param ResetPasswordResponseRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function resetPasswordResponse(
+        ResetPasswordResponseAction $action,
+        ResetPasswordResponseRequest $request
+    ): JsonResponse
     {
-        $user = User::where('remember_token', $request->remember_token)->first();
-        $user->password = Hash::make($request->new_password);
-        $user->remember_token = null;
-        $user->save();
-
-        return response()->json(['status' => 'success']);
+        return ($action)($request);
     }
 
     public function validateToken(ValidateTokenRequest $request): JsonResponse

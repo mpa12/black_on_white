@@ -14,17 +14,22 @@ use Intervention\Image\Facades\Image;
 class PhotoGalleryController extends Controller
 {
     /**
-     * Получение списка изображений
+     * Получение списка изображений.
      *
      * @return AnonymousResourceCollection
      */
     public function index(): AnonymousResourceCollection
     {
-        return PhotoGalleryResource::collection(PhotoGallery::orderByDesc('id')->paginate(50, ['*'], 'page'));
+        $resource = PhotoGallery::orderByDesc('id')->paginate(50, ['*'], 'page');
+
+        return PhotoGalleryResource::collection($resource);
     }
 
     /**
+     * Добавление изображения.
+     *
      * @param CreatePhotoGalleryRequest $request
+     *
      * @return JsonResponse
      */
     public function create(CreatePhotoGalleryRequest $request): JsonResponse
@@ -43,9 +48,10 @@ class PhotoGalleryController extends Controller
     }
 
     /**
-     * Удаление изображения
+     * Удаление изображения.
      *
      * @param PhotoGallery $photo
+     *
      * @return JsonResponse
      */
     public function destroy(PhotoGallery $photo): JsonResponse
